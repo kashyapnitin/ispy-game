@@ -32,16 +32,16 @@
                 <p data-i18n="subtitle">Can you find all the hidden objects?</p>
                 <div class="scene-selection">
                     <button class="scene-btn" data-scene="toyshop">
-                        <img src="assets/images/toyshop_thumbnail.jpg" alt="Toy Shop Scene"
+                        <img src="assets/images/scenes/toyshop/scene_toyshop.jpg" alt="Toy Shop Scene"
                             onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23ccc\'/><text x=\'50\' y=\'50\' dominant-baseline=\'middle\' text-anchor=\'middle\'>Image Needed</text></svg>'">
                         <span data-i18n="sceneToyshop">Toy Shop</span>
                     </button>
                     <button class="scene-btn" data-scene="kitchen">
-                        <img src="assets/images/scene_kitchen.jpg" alt="Kitchen Scene">
+                        <img src="assets/images/scenes/kitchen/scene_kitchen.jpg" alt="Kitchen Scene">
                         <span data-i18n="sceneKitchen">Kitchen</span>
                     </button>
                     <button class="scene-btn" data-scene="playground">
-                        <img src="assets/images/scene_playground.jpg" alt="Playground Scene">
+                        <img src="assets/images/scenes/playground/scene_playground.jpg" alt="Playground Scene">
                         <span data-i18n="scenePlayground">Playground</span>
                     </button>
                 </div>
@@ -97,6 +97,14 @@
     <!-- Audio synthesized via Web Audio API in main.js, so no static mp3 tags needed -->
 
     <script src="js/confetti.js?v=2"></script>
+
+    <!-- Data Modules (Phase 2.5 Architecture) -->
+    <script src="js/data/i18n-core.js"></script>
+    <script src="js/data/scenes/scene-toyshop.js"></script>
+    <script src="js/data/scenes/scene-kitchen.js"></script>
+    <script src="js/data/scenes/scene-playground.js"></script>
+
+    <!-- Core Game Engine -->
     <script src="js/main.js?v=2"></script>
 </body>
 
