@@ -386,6 +386,8 @@ button:active {
     transform-origin: center center;
     background: #fff;
     box-shadow: var(--shadow-soft);
+    flex-shrink: 0;
+    /* CRITICAL: Prevent flexbox from breaking the aspect ratio */
 }
 
 #scene-image {
@@ -408,6 +410,10 @@ button:active {
     position: absolute;
     cursor: crosshair;
     border-radius: var(--border-radius-round);
+    aspect-ratio: 1 / 1;
+    /* Dynamically scale the minimum physical tap target to 44px regardless of container zoom */
+    min-width: calc(44px * var(--inverse-scale, 1));
+    min-height: calc(44px * var(--inverse-scale, 1));
 }
 
 .sprite-render {

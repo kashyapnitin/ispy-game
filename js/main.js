@@ -291,6 +291,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const bgImg = new Image();
             bgImg.onload = () => {
                 ui.sceneImage.src = bgImg.src;
+                // Dynamically capture the aspect ratio from the actual loaded image!
+                gameState.sceneData.origWidth = bgImg.naturalWidth || 1024;
+                gameState.sceneData.origHeight = bgImg.naturalHeight || 1024;
                 resolve();
             };
             bgImg.onerror = resolve; // Resolve anyway to prevent infinite loading screen
@@ -379,6 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.sceneWrapper.style.width = `${origW}px`;
         ui.sceneWrapper.style.height = `${origH}px`;
         ui.sceneWrapper.style.transform = `scale(${scale})`;
+        ui.sceneWrapper.style.setProperty('--inverse-scale', 1 / scale);
     }
 
     function setupScene() {
@@ -391,7 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
             box.style.left = `${obj.x}%`;
             box.style.top = `${obj.y}%`;
             box.style.width = `${obj.w}%`;
-            box.style.paddingTop = `${obj.w}%`; // 1:1 aspect ratio trick
             box.style.transform = 'translate(-50%, -50%)';
 
             // Apply the individual image URL directly as the background image
@@ -424,6 +427,17 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             ui.targetList.appendChild(itemElement);
         });
+    }
+
+    // Cache voices array globally to avoid empty array on first load
+    let systemVoices = [];
+    if ('speechSynthesis' in window) {
+        // Voices load asynchronously in some browsers
+        window.speechSynthesis.onvoiceschanged = () => {
+            systemVoices = window.speechSynthesis.getVoices();
+        };
+        // Also try immediately for browsers that load them synchronously
+        systemVoices = window.speechSynthesis.getVoices();
     }
 
     function handleObjectClick(e, obj) {
@@ -496,7 +510,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentLang === 'zh') speechText = `你找到了 ${locName}`;
 
                 const utterance = new SpeechSynthesisUtterance(speechText);
-                utterance.pitch = 1.3; // Make it sound a bit more "child friendly"
+
+                // Try to find a premium native voice based on the selected language
+                if (systemVoices.length > 0) {
+                    const premiumVoicesByLang = {
+                        'en': ['Samantha', 'Daniel', 'Karen', 'Moira', 'Google US English', 'Microsoft Zira'],
+                        'es': ['Monica', 'Paulina', 'Jorge', 'Google Español', 'Microsoft Sabina'],
+                        'hi': ['Lekha', 'Google हिन्दी', 'Microsoft Swara'],
+                        'zh': ['Ting-Ting', 'Mei-Jia', 'Sin-Ji', 'Google 普通话', 'Microsoft Huihui']
+                    };
+
+                    const preferredVoices = premiumVoicesByLang[currentLang] || [];
+                    let selectedVoice = null;
+
+                    // 1. Search for a high-quality explicit name
+                    for (const pref of preferredVoices) {
+                        selectedVoice = systemVoices.find(v => v.name.includes(pref));
+                        if (selectedVoice) break;
+                    }
+
+                    // 2. Fallback to any voice matching the exact lang tag
+                    if (!selectedVoice) {
+                        selectedVoice = systemVoices.find(v => v.lang.startsWith(langCode));
+                    }
+
+                    // 3. Fallback to broad language match (e.g. 'en-US' failing over to 'en-GB' or just 'en')
+                    if (!selectedVoice) {
+                        selectedVoice = systemVoices.find(v => v.lang.startsWith(currentLang));
+                    }
+
+                    if (selectedVoice) {
+                        utterance.voice = selectedVoice;
+                    }
+                }
+
+                utterance.pitch = 1.0; // Restored to 1.0 to prevent OS-level voice distortion/muffling
                 utterance.rate = 1.0;
                 utterance.lang = langCode;
                 window.speechSynthesis.speak(utterance);
