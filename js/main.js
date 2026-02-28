@@ -213,14 +213,22 @@ document.addEventListener('DOMContentLoaded', () => {
             bgImage: "assets/images/scene_kitchen.jpg",
             origWidth: 1024,
             origHeight: 1024,
-            objects: ["Apple", "Banana", "Mug", "Spoon", "Fork", "Plate", "Pot", "Pan", "Spatula", "Toaster", "Blender", "Oven Mitt", "Rolling Pin", "Whisk"].map((name, i) => ({
-                id: `kit_${i}`,
-                name: name,
-                x: 10 + (i % 7) * 12, // simple grid positioning for placeholders
-                y: 20 + Math.floor(i / 7) * 30, // simple grid positioning
-                w: 7,
-                imgUrl: `assets/images/objects/kitchen_${i}.png`
-            }))
+            objects: [
+                { id: "kit_0", name: "Apple", x: 28, y: 53, w: 3, imgUrl: "assets/images/Apple.jpg" }, // On counter left
+                { id: "kit_1", name: "Banana", x: 86, y: 45, w: 4, imgUrl: "assets/images/Banana.jpg" }, // Top of fridge
+                { id: "kit_2", name: "Mug", x: 67, y: 31, w: 3, imgUrl: "assets/images/Mug.jpg" }, // Shelf above stove
+                { id: "kit_3", name: "Spoon", x: 6, y: 72, w: 2, imgUrl: "assets/images/Spoon.jpg" }, // Hanging left drawer
+                { id: "kit_4", name: "Fork", x: 58, y: 74, w: 2, imgUrl: "assets/images/Fork.jpg" }, // On table near kid
+                { id: "kit_5", name: "Plate", x: 50, y: 32, w: 6, imgUrl: "assets/images/Plate.jpg" }, // Open cabinet
+                { id: "kit_6", name: "Pot", x: 34, y: 75, w: 5, imgUrl: "assets/images/Pot.jpg" }, // Lower open shelf
+                { id: "kit_7", name: "Pan", x: 63, y: 44, w: 5, imgUrl: "assets/images/Pan.jpg" }, // Hanging over stove
+                { id: "kit_8", name: "Spatula", x: 57, y: 45, w: 2, imgUrl: "assets/images/Spatula.jpg" }, // Next to stove
+                { id: "kit_9", name: "Toaster", x: 42, y: 53, w: 6, imgUrl: "assets/images/Toaster.jpg" }, // Counter corner
+                { id: "kit_10", name: "Blender", x: 48, y: 47, w: 5, imgUrl: "assets/images/Blender.jpg" }, // Next to toaster
+                { id: "kit_11", name: "Oven Mitt", x: 19, y: 50, w: 4, imgUrl: "assets/images/Oven_Mitt.jpg" }, // Next to sink brushes
+                { id: "kit_12", name: "Rolling Pin", x: 38, y: 55, w: 6, imgUrl: "assets/images/Rolling_Pin.jpg" }, // On cutting board
+                { id: "kit_13", name: "Whisk", x: 80, y: 14, w: 3, imgUrl: "assets/images/Whisk.jpg" } // Top high shelf
+            ]
         },
         "playground": {
             id: "playground",
