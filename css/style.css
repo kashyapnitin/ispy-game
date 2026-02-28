@@ -1,0 +1,538 @@
+/* =========================================
+   VARIABLES & RESET
+   ========================================= */
+:root {
+    --primary-color: #FF5722;
+    --primary-hover: #E64A19;
+    --secondary-color: #2196F3;
+    --secondary-hover: #1976D2;
+    --success-color: #4CAF50;
+    --error-color: #F44336;
+    --bg-color: #F0F8FF;
+    /* AliceBlue for a soft, friendly feel */
+    --surface-color: #FFFFFF;
+    --text-color: #333333;
+
+    --font-heading: 'Fredoka One', cursive, sans-serif;
+    --font-body: 'Nunito', sans-serif;
+
+    --border-radius-sm: 8px;
+    --border-radius-md: 16px;
+    --border-radius-lg: 24px;
+    --border-radius-round: 50%;
+
+    --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 15px rgba(255, 235, 59, 0.8);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    /* Prevent text selection during gameplay for kids */
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    /* Disable double-tap-to-zoom */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+    /* Prevent scrolling, full app feel */
+    width: 100vw;
+    height: 100vh;
+}
+
+h1,
+h2,
+h3,
+.font-heading {
+    font-family: var(--font-heading);
+    color: var(--secondary-color);
+}
+
+button {
+    font-family: var(--font-heading);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius-md);
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    color: white;
+    transition: transform 0.1s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    /* Chunky "pushable" button look */
+}
+
+button:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 rgba(0, 0, 0, 0.15);
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.secondary-btn {
+    background-color: var(--secondary-color);
+}
+
+.secondary-btn:hover {
+    background-color: var(--secondary-hover);
+}
+
+
+/* =========================================
+   APP STRUCTURE & SCREENS
+   ========================================= */
+#app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.overlay {
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 100;
+}
+
+/* =========================================
+   MAIN MENU
+   ========================================= */
+#main-menu {
+    background: radial-gradient(circle at center, #ffffff 0%, var(--bg-color) 100%);
+}
+
+.menu-content {
+    text-align: center;
+    background: var(--surface-color);
+    padding: 40px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-soft);
+}
+
+.menu-content h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.menu-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #666;
+    font-weight: 700;
+}
+
+.scene-selection {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.scene-btn {
+    background: var(--surface-color);
+    border: 4px solid var(--secondary-color);
+    border-radius: var(--border-radius-lg);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--secondary-color);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
+
+.scene-btn:hover {
+    background: var(--bg-color);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.scene-btn img {
+    border-radius: var(--border-radius-sm);
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    background-color: #eee;
+}
+
+
+/* =========================================
+   GAME SCREEN (SPLIT LAYOUT)
+   ========================================= */
+#game-screen {
+    flex-direction: row;
+    /* Sidebar left/right, scene main */
+    display: none;
+    /* hidden by default */
+}
+
+#game-screen.active {
+    display: flex;
+}
+
+#sidebar {
+    width: 300px;
+    height: 100%;
+    background-color: var(--surface-color);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.target-grid {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding-bottom: 20px;
+    align-content: start;
+}
+
+/* Custom Scrollbar for Sidebar */
+.target-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.target-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.target-grid::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.target-grid::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+
+.target-item {
+    background-color: #f9f9f9;
+    border: 3px solid #eee;
+    border-radius: var(--border-radius-md);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.target-item .sprite-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 5px;
+    border-radius: var(--border-radius-sm);
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+.target-item span {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* State when found */
+.target-item.found {
+    border-color: var(--success-color);
+    background-color: #E8F5E9;
+    opacity: 0.6;
+    transform: scale(0.95);
+}
+
+.target-item.found .sprite-thumb {
+    filter: grayscale(80%);
+}
+
+.target-item.recently-found {
+    animation: pulseGlow 1s ease;
+}
+
+
+.sidebar-controls {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#progress-text {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+#back-to-menu-btn {
+    width: 100%;
+}
+
+
+/* =========================================
+   MAIN SCENE CONTAINER
+   ========================================= */
+#scene-container {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    background-color: #333;
+    /* Dark backdrop for letterboxing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#scene-wrapper {
+    position: relative;
+    /* This will be dynamically scaled via JS to fit the container while maintaining aspect ratio */
+    transform-origin: center center;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+}
+
+#scene-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    /* Let clicks pass through to hitboxes if needed, though usually hitboxes are above */
+}
+
+#hitboxes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hitbox {
+    position: absolute;
+    cursor: crosshair;
+    border-radius: var(--border-radius-round);
+}
+
+.sprite-render {
+    /* Soft shadow to pop out from background a bit */
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* Animations added to hitboxes when found */
+.hitbox.found-anim {
+    animation: bouncePop 0.8s ease forwards;
+    pointer-events: none;
+}
+
+.hitbox.found {
+    pointer-events: none;
+}
+
+/* =========================================
+   OVERLAYS & EFFECTS
+   ========================================= */
+#confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.loader {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--primary-color);
+    animation: pulse 1s infinite alternate;
+}
+
+.win-content {
+    background: var(--surface-color);
+    padding: 50px;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border: 5px solid var(--success-color);
+}
+
+.win-content h2 {
+    font-size: 3.5rem;
+    color: var(--success-color);
+    margin-bottom: 10px;
+}
+
+.win-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.win-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(76, 175, 80, 0);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-glow);
+        border-color: var(--success-color);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+
+@keyframes bouncePop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+        filter: drop-shadow(0 0 10px yellow);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (TABLETS/MOBILES)
+   ========================================= */
+@media (max-width: 900px) {
+    #game-screen.active {
+        flex-direction: column-reverse;
+        /* Sidebar on bottom */
+    }
+
+    #sidebar {
+        width: 100%;
+        height: 200px;
+        /* Fixed height map for bottom panel */
+        flex-direction: row;
+        /* Horizontal layout */
+        align-items: center;
+        padding: 10px;
+    }
+
+    #sidebar h2 {
+        display: none;
+        /* Save space */
+    }
+
+    .target-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        padding-bottom: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex: 1;
+        align-items: center;
+    }
+
+    .target-item {
+        flex: 0 0 auto;
+        width: 80px;
+        padding: 5px;
+    }
+
+    .target-item .sprite-thumb {
+        width: 40px;
+        height: 40px;
+    }
+
+    .target-item span {
+        font-size: 0.7rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    .sidebar-controls {
+        flex-direction: column;
+        justify-content: center;
+        border-top: none;
+        border-left: 2px solid #eee;
+        padding-left: 15px;
+        margin-left: 15px;
+        margin-top: 0;
+        min-width: 120px;
+    }
+
+    #progress-text {
+        font-size: 1.2rem;
+    }
+
+    #back-to-menu-btn {
+        padding: 8px 12px;
+        font-size: 1rem;
+    }
+}
