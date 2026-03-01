@@ -318,16 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cache voices array globally to avoid empty array on first load
-    let systemVoices = [];
-    if ('speechSynthesis' in window) {
-        // Voices load asynchronously in some browsers
-        window.speechSynthesis.onvoiceschanged = () => {
-            systemVoices = window.speechSynthesis.getVoices();
-        };
-        // Also try immediately for browsers that load them synchronously
-        systemVoices = window.speechSynthesis.getVoices();
-    }
+    // Removed dynamic systemVoices loading as we now use pre-generated MP3s
 
     function handleObjectClick(e, obj) {
         initAudio(); // Ensure audio context is unlocked
@@ -366,86 +357,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Keep track of the currently playing TTS audio so we can interrupt it if necessary
+    let currentVoiceAudio = null;
+
     function speakPhrase(phraseType, objName) {
-        if (!objName || !('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
+        if (!objName) return;
 
-        const locName = getI18nObjName(objName);
-        let speechText = "";
-
-        if (phraseType === 'hint') {
-            const hintGrammar = {
-                'en': `Find the ${locName} in the picture`, 'es': `Encuentra el ${locName} en la imagen`, 'hi': `चित्र में ${locName} खोजें`, 'zh': `在图中找到 ${locName}`,
-                'pt-PT': `Encontra o ${locName} na imagem`, 'pt-BR': `Encontre o ${locName} na imagem`, 'fr': `Trouve le ${locName} dans l'image`, 'ja': `絵の中から ${locName} を見つけて`,
-                'bn': `ছবিতে ${locName} খুঁজুন`, 'gu': `ચિત્રમાં ${locName} શોધો`, 'mr': `चित्रात ${locName} शोधा`, 'kn': `ಚಿತ್ರದಲ್ಲಿ ${locName} ಅನ್ನು ಹುಡುಕಿ`,
-                'ta': `படத்தில் ${locName} ஐக் கண்டுபிடிக்கவும்`, 'ml': `ചിത്രത്തിൽ ${locName} കണ്ടെത്തുക`, 'pa': `ਤਸਵੀਰ ਵਿੱਚ ${locName} ਲੱਭੋ`, 'sw': `Tafuta ${locName} kwenye picha`,
-                'ms': `Cari ${locName} dalam gambar`, 'tl': `Hanapin ang ${locName} sa larawan`
-            };
-            speechText = hintGrammar[currentLang] || hintGrammar['en'];
-        } else {
-            const foundGrammar = {
-                'en': `You found the ${locName}`, 'es': `Encontraste el ${locName}`, 'hi': `आपने ${locName} ढूंढ लिया`, 'zh': `你找到了 ${locName}`,
-                'pt-PT': `Encontraste o ${locName}`, 'pt-BR': `Você encontrou o ${locName}`, 'fr': `Tu as trouvé le ${locName}`, 'ja': `${locName} を見つけました`,
-                'bn': `আপনি ${locName} খুঁজে পেয়েছেন`, 'gu': `તમે ${locName} શોધી લીધું`, 'mr': `तुम्हाला ${locName} सापडले`, 'kn': `ನೀವು ${locName} ಅನ್ನು ಕಂಡುಕೊಂಡಿದ್ದೀರಿ`,
-                'ta': `நீங்கள் ${locName} ஐ கண்டுபிடித்துவிட்டீர்கள்`, 'ml': `നിങ്ങൾ ${locName} കണ്ടെത്തി`, 'pa': `ਤੁਸੀਂ ${locName} ਲੱਭ ਲਿਆ`, 'sw': `Umepata ${locName}`,
-                'ms': `Anda menjumpai ${locName}`, 'tl': `Nahanap mo ang ${locName}`
-            };
-            speechText = foundGrammar[currentLang] || foundGrammar['en'];
+        // Interrupt any currently playing TTS
+        if (currentVoiceAudio) {
+            currentVoiceAudio.pause();
+            currentVoiceAudio.currentTime = 0;
         }
 
-        const voiceMap = {
-            'en': 'en-US', 'es': 'es-ES', 'hi': 'hi-IN', 'zh': 'zh-CN',
-            'pt-PT': 'pt-PT', 'pt-BR': 'pt-BR', 'fr': 'fr-FR', 'ja': 'ja-JP',
-            'bn': 'bn-IN', 'gu': 'gu-IN', 'mr': 'mr-IN', 'kn': 'kn-IN',
-            'ta': 'ta-IN', 'ml': 'ml-IN', 'pa': 'pa-IN', 'sw': 'sw-KE',
-            'ms': 'ms-MY', 'tl': 'tl-PH'
-        };
-        const langCode = voiceMap[currentLang] || 'en-US';
+        // Statically generated fallback paths
+        // Spaces are replaced with underscores matching the Python script
+        const sanitizedObjName = objName.replace(/ /g, "_");
+        const audioPath = `assets/audio/voices/${currentLang}/${phraseType}_${sanitizedObjName}.mp3`;
 
-        const utterance = new SpeechSynthesisUtterance(speechText);
-        let selectedVoice = null;
-
-        if (systemVoices.length > 0) {
-            const premiumVoicesByLang = {
-                'en': ['Samantha', 'Daniel', 'Karen', 'Moira', 'Google US English'],
-                'es': ['Monica', 'Paulina', 'Jorge', 'Google Español'],
-                'hi': ['Lekha', 'Google हिन्दी'],
-                'zh': ['Ting-Ting', 'Mei-Jia', 'Sin-Ji', 'Google 普通话'],
-                'pt-PT': ['Joana', 'Luciana', 'Catarina', 'Google português'],
-                'pt-BR': ['Luciana', 'Vitoria', 'Google português do Brasil'],
-                'fr': ['Amelie', 'Thomas', 'Audrey', 'Google français'],
-                'ja': ['Kyoko', 'Otoya', 'Google 日本語'],
-                'ms': ['Amira']
-            };
-
-            const preferredVoices = premiumVoicesByLang[currentLang] || [];
-
-            for (const pref of preferredVoices) {
-                selectedVoice = systemVoices.find(v => v.name.includes(pref));
-                if (selectedVoice) break;
-            }
-
-            if (!selectedVoice) selectedVoice = systemVoices.find(v => v.lang.startsWith(langCode));
-            if (!selectedVoice) selectedVoice = systemVoices.find(v => v.lang.startsWith(currentLang));
-
-            // Critical fix: If browser lacks a specific voice (e.g., BN, GU, MR, etc.),
-            // it will silently drop the speech if utterance.lang is set to that uninstalled lang.
-            // We must fallback to a generic English voice to at least read the romanized text or attempt it.
-            if (!selectedVoice) {
-                selectedVoice = systemVoices.find(v => v.lang.startsWith('en')) || systemVoices[0];
-            }
-        }
-
-        if (selectedVoice) {
-            utterance.voice = selectedVoice;
-            utterance.lang = selectedVoice.lang;
-        } else {
-            utterance.lang = langCode;
-        }
-
-        utterance.pitch = 1.0;
-        utterance.rate = 1.0;
-        window.speechSynthesis.speak(utterance);
+        currentVoiceAudio = new Audio(audioPath);
+        currentVoiceAudio.play().catch(err => {
+            console.warn(`Could not play static audio file ${audioPath}:`, err);
+        });
     }
 
     function playSound(type, objName) {
