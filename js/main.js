@@ -54,20 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
     window.ISPY_SCENES = window.ISPY_SCENES || {};
 
     // --- Aggregated Data ---
-    const I18N_DICT = {
-        en: { ...window.ISPY_UI.en },
-        es: { ...window.ISPY_UI.es },
-        hi: { ...window.ISPY_UI.hi },
-        zh: { ...window.ISPY_UI.zh }
-    };
+    const I18N_DICT = {};
+    Object.keys(window.ISPY_UI).forEach(lang => {
+        I18N_DICT[lang] = { ...window.ISPY_UI[lang] };
+    });
 
     // Dynamically merge all scene-specific localized words into the master dictionary
     Object.values(window.ISPY_SCENES).forEach(scene => {
         if (scene.i18n) {
-            ['en', 'es', 'hi', 'zh'].forEach(lang => {
-                if (scene.i18n[lang]) {
-                    Object.assign(I18N_DICT[lang], scene.i18n[lang]);
-                }
+            Object.keys(scene.i18n).forEach(lang => {
+                I18N_DICT[lang] = I18N_DICT[lang] || {};
+                Object.assign(I18N_DICT[lang], scene.i18n[lang]);
             });
         }
     });
@@ -274,7 +271,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const sidebarTapCounts = new Map();
+
     function setupSidebar() {
+        ui.targetList.innerHTML = '';
+        sidebarTapCounts.clear();
+
         gameState.objectsToFind.forEach(obj => {
             const itemElement = document.createElement('div');
             itemElement.classList.add('target-item');
@@ -286,6 +288,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${obj.dataUrl || obj.imgUrl}" alt="${locName}" class="sprite-thumb">
                 <span>${locName}</span>
             `;
+
+            // Hint interaction
+            itemElement.addEventListener('click', () => {
+                if (gameState.foundObjects.has(obj.id)) return;
+
+                // Sidebar animation
+                itemElement.classList.add('hint-anim');
+                setTimeout(() => itemElement.classList.remove('hint-anim'), 400);
+
+                // Speak hint
+                speakPhrase('hint', obj.name);
+
+                // Track taps for scene hint
+                const currentTaps = (sidebarTapCounts.get(obj.id) || 0) + 1;
+                sidebarTapCounts.set(obj.id, currentTaps);
+
+                if (currentTaps >= 3) {
+                    const hitbox = document.querySelector(`.hitbox[data-id="${obj.id}"]`);
+                    if (hitbox) {
+                        hitbox.classList.add('scene-hint-anim');
+                        setTimeout(() => hitbox.classList.remove('scene-hint-anim'), 1000);
+                    }
+                    sidebarTapCounts.set(obj.id, 0); // reset
+                }
+            });
+
             ui.targetList.appendChild(itemElement);
         });
     }
@@ -338,6 +366,88 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function speakPhrase(phraseType, objName) {
+        if (!objName || !('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+
+        const locName = getI18nObjName(objName);
+        let speechText = "";
+
+        if (phraseType === 'hint') {
+            const hintGrammar = {
+                'en': `Find the ${locName} in the picture`, 'es': `Encuentra el ${locName} en la imagen`, 'hi': `चित्र में ${locName} खोजें`, 'zh': `在图中找到 ${locName}`,
+                'pt-PT': `Encontra o ${locName} na imagem`, 'pt-BR': `Encontre o ${locName} na imagem`, 'fr': `Trouve le ${locName} dans l'image`, 'ja': `絵の中から ${locName} を見つけて`,
+                'bn': `ছবিতে ${locName} খুঁজুন`, 'gu': `ચિત્રમાં ${locName} શોધો`, 'mr': `चित्रात ${locName} शोधा`, 'kn': `ಚಿತ್ರದಲ್ಲಿ ${locName} ಅನ್ನು ಹುಡುಕಿ`,
+                'ta': `படத்தில் ${locName} ஐக் கண்டுபிடிக்கவும்`, 'ml': `ചിത്രത്തിൽ ${locName} കണ്ടെത്തുക`, 'pa': `ਤਸਵੀਰ ਵਿੱਚ ${locName} ਲੱਭੋ`, 'sw': `Tafuta ${locName} kwenye picha`,
+                'ms': `Cari ${locName} dalam gambar`, 'tl': `Hanapin ang ${locName} sa larawan`
+            };
+            speechText = hintGrammar[currentLang] || hintGrammar['en'];
+        } else {
+            const foundGrammar = {
+                'en': `You found the ${locName}`, 'es': `Encontraste el ${locName}`, 'hi': `आपने ${locName} ढूंढ लिया`, 'zh': `你找到了 ${locName}`,
+                'pt-PT': `Encontraste o ${locName}`, 'pt-BR': `Você encontrou o ${locName}`, 'fr': `Tu as trouvé le ${locName}`, 'ja': `${locName} を見つけました`,
+                'bn': `আপনি ${locName} খুঁজে পেয়েছেন`, 'gu': `તમે ${locName} શોધી લીધું`, 'mr': `तुम्हाला ${locName} सापडले`, 'kn': `ನೀವು ${locName} ಅನ್ನು ಕಂಡುಕೊಂಡಿದ್ದೀರಿ`,
+                'ta': `நீங்கள் ${locName} ஐ கண்டுபிடித்துவிட்டீர்கள்`, 'ml': `നിങ്ങൾ ${locName} കണ്ടെത്തി`, 'pa': `ਤੁਸੀਂ ${locName} ਲੱਭ ਲਿਆ`, 'sw': `Umepata ${locName}`,
+                'ms': `Anda menjumpai ${locName}`, 'tl': `Nahanap mo ang ${locName}`
+            };
+            speechText = foundGrammar[currentLang] || foundGrammar['en'];
+        }
+
+        const voiceMap = {
+            'en': 'en-US', 'es': 'es-ES', 'hi': 'hi-IN', 'zh': 'zh-CN',
+            'pt-PT': 'pt-PT', 'pt-BR': 'pt-BR', 'fr': 'fr-FR', 'ja': 'ja-JP',
+            'bn': 'bn-IN', 'gu': 'gu-IN', 'mr': 'mr-IN', 'kn': 'kn-IN',
+            'ta': 'ta-IN', 'ml': 'ml-IN', 'pa': 'pa-IN', 'sw': 'sw-KE',
+            'ms': 'ms-MY', 'tl': 'tl-PH'
+        };
+        const langCode = voiceMap[currentLang] || 'en-US';
+
+        const utterance = new SpeechSynthesisUtterance(speechText);
+        let selectedVoice = null;
+
+        if (systemVoices.length > 0) {
+            const premiumVoicesByLang = {
+                'en': ['Samantha', 'Daniel', 'Karen', 'Moira', 'Google US English'],
+                'es': ['Monica', 'Paulina', 'Jorge', 'Google Español'],
+                'hi': ['Lekha', 'Google हिन्दी'],
+                'zh': ['Ting-Ting', 'Mei-Jia', 'Sin-Ji', 'Google 普通话'],
+                'pt-PT': ['Joana', 'Luciana', 'Catarina', 'Google português'],
+                'pt-BR': ['Luciana', 'Vitoria', 'Google português do Brasil'],
+                'fr': ['Amelie', 'Thomas', 'Audrey', 'Google français'],
+                'ja': ['Kyoko', 'Otoya', 'Google 日本語'],
+                'ms': ['Amira']
+            };
+
+            const preferredVoices = premiumVoicesByLang[currentLang] || [];
+
+            for (const pref of preferredVoices) {
+                selectedVoice = systemVoices.find(v => v.name.includes(pref));
+                if (selectedVoice) break;
+            }
+
+            if (!selectedVoice) selectedVoice = systemVoices.find(v => v.lang.startsWith(langCode));
+            if (!selectedVoice) selectedVoice = systemVoices.find(v => v.lang.startsWith(currentLang));
+
+            // Critical fix: If browser lacks a specific voice (e.g., BN, GU, MR, etc.),
+            // it will silently drop the speech if utterance.lang is set to that uninstalled lang.
+            // We must fallback to a generic English voice to at least read the romanized text or attempt it.
+            if (!selectedVoice) {
+                selectedVoice = systemVoices.find(v => v.lang.startsWith('en')) || systemVoices[0];
+            }
+        }
+
+        if (selectedVoice) {
+            utterance.voice = selectedVoice;
+            utterance.lang = selectedVoice.lang;
+        } else {
+            utterance.lang = langCode;
+        }
+
+        utterance.pitch = 1.0;
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+    }
+
     function playSound(type, objName) {
         if (!audioCtx) return;
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -349,67 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = audioCtx.currentTime;
 
         if (type === 'success') {
-            // Verbal Reinforcement via Web Speech API
-            if (objName && 'speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // kill any active speech so it stays snappy
-
-                const locName = getI18nObjName(objName);
-                let speechText = `You found the ${locName}`;
-
-                // Map current lang to actual Speech API voice tags
-                const voiceMap = {
-                    'en': 'en-US',
-                    'es': 'es-ES',
-                    'hi': 'hi-IN',
-                    'zh': 'zh-CN'
-                };
-                const langCode = voiceMap[currentLang] || 'en-US';
-
-                // Basic localized grammar
-                if (currentLang === 'es') speechText = `Encontraste el ${locName}`;
-                if (currentLang === 'hi') speechText = `आपने ${locName} ढूंढ लिया`;
-                if (currentLang === 'zh') speechText = `你找到了 ${locName}`;
-
-                const utterance = new SpeechSynthesisUtterance(speechText);
-
-                // Try to find a premium native voice based on the selected language
-                if (systemVoices.length > 0) {
-                    const premiumVoicesByLang = {
-                        'en': ['Samantha', 'Daniel', 'Karen', 'Moira', 'Google US English', 'Microsoft Zira'],
-                        'es': ['Monica', 'Paulina', 'Jorge', 'Google Español', 'Microsoft Sabina'],
-                        'hi': ['Lekha', 'Google हिन्दी', 'Microsoft Swara'],
-                        'zh': ['Ting-Ting', 'Mei-Jia', 'Sin-Ji', 'Google 普通话', 'Microsoft Huihui']
-                    };
-
-                    const preferredVoices = premiumVoicesByLang[currentLang] || [];
-                    let selectedVoice = null;
-
-                    // 1. Search for a high-quality explicit name
-                    for (const pref of preferredVoices) {
-                        selectedVoice = systemVoices.find(v => v.name.includes(pref));
-                        if (selectedVoice) break;
-                    }
-
-                    // 2. Fallback to any voice matching the exact lang tag
-                    if (!selectedVoice) {
-                        selectedVoice = systemVoices.find(v => v.lang.startsWith(langCode));
-                    }
-
-                    // 3. Fallback to broad language match (e.g. 'en-US' failing over to 'en-GB' or just 'en')
-                    if (!selectedVoice) {
-                        selectedVoice = systemVoices.find(v => v.lang.startsWith(currentLang));
-                    }
-
-                    if (selectedVoice) {
-                        utterance.voice = selectedVoice;
-                    }
-                }
-
-                utterance.pitch = 1.0; // Restored to 1.0 to prevent OS-level voice distortion/muffling
-                utterance.rate = 1.0;
-                utterance.lang = langCode;
-                window.speechSynthesis.speak(utterance);
-            }
+            speakPhrase('found', objName);
 
             // High-pitched synth "Clap/bell" sound
             osc.type = 'sine';
@@ -475,6 +525,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Event Listeners ---
+
+    // Carousel Selection
+    const sceneSelection = document.getElementById('scene-selection');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+
+    if (sceneSelection && prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+            sceneSelection.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', () => {
+            sceneSelection.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+    }
 
     // Scene Selection Buttons
     document.querySelectorAll('.scene-btn').forEach(btn => {

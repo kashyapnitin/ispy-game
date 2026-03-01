@@ -204,10 +204,66 @@ button:active {
     font-weight: 700;
 }
 
+.carousel-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carousel-arrow {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-round);
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.carousel-arrow:hover {
+    background-color: var(--primary-hover);
+}
+
+.carousel-arrow:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 rgba(0, 0, 0, 0.15);
+}
+
 .scene-selection {
     display: flex;
     gap: 20px;
-    justify-content: center;
+    /* Carousel Scrolling */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 10px;
+    /* Soften scrollbars */
+    scrollbar-width: none;
+    /* Hide scrollbar for cleaner look with arrows */
+}
+
+.scene-selection::-webkit-scrollbar {
+    display: none;
+}
+
+.scene-selection::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scene-selection::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+.scene-selection::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
 }
 
 .scene-btn {
@@ -222,6 +278,9 @@ button:active {
     box-shadow: var(--shadow-soft);
     position: relative;
     overflow: hidden;
+    /* Force 3 items per view (accounting for 20px gap / 3) */
+    flex: 0 0 calc(33.333% - 14px);
+    scroll-snap-align: center;
 }
 
 .scene-btn:hover {
@@ -310,6 +369,16 @@ button:active {
     flex-direction: column;
     align-items: center;
     transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.target-item:active {
+    transform: scale(0.95);
+}
+
+.target-item.hint-anim {
+    animation: hintShake 0.4s ease;
+    border-color: var(--secondary-color);
 }
 
 .target-item .sprite-thumb {
@@ -431,6 +500,12 @@ button:active {
     pointer-events: none;
 }
 
+.hitbox.scene-hint-anim {
+    animation: bouncePop 1s ease 2;
+    filter: drop-shadow(0 0 25px var(--secondary-color));
+    z-index: 100;
+}
+
 /* =========================================
    OVERLAYS & EFFECTS
    ========================================= */
@@ -521,6 +596,28 @@ button:active {
     100% {
         transform: scale(1);
         opacity: 0.5;
+    }
+}
+
+@keyframes hintShake {
+    0% {
+        transform: rotate(0deg) scale(1.05);
+    }
+
+    25% {
+        transform: rotate(-5deg) scale(1.05);
+    }
+
+    50% {
+        transform: rotate(5deg) scale(1.05);
+    }
+
+    75% {
+        transform: rotate(-5deg) scale(1.05);
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1);
     }
 }
 

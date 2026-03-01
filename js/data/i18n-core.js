@@ -12,7 +12,8 @@ window.ISPY_UI = {
         mainMenu: "Main Menu",
         sceneToyshop: "Toy Shop",
         sceneKitchen: "Kitchen",
-        scenePlayground: "Playground"
+        scenePlayground: "Playground",
+        sceneBeach: "Beach"
     },
     es: {
         title: "Veo, veo...",
@@ -26,7 +27,8 @@ window.ISPY_UI = {
         mainMenu: "Menú Principal",
         sceneToyshop: "Tienda de Juguetes",
         sceneKitchen: "Cocina",
-        scenePlayground: "Parque"
+        scenePlayground: "Parque",
+        sceneBeach: "Playa"
     },
     hi: {
         title: "मैं देखता हूँ...",
@@ -40,7 +42,8 @@ window.ISPY_UI = {
         mainMenu: "मुख्य मेनू",
         sceneToyshop: "खिलौनों की दुकान",
         sceneKitchen: "रसोई",
-        scenePlayground: "खेल का मैदान"
+        scenePlayground: "खेल का मैदान",
+        sceneBeach: "समुद्र तट"
     },
     zh: {
         title: "我找到了...",
@@ -54,6 +57,21 @@ window.ISPY_UI = {
         mainMenu: "主菜单",
         sceneToyshop: "玩具店",
         sceneKitchen: "厨房",
-        scenePlayground: "游乐场"
-    }
+        scenePlayground: "游乐场",
+        sceneBeach: "海滩"
+    },
+    'pt-PT': { title: "Eu Vejo...", subtitle: "Consegues encontrar todos os objetos escondidos?", findThese: "Encontra isto!", found: "Encontrados", backToMenu: "Voltar ao Menu", winTitle: "Encontraste todos!", winSubtitle: "Bom trabalho a encontrar todos.", playAgain: "Jogar Novamente", mainMenu: "Menu Principal", sceneToyshop: "Loja de Brinquedos", sceneKitchen: "Cozinha", scenePlayground: "Parque Infantil", sceneBeach: "Praia" },
+    'pt-BR': { title: "Eu Vejo...", subtitle: "Você consegue encontrar todos os objetos escondidos?", findThese: "Encontre estes!", found: "Encontrados", backToMenu: "Voltar ao Menu", winTitle: "Você encontrou todos!", winSubtitle: "Ótimo trabalho!", playAgain: "Jogar Novamente", mainMenu: "Menu Principal", sceneToyshop: "Loja de Brinquedos", sceneKitchen: "Cozinha", scenePlayground: "Parquinho", sceneBeach: "Praia" },
+    'fr': { title: "Je Vois...", subtitle: "Peux-tu trouver tous les objets cachés ?", findThese: "Trouve ceux-ci !", found: "Trouvés", backToMenu: "Retour au Menu", winTitle: "Tu les as tous trouvés !", winSubtitle: "Excellent travail !", playAgain: "Rejouer", mainMenu: "Menu Principal", sceneToyshop: "Magasin de Jouets", sceneKitchen: "Cuisine", scenePlayground: "Aire de Jeux", sceneBeach: "Plage" },
+    'ja': { title: "見つけた...", subtitle: "隠されたオブジェクトをすべて見つけられますか？", findThese: "これを見つけて！", found: "見つけた", backToMenu: "メニューに戻る", winTitle: "すべて見つけました！", winSubtitle: "素晴らしいです。", playAgain: "もう一度プレイ", mainMenu: "メインメニュー", sceneToyshop: "おもちゃ屋", sceneKitchen: "キッチン", scenePlayground: "遊び場", sceneBeach: "ビーチ" },
+    'bn': { title: "আমি দেখছি...", subtitle: "তুমি কি সব লুকানো জিনিস খুঁজে বের করতে পারবে?", findThese: "এগুলো খোঁজ!", found: "পাওয়া গেছে", backToMenu: "মেনুতে ফিরে যাও", winTitle: "তুমি সব খুঁজে পেয়েছ!", winSubtitle: "দারুণ কাজ করেছ।", playAgain: "আবার খেলুন", mainMenu: "প্রধান মেনু", sceneToyshop: "খেলনার দোকান", sceneKitchen: "রান্নাঘর", scenePlayground: "খেলার মাঠ", sceneBeach: "সমুদ্র সৈকত" },
+    'gu': { title: "હું જોઉં છું...", subtitle: "શું તમે બધી છુપાયેલી વસ્તુઓ શોધી શકો છો?", findThese: "આ શોધો!", found: "મળી ગયું", backToMenu: "મેનુ પર પાછા જાઓ", winTitle: "તમે બધું શોધી કાઢ્યું છે!", winSubtitle: "મહાન કામ.", playAgain: "ફરીથી રમો", mainMenu: "મુખ્ય મેનુ", sceneToyshop: "રમકડાંની દુકાન", sceneKitchen: "રસોડું", scenePlayground: "રમતનું મેદાન", sceneBeach: "બીચ" },
+    'mr': { title: "मी पाहतो...", subtitle: "तुम्ही सर्व लपलेल्या वस्तू शोधू शकता का?", findThese: "हे शोधा!", found: "सापडले", backToMenu: "मेनूवर परत जा", winTitle: "तुम्हाला ते सर्व सापडले!", winSubtitle: "उत्तम काम.", playAgain: "पुन्हा खेळा", mainMenu: "मुख्य मेनू", sceneToyshop: "खेळण्यांचे दुकान", sceneKitchen: "स्वयंपाकघर", scenePlayground: "खेळण्याचे मैदान", sceneBeach: "समुद्रकिनारा" },
+    'kn': { title: "ನಾನು ನೋಡುತ್ತಿದ್ದೇನೆ...", subtitle: "ನೀವು ಎಲ್ಲಾ ಗುಪ್ತ ವಸ್ತುಗಳನ್ನು ಹುಡುಕಬಹುದೇ?", findThese: "ಇವುಗಳನ್ನು ಹುಡುಕಿ!", found: "ಕಂಡುಬಂದಿದೆ", backToMenu: "ಮೆನುಗೆ ಹಿಂತಿರುಗಿ", winTitle: "ನೀವು ಎಲ್ಲವನ್ನೂ ಕಂಡುಕೊಂಡಿದ್ದೀರಿ!", winSubtitle: "ಉತ್ತಮ ಕೆಲಸ.", playAgain: "ಮತ್ತೆ ಆಡಿ", mainMenu: "ಮುಖ್ಯ ಮೆನು", sceneToyshop: "ಆಟಿಕೆ ಅಂಗಡಿ", sceneKitchen: "ಅಡುಗೆಮನೆ", scenePlayground: "ಆಟದ ಮೈದಾನ", sceneBeach: "ಕಡಲತೀರ" },
+    'ta': { title: "நான் பார்க்கிறேன்...", subtitle: "மறைந்திருக்கும் அனைத்து பொருட்களையும் உங்களால் கண்டுபிடிக்க முடியுமா?", findThese: "இவற்றைக் கண்டுபிடி!", found: "கண்டுபிடிக்கப்பட்டது", backToMenu: "மெனுவுக்குத் திரும்பு", winTitle: "நீங்கள் அனைத்தையும் கண்டுபிடித்துவிட்டீர்கள்!", winSubtitle: "சிறந்த வேலை.", playAgain: "மீண்டும் விளையாடு", mainMenu: "முக்கிய மெனு", sceneToyshop: "பொம்மை கடை", sceneKitchen: "சமையலறை", scenePlayground: "விளையாட்டு மைதானம்", sceneBeach: "கடற்கரை" },
+    'ml': { title: "ഞാൻ കാണുന്നു...", subtitle: "ഒളിച്ചിരിക്കുന്ന എല്ലാ വസ്തുക്കളും കണ്ടെത്താമോ?", findThese: "ഇവ കണ്ടെത്തുക!", found: "കണ്ടെത്തി", backToMenu: "മെനുവിലേക്ക് മടങ്ങുക", winTitle: "നിങ്ങൾ എല്ലാം കണ്ടെത്തി!", winSubtitle: "മികച്ച ജോലി.", playAgain: "വീണ്ടും കളിക്കുക", mainMenu: "പ്രധാന മെനു", sceneToyshop: "കളിപ്പാട്ട കട", sceneKitchen: "അടുക്കള", scenePlayground: "കളിസ്ഥലം", sceneBeach: "ബീച്ച്" },
+    'pa': { title: "ਮੈਂ ਦੇਖਦਾ ਹਾਂ...", subtitle: "ਕੀ ਤੁਸੀਂ ਸਾਰੀਆਂ ਲੁਕਵੀਆਂ ਚੀਜ਼ਾਂ ਲੱਭ ਸਕਦੇ ਹੋ?", findThese: "ਇਹ ਲੱਭੋ!", found: "ਲੱਭਿਆ", backToMenu: "ਮੀਨੂ 'ਤੇ ਵਾਪਸ ਜਾਓ", winTitle: "ਤੁਹਾਨੂੰ ਸਭ ਮਿਲ ਗਿਆ ਹੈ!", winSubtitle: "ਵਧੀਆ ਕੰਮ।", playAgain: "ਦੁਬਾਰਾ ਖੇਡੋ", mainMenu: "ਮੁੱਖ ਮੀਨੂ", sceneToyshop: "ਖਿਡੌਣਿਆਂ ਦੀ ਦੁਕਾਨ", sceneKitchen: "ਰਸੋਈ", scenePlayground: "ਖੇਡ ਦਾ ਮੈਦਾਨ", sceneBeach: "ਬੀਚ" },
+    'sw': { title: "Naona...", subtitle: "Je, unaweza kupata vitu vyote vilivyofichwa?", findThese: "Tafuta Hizi!", found: "Imepatikana", backToMenu: "Rudi kwenye Menyu", winTitle: "Umezikuta zote!", winSubtitle: "Kazi nzuri.", playAgain: "Cheza Tena", mainMenu: "Menyu Kuu", sceneToyshop: "Duka la Vitu vya kuchezea", sceneKitchen: "Jikoni", scenePlayground: "Uwanja wa Michezo", sceneBeach: "Ufwekeni" },
+    'ms': { title: "Saya Nampak...", subtitle: "Bolehkah anda mencari semua objek yang tersembunyi?", findThese: "Cari Ini!", found: "Ditemui", backToMenu: "Kembali ke Menu", winTitle: "Anda jumpa semuanya!", winSubtitle: "Kerja yang bagus.", playAgain: "Main Semula", mainMenu: "Menu Utama", sceneToyshop: "Kedai Mainan", sceneKitchen: "Dapur", scenePlayground: "Taman Permainan", sceneBeach: "Pantai" },
+    'tl': { title: "Nakikita Ko...", subtitle: "Mahanap mo ba ang lahat ng nakatagong bagay?", findThese: "Hanapin Ito!", found: "Nahanap", backToMenu: "Bumalik sa Menu", winTitle: "Nahanap mo lahat!", winSubtitle: "Mahusay na trabaho.", playAgain: "Maglaro Uli", mainMenu: "Pangunahing Menu", sceneToyshop: "Tindahan ng Laruan", sceneKitchen: "Kusina", scenePlayground: "Palaruan", sceneBeach: "Dalampasigan" }
 };
