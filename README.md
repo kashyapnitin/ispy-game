@@ -85,6 +85,12 @@ Before running any of the above, install Python dependencies (e.g. `requests`, `
 ## Project Status
 
 - Multiple scenes are fully playable (Toyshop, Kitchen, Playground, Beach).
-- Internationalization is wired up for many languages; static audio currently exists primarily for English, Spanish, and Hindi, with the scripts available to expand coverage.
+- The **Playground** scene uses a new **hotspot-only** mode:
+  - The background image is the only visual; tappable regions are defined as bounding boxes.
+  - About 28 distinct objects are defined for the scene; each playthrough randomly activates 14 of them.
+  - Sidebar thumbnails are cropped directly from the background image, keeping visuals perfectly consistent.
+  - On a correct tap, the found object briefly “pops out” of the image (zoom + shadow) before confetti.
+  - Hints (tapping an item 3 times in the sidebar) use the same pop-out highlight but **without** confetti.
+- Internationalization is wired up for many languages; static audio currently exists primarily for English, Spanish, and Hindi, with scripts available to expand coverage (including the new Playground hotspot objects).
 - Asset-generation tooling is in-place to grow scenes and localized voice lines over time.
 
