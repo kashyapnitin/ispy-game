@@ -7,7 +7,7 @@ An accessible, browser-based "I Spy" / hidden-object game for young kids (roughl
 ## Tech Stack
 
 - **Frontend**: Static HTML + CSS + vanilla JavaScript
-- **Rendering**: Absolutely positioned hitboxes with per-object sprites, responsive layout tuned for desktop and tablets
+- **Rendering**: Absolutely positioned **hotspot hitboxes** over high‑resolution background images (legacy per-object sprites are archived), tuned for desktop and tablets
 - **Effects**: Canvas-based confetti, simple Web Audio API tones
 - **Content**:
   - Scene and object data in `js/data/scenes/scene-*.js`
@@ -24,12 +24,12 @@ From the project root:
 
 ```bash
 cd /Users/nitinkashyap/Projects/ispy-game
-python3 -m http.server 8080
+python3 -m http.server 8000
 ```
 
 Then open the game in your browser at:
 
-- `http://localhost:8080/`
+- `http://localhost:8000/`
 
 You should see the main menu with a language dropdown and a scene carousel. Pick a scene to start playing.
 
@@ -62,13 +62,13 @@ All helper scripts live in the `scripts/` directory. They are optional and only 
   - Parses `js/data/i18n-core.js` and `js/data/scenes/scene-*.js` into `scripts/game_data.json`.
 
 - **Generate hint/found voice lines**
-  - `scripts/generate_audio.py`
-  - Reads `scripts/game_data.json`, expands translations, and generates `hint_*.mp3` / `found_*.mp3` into `assets/audio/voices/<lang>/`.
-  - Uses `ELEVENLABS_API_KEY` from `.env`. If the key is missing, it falls back to writing small mock MP3 files.
-
-- **Generate sample kid voices (for testing)**
-  - `scripts/generate_sample.py`
-  - Writes sample MP3s into `assets/audio/voices_temp_tests/` for multiple languages.
+  - **Generic full regen**: `scripts/generate_audio.py`
+    - Reads `scripts/game_data.json`, expands translations, and generates `hint_*.mp3` / `found_*.mp3` into `assets/audio/voices/<lang>/`.
+    - Uses `ELEVENLABS_API_KEY` from `.env`. If the key is missing, it falls back to writing small mock MP3 files.
+  - **Per‑scene / hotspot-aware flows**:
+    - `scripts/generate_scene_audio.py` – generate audio for a single scene/language via `--scene` / `--lang` / `--engine`.
+    - `scripts/generate_audio_toyshop_all_langs.py` – 28 hotspot objects in the toyshop scene (ElevenLabs for English/Hindi, gTTS for others).
+    - `scripts/generate_audio_kitchen_beach_all_langs.py` – 28 hotspot objects each for **kitchen**, **beach**, and **playground`** (same ElevenLabs/gTTS split).
 
 - **Discover and inspect ElevenLabs voices**
   - `scripts/find_specific_voices.py` – queries shared voices by name (e.g., Tripti, Stacy).
@@ -76,7 +76,7 @@ All helper scripts live in the `scripts/` directory. They are optional and only 
 
 - **Generate DALL·E object sprites**
   - `scripts/generate_dalle_assets.py`
-  - Uses `OPENAI_API_KEY` to generate PNG sprites for individual objects (e.g., Bicycle, Bench) and saves them under `assets/images/scenes/<scene>/`.
+  - Uses `OPENAI_API_KEY` to generate PNG sprites for individual objects (e.g., Bicycle, Bench). These sprites are now **archived** under `assets/images/archive/<scene>/` since hotspot scenes draw directly from the background art.
 
 Before running any of the above, install Python dependencies (e.g. `requests`, `chompjs`, ElevenLabs SDK) into your environment as needed.
 
@@ -85,12 +85,13 @@ Before running any of the above, install Python dependencies (e.g. `requests`, `
 ## Project Status
 
 - Multiple scenes are fully playable (Toyshop, Kitchen, Playground, Beach).
-- The **Playground** scene uses a new **hotspot-only** mode:
-  - The background image is the only visual; tappable regions are defined as bounding boxes.
-  - About 28 distinct objects are defined for the scene; each playthrough randomly activates 14 of them.
-  - Sidebar thumbnails are cropped directly from the background image, keeping visuals perfectly consistent.
+- The **Toyshop**, **Kitchen**, **Playground**, and **Beach** scenes now run in a unified **hotspot-only** mode:
+  - The background image is the only visual; tappable regions are defined as percentage‑based bounding boxes loaded from `scripts/<scene>_hotspots.json`.
+  - Each of these scenes defines **28 hotspot objects**; each playthrough randomly activates **14** of them.
+  - Sidebar thumbnails are cropped directly from the background image, keeping visuals perfectly consistent across languages.
   - On a correct tap, the found object briefly “pops out” of the image (zoom + shadow) before confetti.
   - Hints (tapping an item 3 times in the sidebar) use the same pop-out highlight but **without** confetti.
-- Internationalization is wired up for many languages; static audio currently exists primarily for English, Spanish, and Hindi, with scripts available to expand coverage (including the new Playground hotspot objects).
+- Internationalization is wired up for many languages; all hotspot objects in the four main scenes are localized across the supported locales.
+- Static audio hint/found lines are pre-generated for every hotspot object (ElevenLabs for English and Hindi; gTTS for other languages), with scripts in place to easily regenerate or extend coverage.
 - Asset-generation tooling is in-place to grow scenes and localized voice lines over time.
 

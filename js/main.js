@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.sceneWrapper.appendChild(pop);
         setTimeout(() => {
             if (pop.parentNode) pop.parentNode.removeChild(pop);
-        }, 650);
+        }, 1300);
     }
 
     function setupSidebar() {

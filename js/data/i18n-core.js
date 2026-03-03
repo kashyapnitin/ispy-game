@@ -31,7 +31,7 @@ window.ISPY_UI = {
         sceneBeach: "Playa"
     },
     hi: {
-        title: "मैं देखता हूँ...",
+        title: "ढूँढो तो जानें",
         subtitle: "क्या आप सभी छिपी हुई वस्तुएं ढूंढ सकते हैं?",
         findThese: "इन्हें खोजें!",
         found: "खोज लिए",
