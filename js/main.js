@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- State ---
     const HOTSPOT_SOURCES = {
         playground: 'scripts/playground_hotspots.json',
+        toyshop: 'scripts/toyshop_hotspots.json',
     };
     const gameState = {
         currentSceneId: null,
