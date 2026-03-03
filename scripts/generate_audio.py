@@ -126,7 +126,7 @@ def generate_audio():
             
             # Construct phrase
             hintGrammar = {
-                'en': f'Find the {locName} in the picture', 'es': f'Encuentra el {locName} en la imagen', 'hi': f'चित्र में {locName} खोजें', 'zh': f'在图中找到 {locName}',
+                'en': f'Find the {locName} in the picture', 'es': f'Encuentra el {locName} en la imagen', 'hi': f'चित्र में {locName} ढूँडो', 'zh': f'在图中找到 {locName}',
                 'pt-PT': f'Encontra o {locName} na imagem', 'pt-BR': f'Encontre o {locName} na imagem', 'fr': f"Trouve le {locName} dans l'image", 'ja': f'絵の中から {locName} を見つけて',
                 'bn': f'ছবিতে {locName} খুঁজুন', 'gu': f'ચિત્રમાં {locName} શોધો', 'mr': f'चित्रात {locName} शोधा', 'kn': f'ಚಿತ್ರದಲ್ಲಿ {locName} ಅನ್ನು ಹುಡುಕಿ',
                 'ta': f'படத்தில் {locName} ஐக் கண்டுபிடிக்கவும்', 'ml': f'ചിത്രത്തിൽ {locName} കണ്ടെത്തുക', 'pa': f'ਤਸਵੀਰ ਵਿੱਚ {locName} ਲੱਭੋ', 'sw': f'Tafuta {locName} kwenye picha',
@@ -135,7 +135,7 @@ def generate_audio():
             hint_text = hintGrammar.get(lang_code, hintGrammar['en'])
 
             foundGrammar = {
-                'en': f'You found the {locName}', 'es': f'Encontraste el {locName}', 'hi': f'आपने {locName} ढूंढ लिया', 'zh': f'你找到了 {locName}',
+                'en': f'You found the {locName}', 'es': f'Encontraste el {locName}', 'hi': f'वाह, तुमने तो {locName} को ढूंढ लिया!', 'zh': f'你找到了 {locName}',
                 'pt-PT': f'Encontraste o {locName}', 'pt-BR': f'Você encontrou o {locName}', 'fr': f'Tu as trouvé le {locName}', 'ja': f'{locName} を見つけました',
                 'bn': f'আপনি {locName} খুঁজে পেয়েছেন', 'gu': f'તમે {locName} શોધી લીધું', 'mr': f'तुम्हाला {locName} सापडले', 'kn': f'ನೀವು {locName} ಅನ್ನು ಕಂಡುಕೊಂಡಿದ್ದೀರಿ',
                 'ta': f'நீங்கள் {locName} ஐ கண்டுபிடித்துவிட்டீர்கள்', 'ml': f'നിങ്ങൾ {locName} കണ്ടെത്തി', 'pa': f'ਤੁਸੀਂ {locName} ਲੱਭ ਲਿਆ', 'sw': f'Umepata {locName}',

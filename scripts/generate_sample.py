@@ -93,7 +93,7 @@ for lang_code, mapped_code in LANG_MAP.items():
     locName = I18N_DICT.get(lang_code, {}).get(key, I18N_DICT.get('en', {}).get(key, obj_name))
     
     hintGrammar = {
-        'hi': f'चित्र में {locName} खोजें', 'zh': f'在图中找到 {locName}',
+        'hi': f'चित्र में {locName} ढूँडो', 'zh': f'在图中找到 {locName}',
         'pt-PT': f'Encontra o {locName} na imagem', 'pt-BR': f'Encontre o {locName} na imagem', 'fr': f"Trouve le {locName} dans l'image", 'ja': f'絵の中から {locName} を見つけて',
         'bn': f'ছবিতে {locName} খুঁজুন', 'gu': f'ચિત્રમાં {locName} શોધો', 'mr': f'चित्रात {locName} शोधा', 'kn': f'ಚಿತ್ರದಲ್ಲಿ {locName} ಅನ್ನು ಹುಡುಕಿ',
         'ta': f'படத்தில் {locName} ஐக் கண்டுபிடிக்கவும்', 'ml': f'ചിത്രത്തിൽ {locName} കണ്ടെത്തുക', 'pa': f'ਤਸਵੀਰ ਵਿੱਚ {locName} ਲੱਭੋ', 'sw': f'Tafuta {locName} kwenye picha',

@@ -1090,7 +1090,7 @@
     },
     "playground": {
       "id": "playground",
-      "bgImage": "assets/images/scenes/playground/scene_playground.jpg",
+      "bgImage": "assets/images/scenes/playground/scene_playground.jpg?v=3",
       "objects": [
         {
           "id": "pg_1",
@@ -1098,7 +1098,7 @@
           "x": 20,
           "y": 70,
           "w": 12,
-          "imgUrl": "assets/images/scenes/playground/Slide.png"
+          "imgUrl": "assets/images/scenes/playground/Slide.png?v=3"
         },
         {
           "id": "pg_2",
@@ -1106,7 +1106,7 @@
           "x": 80,
           "y": 60,
           "w": 10,
-          "imgUrl": "assets/images/scenes/playground/Swing.png"
+          "imgUrl": "assets/images/scenes/playground/Swing.png?v=3"
         },
         {
           "id": "pg_3",
@@ -1114,7 +1114,7 @@
           "x": 50,
           "y": 85,
           "w": 15,
-          "imgUrl": "assets/images/scenes/playground/Sandbox.png"
+          "imgUrl": "assets/images/scenes/playground/Sandbox.png?v=3"
         },
         {
           "id": "pg_4",
@@ -1122,7 +1122,7 @@
           "x": 40,
           "y": 75,
           "w": 20,
-          "imgUrl": "assets/images/scenes/playground/Seesaw.png"
+          "imgUrl": "assets/images/scenes/playground/Seesaw.png?v=3"
         },
         {
           "id": "pg_5",
@@ -1130,7 +1130,7 @@
           "x": 60,
           "y": 80,
           "w": 3,
-          "imgUrl": "assets/images/scenes/playground/Ball.png"
+          "imgUrl": "assets/images/scenes/playground/Ball.png?v=3"
         },
         {
           "id": "pg_6",
@@ -1138,7 +1138,7 @@
           "x": 30,
           "y": 85,
           "w": 5,
-          "imgUrl": "assets/images/scenes/playground/Jump_Rope.png"
+          "imgUrl": "assets/images/scenes/playground/Jump_Rope.png?v=3"
         },
         {
           "id": "pg_7",
@@ -1146,7 +1146,7 @@
           "x": 70,
           "y": 20,
           "w": 6,
-          "imgUrl": "assets/images/scenes/playground/KitePg.png"
+          "imgUrl": "assets/images/scenes/playground/KitePg.png?v=3"
         },
         {
           "id": "pg_8",
@@ -1154,7 +1154,7 @@
           "x": 90,
           "y": 80,
           "w": 8,
-          "imgUrl": "assets/images/scenes/playground/Bicycle.png"
+          "imgUrl": "assets/images/scenes/playground/Bicycle.png?v=3"
         },
         {
           "id": "pg_9",
@@ -1162,7 +1162,7 @@
           "x": 80,
           "y": 80,
           "w": 12,
-          "imgUrl": "assets/images/scenes/playground/Bench.png"
+          "imgUrl": "assets/images/scenes/playground/Bench.png?v=3"
         },
         {
           "id": "pg_10",
@@ -1170,7 +1170,7 @@
           "x": 10,
           "y": 40,
           "w": 20,
-          "imgUrl": "assets/images/scenes/playground/Tree.png"
+          "imgUrl": "assets/images/scenes/playground/Tree.png?v=3"
         },
         {
           "id": "pg_11",
@@ -1178,7 +1178,7 @@
           "x": 40,
           "y": 15,
           "w": 3,
-          "imgUrl": "assets/images/scenes/playground/Bird.png"
+          "imgUrl": "assets/images/scenes/playground/Bird.png?v=3"
         },
         {
           "id": "pg_12",
@@ -1186,7 +1186,7 @@
           "x": 20,
           "y": 15,
           "w": 15,
-          "imgUrl": "assets/images/scenes/playground/Cloud.png"
+          "imgUrl": "assets/images/scenes/playground/Cloud.png?v=3"
         },
         {
           "id": "pg_13",
@@ -1194,7 +1194,7 @@
           "x": 90,
           "y": 10,
           "w": 10,
-          "imgUrl": "assets/images/scenes/playground/Sun.png"
+          "imgUrl": "assets/images/scenes/playground/Sun.png?v=3"
         },
         {
           "id": "pg_14",
@@ -1202,7 +1202,7 @@
           "x": 15,
           "y": 90,
           "w": 4,
-          "imgUrl": "assets/images/scenes/playground/Flower.png"
+          "imgUrl": "assets/images/scenes/playground/Flower.png?v=3"
         }
       ],
       "i18n": {
