@@ -98,6 +98,9 @@ def generate_audio():
     for scene_id, scene_data in data['scenes'].items():
         for obj in scene_data.get('objects', []):
             objects_to_translate.add(obj['name'])
+        # Also support hotspot-only scenes that define `allObjects`
+        for obj in scene_data.get('allObjects', []):
+            objects_to_translate.add(obj['name'])
 
     print(f"Total unique objects: {len(objects_to_translate)}")
     print(f"Total languages: {len(LANG_MAP)}")
