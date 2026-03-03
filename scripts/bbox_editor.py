@@ -42,6 +42,7 @@ class BBoxEditor:
     """
 
     CORNER_RADIUS = 3.0  # percent distance threshold for corner hit-test
+    ROW_SPACING = 0.03   # vertical spacing for list entries in axes coords
 
     def __init__(self, image_path: str, objects: List[Obj], output_path: str):
         self.image_path = image_path
@@ -127,7 +128,7 @@ class BBoxEditor:
         self.ax_list.set_yscale("linear")
         self.ax_list.axis("off")
         self.list_rows.clear()
-        y = 0.95
+        y = 0.97
         for idx, obj in enumerate(self.objects, start=1):
             marker = "→ " if obj.id == self.active_id else "  "
             self.ax_list.text(
@@ -135,11 +136,11 @@ class BBoxEditor:
                 y,
                 f"{marker}{idx}. {obj.name}",
                 transform=self.ax_list.transAxes,
-                fontsize=8,
+                fontsize=7,
                 color="black",
             )
             self.list_rows.append((y, obj.id))
-            y -= 0.05
+            y -= self.ROW_SPACING
 
         self.fig.canvas.draw_idle()
 

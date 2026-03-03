@@ -70,6 +70,7 @@ VOICE_MAP = {
     'pt-BR': 'cgSgspJ2msm6clMCkdW9',
     'fr': 'cgSgspJ2msm6clMCkdW9',
     'es': 'cgSgspJ2msm6clMCkdW9',
+    'gu': 'XcWoPxj7pwnIgM3dQnWv', # Kanika for Gujarati
     'ta': 'upqptL1FRsrohjTgQOHf' # Vani
 }
 

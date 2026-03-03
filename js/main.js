@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const HOTSPOT_SOURCES = {
         playground: 'scripts/playground_hotspots.json',
         toyshop: 'scripts/toyshop_hotspots.json',
+        kitchen: 'scripts/kitchen_hotspots.json',
+        beach: 'scripts/beach_hotspots.json',
     };
     const gameState = {
         currentSceneId: null,
@@ -154,26 +156,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const hasHotspots = Array.isArray(sceneData.allObjects) && sceneData.allObjects.length > 0;
 
-        if (hasHotspots) {
-            // Hotspot-only scenes: randomly select a subset of allObjects.
-            const pool = [...sceneData.allObjects];
-            pool.sort(() => Math.random() - 0.5);
-            const activeCount = sceneData.activeCount || pool.length;
-            gameState.objectsToFind = pool.slice(0, activeCount);
-        } else {
-            // Legacy sprite-based behaviour: randomize positions
-            const baseObjects = sceneData.objects || [];
-            const shuffledPositions = baseObjects.map(o => ({ x: o.x, y: o.y, w: o.w })).sort(() => Math.random() - 0.5);
-
-            gameState.objectsToFind = baseObjects.map((obj, i) => {
-                return {
-                    ...obj,
-                    x: shuffledPositions[i].x,
-                    y: shuffledPositions[i].y,
-                    w: shuffledPositions[i].w
-                };
-            });
+        if (!hasHotspots) {
+            console.error('Scene is missing hotspot allObjects data; cannot start scene:', sceneId);
+            switchScreen('menu');
+            return;
         }
+
+        // Hotspot-only scenes: randomly select a subset of allObjects.
+        const pool = [...sceneData.allObjects];
+        pool.sort(() => Math.random() - 0.5);
+        const activeCount = sceneData.activeCount || pool.length;
+        gameState.objectsToFind = pool.slice(0, activeCount);
 
         // Clear DOM
         ui.hitboxesLayer.innerHTML = '';
@@ -199,48 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bgImg.src = sceneData.bgImage;
         }));
 
-        // For legacy scenes, also preload and process individual object images for real transparency
-        if (!hasHotspots) {
-            gameState.objectsToFind.forEach(obj => {
-                assetPromises.push(new Promise((resolve) => {
-                    const img = new Image();
-                    // Ensure we handle crossOrigin just in case we add remote scene CDN later
-                    img.crossOrigin = 'Anonymous';
-                    img.onload = () => {
-                        // Ensure true white-pixels become transparent alpha
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.naturalWidth || img.width;
-                        canvas.height = img.naturalHeight || img.height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-
-                        try {
-                            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                            const data = imgData.data;
-                            for (let i = 0; i < data.length; i += 4) {
-                                // threshold for "pure white or almost white"
-                                if (data[i] > 235 && data[i + 1] > 235 && data[i + 2] > 235) {
-                                    data[i + 3] = 0; // Alpha 0
-                                }
-                            }
-                            ctx.putImageData(imgData, 0, 0);
-                            obj.dataUrl = canvas.toDataURL('image/png');
-                        } catch (e) {
-                            // Fallback in case of absolute cross-origin taint failure
-                            console.error("Canvas taint error:", e);
-                            obj.dataUrl = obj.imgUrl;
-                        }
-                        resolve();
-                    };
-                    img.onerror = () => {
-                        // Fallback to straight URL if canvas processing fails (e.g. 404 missing image)
-                        obj.dataUrl = obj.imgUrl;
-                        resolve();
-                    }
-                    img.src = obj.imgUrl;
-                }));
-            });
-        }
+        // Legacy sprite overlays are no longer used; all scenes must provide hotspot data.
 
         // Wait for all assets to load/fail, then boot the scene
         Promise.all(assetPromises).then(() => {
