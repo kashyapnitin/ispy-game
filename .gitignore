@@ -1,0 +1,14 @@
+.DS_Store
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated / scratch
+assets/audio/voices_temp_tests/
+scripts/game_data.json
+scripts/expanded_dict.json

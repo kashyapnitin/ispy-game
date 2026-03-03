@@ -1,37 +1,76 @@
 import json
 import os
 import time
-import shutil
 
-# To bypass deep network blocks on Google APIs for this development run,
-# we will generate standard dummy beep files if the gTTS connection fails.
+def load_dotenv(dotenv_path: str) -> None:
+    """
+    Minimal .env loader (no external deps).
+    Loads KEY=VALUE pairs into process env if not already set.
+    """
+    if not os.path.exists(dotenv_path):
+        return
+
+    with open(dotenv_path, "r", encoding="utf-8") as f:
+        for raw_line in f:
+            line = raw_line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip()
+            if not key:
+                continue
+            if (len(value) >= 2) and ((value[0] == value[-1]) and value[0] in ("'", '"')):
+                value = value[1:-1]
+            os.environ.setdefault(key, value)
+
+
+# Load repo-root .env if present
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
 try:
-    from gtts import gTTS
-    GTTS_AVAILABLE = False # FORCED FALSE TO BYPASS BLOCK AND GENERATE INSTANTLY
+    from elevenlabs.client import ElevenLabs
+    from elevenlabs import save
+    from elevenlabs import VoiceSettings
+    ELEVENLABS_AVAILABLE = True
 except ImportError:
-    GTTS_AVAILABLE = False
+    ELEVENLABS_AVAILABLE = False
 
-# Map our ISO codes to gTTS supported language codes
-# See: gtts-cli --all
+# Fallback checking
+api_key = os.environ.get('ELEVENLABS_API_KEY')
+if not api_key:
+    print("WARNING: ELEVENLABS_API_KEY environment variable is not set.")
+    print("Falling back to creating silent mock mp3s.")
+    ELEVENLABS_AVAILABLE = False
+else:
+    print("ElevenLabs API Key found.")
+
+# ElevenLabs supports 29 languages using their `eleven_multilingual_v2` model.
+# Since your API key restricts `voices_read`, we are hardcoding known premium 
+# "Child" and "Animation" voices that work exceptionally well for kids games.
 LANG_MAP = {
-    'en': 'en',
-    'es': 'es',
-    'hi': 'hi',
-    'zh': 'zh-CN',
-    'pt-PT': 'pt-PT',
-    'pt-BR': 'pt-BR',
-    'fr': 'fr',
-    'ja': 'ja',
-    'bn': 'bn',
-    'gu': 'gu',
-    'mr': 'mr',
-    'kn': 'kn',
-    'ta': 'ta',
-    'ml': 'ml',
-    'pa': 'pa',
-    'sw': 'sw',
-    'ms': 'ms',
-    'tl': 'tl'
+    'hi': 'hi', 'zh': 'zh',
+    'pt-PT': 'pt-PT', 'pt-BR': 'pt-BR', 'fr': 'fr', 'ja': 'ja',
+    'bn': 'bn', 'gu': 'gu', 'mr': 'mr', 'kn': 'kn',
+    'ta': 'ta', 'ml': 'ml', 'pa': 'pa', 'sw': 'sw',
+    'ms': 'ms', 'tl': 'tl'
+}
+
+VOICE_MAP = {
+    # Jessica (cgSgspJ2msm6clMCkdW9) - Playful, Bright, Warm, Cute
+    # Even though she is tagged 'en', the eleven_multilingual_v2 model 
+    # automatically makes her speak natively in all 29 languages!
+    'default': 'cgSgspJ2msm6clMCkdW9', # Jessica
+    
+    'hi': 'yLldDJzoAIYirDpSiBvy', # Tripti
+    'zh': 'hkfHEbBvdQFNX4uWHqRF', # Stacy
+    'pt-BR': 'cgSgspJ2msm6clMCkdW9',
+    'fr': 'cgSgspJ2msm6clMCkdW9',
+    'es': 'cgSgspJ2msm6clMCkdW9',
+    'ta': 'upqptL1FRsrohjTgQOHf' # Vani
 }
 
 def generate_audio():
@@ -69,10 +108,16 @@ def generate_audio():
     base_dir = "assets/audio/voices"
     os.makedirs(base_dir, exist_ok=True)
 
-    for lang_code, gtts_code in LANG_MAP.items():
+    if ELEVENLABS_AVAILABLE:
+        client = ElevenLabs(api_key=api_key)
+
+    target_langs = {'hi': LANG_MAP['hi']}
+    for lang_code, mapped_code in target_langs.items():
         lang_dir = os.path.join(base_dir, lang_code)
         os.makedirs(lang_dir, exist_ok=True)
         print(f"\nProcessing Language: {lang_code}")
+        
+        voice_id = VOICE_MAP.get(lang_code, VOICE_MAP['default']) 
 
         for obj_name in objects_to_translate:
             # Get translated name
@@ -98,48 +143,40 @@ def generate_audio():
             }
             found_text = foundGrammar.get(lang_code, foundGrammar['en'])
 
+            def generate_mp3(text, out_path):
+                if not ELEVENLABS_AVAILABLE:
+                    with open(out_path, 'wb') as f:
+                        f.write(b'Mock Audio MP3 Header / Silence ')
+                    return
+
+                try:
+                    audio_generator = client.text_to_speech.convert(
+                        voice_id=voice_id,
+                        output_format="mp3_44100_128",
+                        text=text,
+                        model_id="eleven_multilingual_v2"
+                    )
+                    
+                    # Convert Generator to bytes
+                    audio_bytes = b"".join(list(audio_generator))
+
+                    with open(out_path, 'wb') as f:
+                        f.write(audio_bytes)
+                    time.sleep(0.5) 
+                except Exception as e:
+                    print(f"ElevenLabs API Error for {out_path}: {e}")
+                    with open(out_path, 'wb') as f:
+                        f.write(b'Mock Audio MP3 Header / Silence ')
+
             # Generate Hint Audio
             hint_path = os.path.join(lang_dir, f"hint_{obj_name.replace(' ', '_')}.mp3")
-            if not os.path.exists(hint_path):
-                success = False
-                if GTTS_AVAILABLE:
-                    retries = 2
-                    for i in range(retries):
-                        try:
-                            tts = gTTS(text=hint_text, lang=gtts_code, tld='co.in')
-                            tts.save(hint_path)
-                            time.sleep(0.2)
-                            success = True
-                            break
-                        except Exception as e:
-                            print(f"Failed to connect to Google for {hint_path}: {e}")
-                            time.sleep(1)
-                
-                if not success:
-                    # Fallback to copy empty placeholder file
-                    with open(hint_path, 'wb') as f:
-                        f.write(b'Mock Audio MP3 Header / Silence ')
+            if not os.path.exists(hint_path) or os.path.getsize(hint_path) < 100:
+                generate_mp3(hint_text, hint_path)
 
             # Generate Found Audio
             found_path = os.path.join(lang_dir, f"found_{obj_name.replace(' ', '_')}.mp3")
-            if not os.path.exists(found_path):
-                success = False
-                if GTTS_AVAILABLE:
-                    retries = 2
-                    for i in range(retries):
-                        try:
-                            tts = gTTS(text=found_text, lang=gtts_code, tld='co.in')
-                            tts.save(found_path)
-                            time.sleep(0.2)
-                            success = True
-                            break
-                        except Exception as e:
-                            print(f"Failed to connect to Google for {found_path}: {e}")
-                            time.sleep(1)
-
-                if not success:
-                    with open(found_path, 'wb') as f:
-                        f.write(b'Mock Audio MP3 Header / Silence ')
+            if not os.path.exists(found_path) or os.path.getsize(found_path) < 100:
+                generate_mp3(found_text, found_path)
             
             generated += 2
             if generated % 100 == 0:

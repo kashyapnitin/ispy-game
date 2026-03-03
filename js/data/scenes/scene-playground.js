@@ -3,23 +3,23 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 
 window.ISPY_SCENES.playground = {
     id: 'playground',
-    bgImage: 'assets/images/scenes/playground/scene_playground.jpg',
+    bgImage: 'assets/images/scenes/playground/scene_playground.jpg?v=3',
     // OrigWidth/Height will be populated dynamically at load time
     objects: [
-        { id: "pg_1", name: "Slide", x: 20, y: 70, w: 12, imgUrl: "assets/images/scenes/playground/Slide.png" },
-        { id: "pg_2", name: "Swing", x: 80, y: 60, w: 10, imgUrl: "assets/images/scenes/playground/Swing.png" },
-        { id: "pg_3", name: "Sandbox", x: 50, y: 85, w: 15, imgUrl: "assets/images/scenes/playground/Sandbox.png" },
-        { id: "pg_4", name: "Seesaw", x: 40, y: 75, w: 20, imgUrl: "assets/images/scenes/playground/Seesaw.png" },
-        { id: "pg_5", name: "Ball", x: 60, y: 80, w: 3, imgUrl: "assets/images/scenes/playground/Ball.png" },
-        { id: "pg_6", name: "Jump Rope", x: 30, y: 85, w: 5, imgUrl: "assets/images/scenes/playground/Jump_Rope.png" },
-        { id: "pg_7", name: "KitePg", x: 70, y: 20, w: 6, imgUrl: "assets/images/scenes/playground/KitePg.png" },
-        { id: "pg_8", name: "Bicycle", x: 90, y: 80, w: 8, imgUrl: "assets/images/scenes/playground/Bicycle.png" },
-        { id: "pg_9", name: "Bench", x: 80, y: 80, w: 12, imgUrl: "assets/images/scenes/playground/Bench.png" },
-        { id: "pg_10", name: "Tree", x: 10, y: 40, w: 20, imgUrl: "assets/images/scenes/playground/Tree.png" },
-        { id: "pg_11", name: "Bird", x: 40, y: 15, w: 3, imgUrl: "assets/images/scenes/playground/Bird.png" },
-        { id: "pg_12", name: "Cloud", x: 20, y: 15, w: 15, imgUrl: "assets/images/scenes/playground/Cloud.png" },
-        { id: "pg_13", name: "Sun", x: 90, y: 10, w: 10, imgUrl: "assets/images/scenes/playground/Sun.png" },
-        { id: "pg_14", name: "Flower", x: 15, y: 90, w: 4, imgUrl: "assets/images/scenes/playground/Flower.png" }
+        { id: "pg_1", name: "Slide", x: 20, y: 70, w: 12, imgUrl: "assets/images/scenes/playground/Slide.png?v=3" },
+        { id: "pg_2", name: "Swing", x: 80, y: 60, w: 10, imgUrl: "assets/images/scenes/playground/Swing.png?v=3" },
+        { id: "pg_3", name: "Sandbox", x: 50, y: 85, w: 15, imgUrl: "assets/images/scenes/playground/Sandbox.png?v=3" },
+        { id: "pg_4", name: "Seesaw", x: 40, y: 75, w: 20, imgUrl: "assets/images/scenes/playground/Seesaw.png?v=3" },
+        { id: "pg_5", name: "Ball", x: 60, y: 80, w: 3, imgUrl: "assets/images/scenes/playground/Ball.png?v=3" },
+        { id: "pg_6", name: "Jump Rope", x: 30, y: 85, w: 5, imgUrl: "assets/images/scenes/playground/Jump_Rope.png?v=3" },
+        { id: "pg_7", name: "KitePg", x: 70, y: 20, w: 6, imgUrl: "assets/images/scenes/playground/KitePg.png?v=3" },
+        { id: "pg_8", name: "Bicycle", x: 90, y: 80, w: 8, imgUrl: "assets/images/scenes/playground/Bicycle.png?v=3" },
+        { id: "pg_9", name: "Bench", x: 80, y: 80, w: 12, imgUrl: "assets/images/scenes/playground/Bench.png?v=3" },
+        { id: "pg_10", name: "Tree", x: 10, y: 40, w: 20, imgUrl: "assets/images/scenes/playground/Tree.png?v=3" },
+        { id: "pg_11", name: "Bird", x: 40, y: 15, w: 3, imgUrl: "assets/images/scenes/playground/Bird.png?v=3" },
+        { id: "pg_12", name: "Cloud", x: 20, y: 15, w: 15, imgUrl: "assets/images/scenes/playground/Cloud.png?v=3" },
+        { id: "pg_13", name: "Sun", x: 90, y: 10, w: 10, imgUrl: "assets/images/scenes/playground/Sun.png?v=3" },
+        { id: "pg_14", name: "Flower", x: 15, y: 90, w: 4, imgUrl: "assets/images/scenes/playground/Flower.png?v=3" }
     ],
     // Localized dictionary specific to this scene's items
     i18n: {
