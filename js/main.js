@@ -429,6 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const centerX = boxRect.left + boxRect.width / 2;
         const centerY = boxRect.top + boxRect.height / 2;
         triggerConfetti(centerX, centerY);
+        triggerHaptic();
         updateProgress();
 
         // Check Win Condition
@@ -539,6 +540,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function triggerConfetti(x, y) {
         if (window.burstConfetti) {
             window.burstConfetti(x, y);
+        }
+    }
+
+    // Lightweight haptic feedback using the Web Vibration API where available.
+    // This keeps the project build-less while still giving mobile users a tactile success ping.
+    function triggerHaptic(pattern = [10, 40, 20]) {
+        if (navigator.vibrate) {
+            try {
+                navigator.vibrate(pattern);
+            } catch (e) {
+                // Ignore unsupported or blocked vibration calls
+            }
         }
     }
 
