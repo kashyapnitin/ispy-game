@@ -188,6 +188,8 @@ button:active {
     padding: 40px;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-soft);
+    max-width: 960px;
+    margin: 0 24px;
 }
 
 .menu-content h1 {
@@ -449,6 +451,10 @@ button:active {
     overflow: hidden;
 }
 
+#scene-heading {
+    display: none;
+}
+
 #scene-wrapper {
     position: relative;
     /* This will be dynamically scaled via JS to fit the container while maintaining aspect ratio */
@@ -666,24 +672,43 @@ button:active {
    RESPONSIVE DESIGN (TABLETS/MOBILES)
    ========================================= */
 @media (max-width: 900px) {
+    #main-menu.screen.active {
+        align-items: stretch;
+        justify-content: center;
+    }
+
+    .menu-content {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 12px;
+        padding: 24px 16px;
+    }
+
+    .carousel-container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+
     #game-screen.active {
         flex-direction: column-reverse;
-        /* Sidebar on bottom */
     }
 
     #sidebar {
         width: 100%;
         height: 200px;
-        /* Fixed height map for bottom panel */
         flex-direction: row;
-        /* Horizontal layout */
         align-items: center;
         padding: 10px;
     }
 
     #sidebar h2 {
         display: none;
-        /* Save space */
     }
 
     .target-grid {
@@ -734,5 +759,113 @@ button:active {
     #back-to-menu-btn {
         padding: 8px 12px;
         font-size: 1rem;
+    }
+}
+
+/* Extra tuning for small phones */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    .app-header {
+        top: 10px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .lang-dropdown {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        width: 80vw;
+        max-width: 280px;
+    }
+
+    .menu-content {
+        padding: 20px 12px 24px;
+        margin: 0 8px;
+    }
+
+    .menu-content h1 {
+        font-size: 2.4rem;
+    }
+
+    .menu-content p {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .carousel-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .scene-selection {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 10px 6px;
+    }
+
+    .scene-btn {
+        flex: 0 0 92%;
+        max-width: none;
+    }
+
+    #scene-container {
+        align-items: flex-start;
+        padding-top: 56px;
+    }
+
+    #scene-heading {
+        display: flex;
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        font-family: var(--font-heading);
+        font-size: 1.4rem;
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .scene-btn img {
+        width: 110px;
+        height: 110px;
+    }
+
+    #sidebar {
+        height: 220px;
+    }
+
+    .target-item {
+        width: 70px;
+    }
+
+    .target-item span {
+        font-size: 0.65rem;
+    }
+
+    #progress-text {
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 10px 18px;
+        font-size: 1rem;
+    }
+
+    .win-content {
+        padding: 24px 18px;
+    }
+
+    .win-content h2 {
+        font-size: 2.2rem;
+    }
+
+    .win-content p {
+        font-size: 1.1rem;
     }
 }

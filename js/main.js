@@ -423,7 +423,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Success Feedback
         showObjectPopout(obj);
         playSound('success', obj.name);
-        triggerConfetti(e.clientX, e.clientY); // pass screen coords for local confetti
+
+        // Confetti from the center of the found object, aligned with the scene canvas
+        const boxRect = hitbox.getBoundingClientRect();
+        const centerX = boxRect.left + boxRect.width / 2;
+        const centerY = boxRect.top + boxRect.height / 2;
+        triggerConfetti(centerX, centerY);
         updateProgress();
 
         // Check Win Condition
@@ -558,7 +563,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.stopWinConfetti) window.stopWinConfetti();
         switchScreen('menu');
         window.removeEventListener('resize', handleResize);
-        if (ui.sceneWrapper) ui.sceneWrapper.removeEventListener('click', handleSceneClick);
+        if (ui.sceneWrapper) {
+            ui.sceneWrapper.removeEventListener('click', handleSceneClick);
+            // Clear out scene-specific DOM and transform so the next entry starts from a clean state
+            ui.hitboxesLayer.innerHTML = '';
+            ui.sceneImage.src = '';
+            ui.sceneWrapper.style.transform = '';
+            ui.sceneWrapper.style.width = '';
+            ui.sceneWrapper.style.height = '';
+            ui.sceneWrapper.style.removeProperty('--inverse-scale');
+        }
+        // Reset game state so subsequent scene loads recompute layout and scaling correctly
+        gameState.currentSceneId = null;
+        gameState.sceneData = null;
+        gameState.objectsToFind = [];
     }
 
 
