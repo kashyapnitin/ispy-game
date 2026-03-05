@@ -208,86 +208,86 @@ button:active {
 #main-menu.menu-theme-sky {
     background:
         /* clouds */
-        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.75) 0, transparent 55%),
-        radial-gradient(circle at 82% 24%, rgba(255, 255, 255, 0.6) 0, transparent 52%),
-        radial-gradient(circle at 25% 82%, rgba(255, 255, 255, 0.55) 0, transparent 50%),
+        radial-gradient(circle at 15% 18%, rgba(255, 255, 255, 0.9) 0, transparent 45%),
+        radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.8) 0, transparent 45%),
+        radial-gradient(circle at 35% 32%, rgba(255, 255, 255, 0.8) 0, transparent 50%),
         /* sun */
-        radial-gradient(circle at 90% 5%, rgba(255, 241, 118, 0.95) 0, rgba(255, 241, 118, 0.05) 60%),
+        radial-gradient(circle at 88% 8%, rgba(255, 241, 118, 1) 0, rgba(255, 241, 118, 0.15) 60%),
         /* balloons / balls */
-        radial-gradient(circle at 18% 60%, rgba(255, 183, 77, 0.9) 0, rgba(255, 183, 77, 0.0) 35%),
-        radial-gradient(circle at 70% 75%, rgba(3, 169, 244, 0.9) 0, rgba(3, 169, 244, 0.0) 33%),
-        radial-gradient(circle at 45% 22%, rgba(244, 143, 177, 0.9) 0, rgba(244, 143, 177, 0.0) 33%),
+        radial-gradient(circle at 18% 42%, rgba(255, 183, 77, 1) 0, rgba(255, 183, 77, 0.15) 35%),
+        radial-gradient(circle at 72% 40%, rgba(3, 169, 244, 1) 0, rgba(3, 169, 244, 0.15) 33%),
+        radial-gradient(circle at 48% 18%, rgba(244, 143, 177, 1) 0, rgba(244, 143, 177, 0.15) 33%),
         linear-gradient(180deg, #e0f4ff 0%, #f0f8ff 45%, #ffffff 100%);
 }
 
 #main-menu.menu-theme-meadow {
     background:
         /* soft sky puffs */
-        radial-gradient(circle at 15% 12%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
-        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.55) 0, transparent 50%),
+        radial-gradient(circle at 18% 10%, rgba(255, 255, 255, 0.9) 0, transparent 45%),
+        radial-gradient(circle at 78% 12%, rgba(255, 255, 255, 0.8) 0, transparent 45%),
         /* trees / bushes */
-        radial-gradient(circle at 16% 82%, rgba(129, 199, 132, 0.8) 0, transparent 55%),
-        radial-gradient(circle at 38% 86%, rgba(76, 175, 80, 0.8) 0, transparent 52%),
-        radial-gradient(circle at 72% 84%, rgba(139, 195, 74, 0.8) 0, transparent 52%),
+        radial-gradient(circle at 14% 34%, rgba(129, 199, 132, 1) 0, transparent 45%),
+        radial-gradient(circle at 38% 28%, rgba(76, 175, 80, 0.95) 0, transparent 45%),
+        radial-gradient(circle at 72% 30%, rgba(139, 195, 74, 0.95) 0, transparent 45%),
         /* flowers / balls */
-        radial-gradient(circle at 28% 70%, rgba(244, 143, 177, 0.85) 0, transparent 43%),
-        radial-gradient(circle at 82% 68%, rgba(255, 202, 40, 0.9) 0, transparent 43%),
+        radial-gradient(circle at 26% 20%, rgba(244, 143, 177, 1) 0, transparent 40%),
+        radial-gradient(circle at 84% 24%, rgba(255, 202, 40, 1) 0, transparent 40%),
         linear-gradient(180deg, #e3f9e5 0%, #f5fff7 40%, #ffffff 100%);
 }
 
 #main-menu.menu-theme-sunset {
     background:
         /* soft glow */
-        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.6) 0, transparent 55%),
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.9) 0, transparent 45%),
         /* sun + halo */
-        radial-gradient(circle at 84% 8%, rgba(255, 241, 118, 0.98) 0, rgba(255, 241, 118, 0.08) 60%),
-        radial-gradient(circle at 84% 8%, rgba(255, 213, 79, 0.95) 0, rgba(255, 213, 79, 0.05) 78%),
+        radial-gradient(circle at 84% 8%, rgba(255, 241, 118, 1) 0, rgba(255, 241, 118, 0.15) 60%),
+        radial-gradient(circle at 84% 8%, rgba(255, 213, 79, 1) 0, rgba(255, 213, 79, 0.1) 80%),
         /* stars / confetti */
-        radial-gradient(circle at 22% 30%, rgba(255, 255, 255, 0.7) 0, transparent 38%),
-        radial-gradient(circle at 68% 32%, rgba(255, 255, 255, 0.7) 0, transparent 38%),
-        radial-gradient(circle at 32% 65%, rgba(244, 143, 177, 0.75) 0, transparent 52%),
-        radial-gradient(circle at 78% 78%, rgba(255, 183, 77, 0.75) 0, transparent 57%),
+        radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 1) 0, transparent 34%),
+        radial-gradient(circle at 62% 20%, rgba(255, 255, 255, 0.95) 0, transparent 34%),
+        radial-gradient(circle at 30% 34%, rgba(244, 143, 177, 0.95) 0, transparent 45%),
+        radial-gradient(circle at 78% 32%, rgba(255, 183, 77, 0.95) 0, transparent 45%),
         linear-gradient(180deg, #ffe0b2 0%, #ffe5c7 35%, #fff8e1 65%, #ffffff 100%);
 }
 
 #main-menu.menu-theme-ocean {
     background:
         /* bubbles */
-        radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
-        radial-gradient(circle at 75% 22%, rgba(255, 255, 255, 0.6) 0, transparent 55%),
-        radial-gradient(circle at 22% 70%, rgba(129, 212, 250, 0.85) 0, transparent 55%),
-        radial-gradient(circle at 82% 72%, rgba(0, 188, 212, 0.85) 0, transparent 55%),
+        radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.95) 0, transparent 45%),
+        radial-gradient(circle at 74% 14%, rgba(255, 255, 255, 0.9) 0, transparent 45%),
+        radial-gradient(circle at 26% 30%, rgba(129, 212, 250, 1) 0, transparent 45%),
+        radial-gradient(circle at 80% 32%, rgba(0, 188, 212, 1) 0, transparent 45%),
         /* waves / ribbons */
-        linear-gradient(120deg, rgba(3, 169, 244, 0.35) 0, rgba(3, 169, 244, 0.0) 32%, rgba(3, 169, 244, 0.3) 64%, rgba(3, 169, 244, 0.0) 100%),
-        linear-gradient(300deg, rgba(0, 188, 212, 0.3) 0, rgba(0, 188, 212, 0.0) 30%, rgba(0, 188, 212, 0.3) 65%, rgba(0, 188, 212, 0.0) 100%),
+        linear-gradient(120deg, rgba(3, 169, 244, 0.5) 0, rgba(3, 169, 244, 0.0) 32%, rgba(3, 169, 244, 0.45) 64%, rgba(3, 169, 244, 0.0) 100%),
+        linear-gradient(300deg, rgba(0, 188, 212, 0.45) 0, rgba(0, 188, 212, 0.0) 30%, rgba(0, 188, 212, 0.45) 65%, rgba(0, 188, 212, 0.0) 100%),
         linear-gradient(180deg, #e0f7fa 0%, #e3f2fd 40%, #ffffff 100%);
 }
 
 #main-menu.menu-theme-candy {
     background:
         /* puffy clouds */
-        radial-gradient(circle at 14% 16%, rgba(255, 255, 255, 0.75) 0, transparent 55%),
-        radial-gradient(circle at 80% 14%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
+        radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.95) 0, transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.9) 0, transparent 45%),
         /* candy swirls / lollipops */
-        radial-gradient(circle at 18% 78%, rgba(244, 143, 177, 0.9) 0, transparent 55%),
-        radial-gradient(circle at 78% 76%, rgba(255, 138, 101, 0.9) 0, transparent 55%),
-        radial-gradient(circle at 50% 30%, rgba(129, 212, 250, 0.85) 0, transparent 55%),
+        radial-gradient(circle at 18% 34%, rgba(244, 143, 177, 1) 0, transparent 45%),
+        radial-gradient(circle at 78% 32%, rgba(255, 138, 101, 1) 0, transparent 45%),
+        radial-gradient(circle at 50% 22%, rgba(129, 212, 250, 1) 0, transparent 45%),
         /* ribbons */
-        linear-gradient(135deg, rgba(255, 171, 145, 0.4) 0, rgba(255, 171, 145, 0.0) 40%, rgba(255, 171, 145, 0.35) 70%, rgba(255, 171, 145, 0.0) 100%),
-        linear-gradient(225deg, rgba(244, 143, 177, 0.38) 0, rgba(244, 143, 177, 0.0) 40%, rgba(244, 143, 177, 0.35) 70%, rgba(244, 143, 177, 0.0) 100%),
+        linear-gradient(135deg, rgba(255, 171, 145, 0.55) 0, rgba(255, 171, 145, 0.0) 40%, rgba(255, 171, 145, 0.45) 70%, rgba(255, 171, 145, 0.0) 100%),
+        linear-gradient(225deg, rgba(244, 143, 177, 0.55) 0, rgba(244, 143, 177, 0.0) 40%, rgba(244, 143, 177, 0.45) 70%, rgba(244, 143, 177, 0.0) 100%),
         linear-gradient(180deg, #ffe4ec 0%, #fff3f8 45%, #ffffff 100%);
 }
 
 #main-menu.menu-theme-playroom {
     background:
         /* soft top glow */
-        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
-        radial-gradient(circle at 90% 12%, rgba(255, 241, 118, 0.8) 0, transparent 60%),
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.9) 0, transparent 45%),
+        radial-gradient(circle at 90% 12%, rgba(255, 241, 118, 0.9) 0, transparent 55%),
         /* toy blocks / balls */
-        radial-gradient(circle at 18% 80%, rgba(255, 183, 77, 0.85) 0, transparent 55%),
-        radial-gradient(circle at 38% 78%, rgba(100, 181, 246, 0.85) 0, transparent 55%),
-        radial-gradient(circle at 70% 80%, rgba(129, 199, 132, 0.85) 0, transparent 55%),
-        radial-gradient(circle at 88% 78%, rgba(244, 143, 177, 0.85) 0, transparent 55%),
+        radial-gradient(circle at 18% 30%, rgba(255, 183, 77, 1) 0, transparent 45%),
+        radial-gradient(circle at 38% 26%, rgba(100, 181, 246, 1) 0, transparent 45%),
+        radial-gradient(circle at 70% 28%, rgba(129, 199, 132, 1) 0, transparent 45%),
+        radial-gradient(circle at 88% 30%, rgba(244, 143, 177, 1) 0, transparent 45%),
         linear-gradient(180deg, #fffde7 0%, #fffdf3 40%, #ffffff 100%);
 }
 
@@ -306,6 +306,26 @@ button:active {
 .menu-content p {
     color: #666;
     font-weight: 700;
+}
+
+.made-in-india {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    pointer-events: auto;
+    max-width: 90vw;
+    line-height: 1.2;
+}
+
+@media (max-width: 600px) {
+    .made-in-india {
+        font-size: 0.6rem;
+        max-width: 86vw;
+        line-height: 1.15;
+    }
 }
 
 .carousel-container {
@@ -506,10 +526,13 @@ button:active {
 #game-screen {
     display: none;
     /* hidden by default; flex layout handled via Tailwind classes */
+    height: 100%;
+    overflow: hidden;
 }
 
 #game-screen.active {
     display: flex;
+    height: 100%;
 }
 
 #sidebar {
@@ -617,6 +640,31 @@ button:active {
 
 .target-item.recently-found {
     animation: pulseGlow 1s ease;
+}
+
+.target-item.locked {
+    border-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.85);
+    opacity: 0.95;
+}
+
+.target-item.locked .sprite-thumb {
+    filter: grayscale(100%) opacity(0.25);
+}
+
+.target-item.locked span {
+    opacity: 0;
+}
+
+.target-item.locked::after {
+    content: "?";
+    position: absolute;
+    left: 50%;
+    top: 42%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: rgba(96, 125, 139, 0.95);
 }
 
 
@@ -736,6 +784,15 @@ button:active {
     font-size: 3rem;
     color: var(--primary-color);
     animation: pulse 1s infinite alternate;
+    padding: 24px 32px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+#loading {
+    background: radial-gradient(circle at center, #ffffff 0%, rgba(240, 248, 255, 0.9) 55%, rgba(240, 248, 255, 0.98) 100%);
+    z-index: 200;
 }
 
 .win-content {
@@ -1000,8 +1057,9 @@ button:active {
 
     .menu-content {
         padding: 1vh 3vw 2vh;
-        margin: 8vh 4% 0;
-        max-width: 100%;
+        margin: 8vh auto 0;
+        width: calc(100% - 24px); /* symmetric 12px gutters on both sides */
+        max-width: 480px;
         min-width: 0;
     }
 

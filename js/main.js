@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
         foundObjects: new Set(),
         sceneData: null,
         timerStart: null,
-        timerInterval: null
+        timerInterval: null,
+        currentTargetIndex: null // used only in hard mode
     };
 
     // --- Preferences (persisted) ---
@@ -235,6 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.currentSceneId = sceneId;
         gameState.foundObjects.clear();
         gameState.sceneData = SCENE_DATA[sceneId];
+        gameState.currentTargetIndex = (prefs.gameMode === 'hard') ? 0 : null;
 
         const sceneData = gameState.sceneData;
 
@@ -308,6 +310,12 @@ document.addEventListener('DOMContentLoaded', () => {
             setupSidebar();
             updateProgress();
 
+            // On first entering a scene, speak the first target object (both Easy and Hard modes)
+            const firstObj = gameState.objectsToFind[0];
+            if (firstObj) {
+                speakPhrase('hint', firstObj.name);
+            }
+
             // Generic click on scene for misses
             ui.sceneWrapper.addEventListener('click', handleSceneClick);
 
@@ -340,6 +348,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Adjust scale initially
             handleResize();
             window.addEventListener('resize', handleResize);
+
+            if (prefs.gameMode === 'hard') {
+                updateHardModeTargets();
+                scrollToFirstUnfoundSidebarItem();
+            }
         });
     }
 
@@ -469,7 +482,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.targetList.scrollTop = 0;
         sidebarTapCounts.clear();
 
-        gameState.objectsToFind.forEach(obj => {
+        const hardMode = prefs.gameMode === 'hard';
+
+        gameState.objectsToFind.forEach((obj, index) => {
             // For hotspot-only scenes, derive thumbnails by cropping from the background.
             if (!obj.dataUrl && obj.bbox && gameState.sceneData.bgImg) {
                 try {
@@ -505,6 +520,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (gameState.foundObjects.has(obj.id)) {
                 itemElement.classList.add('found');
+            } else if (hardMode) {
+                if (gameState.currentTargetIndex == null || index !== gameState.currentTargetIndex) {
+                    itemElement.classList.add('locked');
+                }
             }
 
             // Hint interaction
@@ -564,6 +583,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function updateHardModeTargets() {
+        if (prefs.gameMode !== 'hard' || !gameState.objectsToFind.length || !ui.hitboxesLayer) return;
+
+        const currentIdx = gameState.currentTargetIndex ?? 0;
+
+        const boxes = ui.hitboxesLayer.querySelectorAll('.hitbox');
+        boxes.forEach(box => {
+            const id = box.dataset.id;
+            const idx = gameState.objectsToFind.findIndex(o => String(o.id) === String(id));
+            const isFound = gameState.foundObjects.has(id);
+            const isActive = idx === currentIdx && !isFound;
+            if (isActive) {
+                box.style.pointerEvents = 'auto';
+                box.classList.remove('hitbox-locked');
+            } else {
+                box.style.pointerEvents = 'none';
+                box.classList.add('hitbox-locked');
+            }
+        });
+
+        // Rebuild sidebar so locked styling matches current target
+        setupSidebar();
+    }
+
     // Removed dynamic systemVoices loading as we now use pre-generated MP3s
 
     function handleObjectClick(e, obj) {
@@ -596,7 +639,27 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerHaptic();
         updateProgress();
 
-        scrollToFirstUnfoundSidebarItem();
+        const sceneAtClick = gameState.currentSceneId;
+        let nextObjForHint = null;
+
+        if (prefs.gameMode === 'hard') {
+            const currentIdx = gameState.currentTargetIndex ?? 0;
+            if (currentIdx < gameState.objectsToFind.length - 1) {
+                gameState.currentTargetIndex = currentIdx + 1;
+                nextObjForHint = gameState.objectsToFind[gameState.currentTargetIndex];
+            }
+            updateHardModeTargets();
+            // Keep the tray focused on the next target in hard mode as well
+            scrollToFirstUnfoundSidebarItem();
+        } else {
+            // In easy mode, pick the first unfound object as the next hint target
+            nextObjForHint = gameState.objectsToFind.find(o => !gameState.foundObjects.has(o.id));
+            scrollToFirstUnfoundSidebarItem();
+        }
+
+        if (nextObjForHint) {
+            scheduleHintAfterVoice(nextObjForHint, sceneAtClick);
+        }
 
         // Check Win Condition
         if (gameState.foundObjects.size === gameState.objectsToFind.length) {
@@ -637,6 +700,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Keep track of the currently playing TTS audio so we can interrupt it if necessary
     let currentVoiceAudio = null;
+
+    function scheduleHintAfterVoice(nextObjForHint, sceneAtClick, delayMs = 1300) {
+        if (!nextObjForHint) return;
+
+        const safeSpeak = () => {
+            if (
+                gameState.currentSceneId === sceneAtClick &&
+                !gameState.foundObjects.has(nextObjForHint.id)
+            ) {
+                speakPhrase('hint', nextObjForHint.name);
+            }
+        };
+
+        // If a voice clip is currently playing, wait for it to finish
+        if (currentVoiceAudio && !currentVoiceAudio.paused && !currentVoiceAudio.ended) {
+            const handler = () => {
+                // Small buffer after the found clip ends
+                setTimeout(safeSpeak, 200);
+            };
+            currentVoiceAudio.addEventListener('ended', handler, { once: true });
+        } else {
+            // Fallback: simple timeout if nothing is playing
+            setTimeout(safeSpeak, delayMs);
+        }
+    }
 
     function speakPhrase(phraseType, objName) {
         if (!objName) return;
@@ -813,6 +901,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.currentSceneId = null;
         gameState.sceneData = null;
         gameState.objectsToFind = [];
+        gameState.foundObjects.clear();
+        gameState.currentTargetIndex = null;
     }
 
 
