@@ -135,6 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const SCENE_DATA = window.ISPY_SCENES;
 
+    function trackEvent(name, props = {}) {
+        if (window.plausible) {
+            window.plausible(name, { props });
+        }
+    }
+
     const MENU_THEME_CLASSES = [
         'menu-theme-sky',
         'menu-theme-meadow',
@@ -173,12 +179,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Bind dropdown listener
-    document.getElementById('lang-select')?.addEventListener('change', (e) => {
+    const langSelectEl = document.getElementById('lang-select');
+    const initialLang = langSelectEl?.value || currentLang;
+    currentLang = initialLang;
+
+    langSelectEl?.addEventListener('change', (e) => {
+        const fromLang = currentLang;
         currentLang = e.target.value;
         updateDOMStrings();
+        trackEvent('language_change', {
+            from: fromLang,
+            to: currentLang
+        });
     });
 
     loadPrefs();
+    // Track initial main-menu view
+    trackEvent('page_view', {
+        lang: currentLang
+    });
     loadBestTimes();
 
     function syncTogglesFromPrefs() {
@@ -277,6 +296,14 @@ document.addEventListener('DOMContentLoaded', () => {
         pool.sort(() => Math.random() - 0.5);
         const activeCount = sceneData.activeCount || pool.length;
         gameState.objectsToFind = pool.slice(0, activeCount);
+
+        trackEvent('scene_start', {
+            sceneId,
+            mode: prefs.gameMode,
+            timerOn: prefs.timerOn,
+            lang: currentLang,
+            objectsCount: gameState.objectsToFind.length
+        });
 
         // Clear DOM
         ui.hitboxesLayer.innerHTML = '';
@@ -821,11 +848,16 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(gameState.timerInterval);
             gameState.timerInterval = null;
         }
+        const sceneId = gameState.currentSceneId;
+        const mode = prefs.gameMode;
+        let elapsedSeconds = 0;
+        if (prefs.timerOn && gameState.timerStart) {
+            const elapsedMs = Date.now() - gameState.timerStart;
+            elapsedSeconds = Math.floor(elapsedMs / 1000);
+        }
         if (ui.winTimeMessage) {
             if (prefs.timerOn) {
-                const elapsedMs = gameState.timerStart ? Date.now() - gameState.timerStart : 0;
-                const totalSeconds = Math.floor(elapsedMs / 1000);
-                const timeStr = formatSecondsToTime(totalSeconds);
+                const timeStr = formatSecondsToTime(elapsedSeconds);
                 const winTimeTemplate =
                     (I18N_DICT[currentLang] && I18N_DICT[currentLang].winTime) ||
                     (I18N_DICT.en && I18N_DICT.en.winTime) ||
@@ -840,11 +872,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (ui.winPersonalBestMessage) {
-            if (prefs.timerOn && gameState.currentSceneId) {
-                const elapsedMs = gameState.timerStart ? Date.now() - gameState.timerStart : 0;
-                const currentSeconds = Math.floor(elapsedMs / 1000);
-                const sceneId = gameState.currentSceneId;
-                const mode = prefs.gameMode;
+            if (prefs.timerOn && sceneId) {
+                const currentSeconds = elapsedSeconds;
                 const sceneBests = bestTimes[sceneId] || {};
                 const previousBest = sceneBests[mode];
                 const isNewBest = previousBest == null || currentSeconds <= previousBest;
@@ -873,6 +902,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 ui.winPersonalBestMessage.style.display = 'none';
             }
         }
+
+        trackEvent('scene_complete', {
+            sceneId,
+            mode,
+            timerOn: prefs.timerOn,
+            lang: currentLang,
+            elapsedSeconds,
+            bestSeconds: (bestTimes[sceneId] && bestTimes[sceneId][mode]) || null
+        });
 
         playSound('win');
         switchScreen('win');
