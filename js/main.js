@@ -15,8 +15,57 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSceneId: null,
         objectsToFind: [],
         foundObjects: new Set(),
-        sceneData: null // Will hold raw JSON info for the loaded scene
+        sceneData: null,
+        timerStart: null,
+        timerInterval: null
     };
+
+    // --- Preferences (persisted) ---
+    const PREFS_KEYS = { timerOn: 'ispy_timerOn', gameMode: 'ispy_gameMode' };
+    const prefs = {
+        timerOn: false,
+        gameMode: 'easy'
+    };
+    function loadPrefs() {
+        try {
+            const storedTimer = localStorage.getItem(PREFS_KEYS.timerOn);
+            if (storedTimer !== null) prefs.timerOn = storedTimer === 'true';
+            const storedMode = localStorage.getItem(PREFS_KEYS.gameMode);
+            if (storedMode === 'easy' || storedMode === 'hard') prefs.gameMode = storedMode;
+        } catch (e) {}
+    }
+    function savePrefs() {
+        try {
+            localStorage.setItem(PREFS_KEYS.timerOn, String(prefs.timerOn));
+            localStorage.setItem(PREFS_KEYS.gameMode, prefs.gameMode);
+        } catch (e) {}
+    }
+
+    // --- Personal best times (per scene + mode, persisted) ---
+    const BEST_TIMES_KEY = 'ispy_bestTimes';
+    let bestTimes = {}; // { [sceneId]: { easy?: number, hard?: number } } in seconds
+
+    function loadBestTimes() {
+        try {
+            const raw = localStorage.getItem(BEST_TIMES_KEY);
+            if (raw) bestTimes = JSON.parse(raw);
+            if (typeof bestTimes !== 'object' || bestTimes === null) bestTimes = {};
+        } catch (e) {
+            bestTimes = {};
+        }
+    }
+
+    function saveBestTimes() {
+        try {
+            localStorage.setItem(BEST_TIMES_KEY, JSON.stringify(bestTimes));
+        } catch (e) {}
+    }
+
+    function formatSecondsToTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return m + ':' + (s < 10 ? '0' : '') + s;
+    }
 
     // --- DOM Elements ---
     const screens = {
@@ -33,7 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
         hitboxesLayer: document.getElementById('hitboxes'),
         targetList: document.getElementById('target-list'),
         progressText: document.getElementById('progress-text'),
-        confettiCanvas: document.getElementById('confetti-canvas')
+        gameTimer: document.getElementById('game-timer'),
+        winTimeMessage: document.getElementById('win-time-message'),
+        winPersonalBestMessage: document.getElementById('win-personal-best-message'),
+        confettiCanvas: document.getElementById('confetti-canvas'),
+        toggleEasy: document.getElementById('toggle-easy'),
+        toggleHard: document.getElementById('toggle-hard'),
+        toggleTimerOff: document.getElementById('toggle-timer-off'),
+        toggleTimerOn: document.getElementById('toggle-timer-on')
     };
 
     // Audio Elements
@@ -78,6 +134,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const SCENE_DATA = window.ISPY_SCENES;
 
+    const MENU_THEME_CLASSES = [
+        'menu-theme-sky',
+        'menu-theme-meadow',
+        'menu-theme-sunset',
+        'menu-theme-ocean',
+        'menu-theme-candy',
+        'menu-theme-playroom'
+    ];
+    let currentMenuTheme = null;
+
     // --- I18n State & Helpers ---
     let currentLang = 'en';
 
@@ -87,13 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return I18N_DICT[currentLang]?.[key] || I18N_DICT.en[key] || name;
     }
 
-    // Update statically tagged i18n DOM nodes
+    // Update statically tagged i18n DOM nodes (fallback to English if key missing in locale)
     function updateDOMStrings() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (I18N_DICT[currentLang] && I18N_DICT[currentLang][key]) {
-                el.innerText = I18N_DICT[currentLang][key];
-            }
+            const text = (I18N_DICT[currentLang] && I18N_DICT[currentLang][key]) ||
+                (I18N_DICT.en && I18N_DICT.en[key]);
+            if (text) el.innerText = text;
         });
 
         // Refresh dynamic UI elements if they are rendered
@@ -111,14 +177,50 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDOMStrings();
     });
 
+    loadPrefs();
+    loadBestTimes();
+
+    function syncTogglesFromPrefs() {
+        [ui.toggleEasy, ui.toggleHard].forEach(el => {
+            if (!el) return;
+            el.classList.toggle('active', (el.getAttribute('data-value') === prefs.gameMode));
+        });
+        ui.toggleTimerOff && (ui.toggleTimerOff.classList.toggle('active', !prefs.timerOn));
+        ui.toggleTimerOn && (ui.toggleTimerOn.classList.toggle('active', prefs.timerOn));
+    }
+
+    ui.toggleEasy?.addEventListener('click', () => { prefs.gameMode = 'easy'; savePrefs(); syncTogglesFromPrefs(); });
+    ui.toggleHard?.addEventListener('click', () => { prefs.gameMode = 'hard'; savePrefs(); syncTogglesFromPrefs(); });
+    ui.toggleTimerOff?.addEventListener('click', () => { prefs.timerOn = false; savePrefs(); syncTogglesFromPrefs(); });
+    ui.toggleTimerOn?.addEventListener('click', () => { prefs.timerOn = true; savePrefs(); syncTogglesFromPrefs(); });
+
     // Run once on boot to set initial correct translations
     updateDOMStrings();
+    syncTogglesFromPrefs();
     // --- Core Functions ---
+
+    function applyRandomMenuTheme() {
+        const menuEl = screens.menu;
+        if (!menuEl || !MENU_THEME_CLASSES.length) return;
+        if (currentMenuTheme) {
+            menuEl.classList.remove(currentMenuTheme);
+        }
+        const choices = MENU_THEME_CLASSES.filter(c => c !== currentMenuTheme);
+        const next =
+            choices[Math.floor(Math.random() * choices.length)] ||
+            MENU_THEME_CLASSES[0];
+        menuEl.classList.add(next);
+        currentMenuTheme = next;
+    }
 
     function switchScreen(screenId) {
         Object.values(screens).forEach(s => s.classList.remove('active'));
         screens[screenId].classList.add('active');
 
+        if (screenId === 'menu') {
+            applyRandomMenuTheme();
+            syncTogglesFromPrefs();
+        }
         // Show language selector only on main menu for a cleaner in-game UI.
         const langHeader = document.querySelector('.app-header');
         if (langHeader) {
@@ -211,6 +313,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Switch screen FIRST so it has layout dimensions for the resize calculation
             switchScreen('game');
+
+            if (prefs.timerOn) {
+                if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+                gameState.timerStart = Date.now();
+                if (ui.gameTimer) ui.gameTimer.style.display = '';
+                function formatElapsed(ms) {
+                    const totalSeconds = Math.floor(ms / 1000);
+                    const m = Math.floor(totalSeconds / 60);
+                    const s = totalSeconds % 60;
+                    return m + ':' + (s < 10 ? '0' : '') + s;
+                }
+                function tickTimer() {
+                    if (!ui.gameTimer || !gameState.timerStart) return;
+                    ui.gameTimer.textContent = formatElapsed(Date.now() - gameState.timerStart);
+                }
+                tickTimer();
+                gameState.timerInterval = setInterval(tickTimer, 1000);
+            } else {
+                if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+                gameState.timerInterval = null;
+                gameState.timerStart = null;
+                if (ui.gameTimer) ui.gameTimer.style.display = 'none';
+            }
 
             // Adjust scale initially
             handleResize();
@@ -340,6 +465,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setupSidebar() {
         ui.targetList.innerHTML = '';
+        ui.targetList.scrollLeft = 0;
+        ui.targetList.scrollTop = 0;
         sidebarTapCounts.clear();
 
         gameState.objectsToFind.forEach(obj => {
@@ -376,6 +503,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>${locName}</span>
             `;
 
+            if (gameState.foundObjects.has(obj.id)) {
+                itemElement.classList.add('found');
+            }
+
             // Hint interaction
             itemElement.addEventListener('click', () => {
                 if (gameState.foundObjects.has(obj.id)) return;
@@ -404,6 +535,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ui.targetList.appendChild(itemElement);
         });
+    }
+
+    function scrollToFirstUnfoundSidebarItem() {
+        const container = ui.targetList;
+        if (!container) return;
+
+        const items = Array.from(container.querySelectorAll('.target-item'));
+        if (!items.length) return;
+
+        const next = items.find(el => !el.classList.contains('found'));
+        if (!next) return;
+
+        const hasHorizontal = container.scrollWidth > container.clientWidth + 1;
+        const hasVertical = container.scrollHeight > container.clientHeight + 1;
+
+        // Only adjust scroll when there is actual overflow in at least one direction
+        if (!hasHorizontal && !hasVertical) return;
+
+        if (hasHorizontal) {
+            const itemCenter = next.offsetLeft + next.offsetWidth / 2;
+            const targetScrollLeft = itemCenter - container.clientWidth / 2;
+            container.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+        } else if (hasVertical) {
+            const itemCenter = next.offsetTop + next.offsetHeight / 2;
+            const targetScrollTop = itemCenter - container.clientHeight / 2;
+            container.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
+        }
     }
 
     // Removed dynamic systemVoices loading as we now use pre-generated MP3s
@@ -437,6 +595,8 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerConfetti(centerX, centerY);
         triggerHaptic();
         updateProgress();
+
+        scrollToFirstUnfoundSidebarItem();
 
         // Check Win Condition
         if (gameState.foundObjects.size === gameState.objectsToFind.length) {
@@ -569,6 +729,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function triggerWinScreen() {
+        if (gameState.timerInterval) {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = null;
+        }
+        if (ui.winTimeMessage) {
+            if (prefs.timerOn) {
+                const elapsedMs = gameState.timerStart ? Date.now() - gameState.timerStart : 0;
+                const totalSeconds = Math.floor(elapsedMs / 1000);
+                const timeStr = formatSecondsToTime(totalSeconds);
+                const winTimeTemplate =
+                    (I18N_DICT[currentLang] && I18N_DICT[currentLang].winTime) ||
+                    (I18N_DICT.en && I18N_DICT.en.winTime) ||
+                    'You found all the objects in {time}.';
+                const base = winTimeTemplate.replace('{time}', timeStr);
+                ui.winTimeMessage.textContent = `${base} ⏱️🎉`;
+                ui.winTimeMessage.style.display = '';
+            } else {
+                ui.winTimeMessage.textContent = '';
+                ui.winTimeMessage.style.display = 'none';
+            }
+        }
+
+        if (ui.winPersonalBestMessage) {
+            if (prefs.timerOn && gameState.currentSceneId) {
+                const elapsedMs = gameState.timerStart ? Date.now() - gameState.timerStart : 0;
+                const currentSeconds = Math.floor(elapsedMs / 1000);
+                const sceneId = gameState.currentSceneId;
+                const mode = prefs.gameMode;
+                const sceneBests = bestTimes[sceneId] || {};
+                const previousBest = sceneBests[mode];
+                const isNewBest = previousBest == null || currentSeconds <= previousBest;
+
+                if (isNewBest) {
+                    if (!bestTimes[sceneId]) bestTimes[sceneId] = {};
+                    bestTimes[sceneId][mode] = currentSeconds;
+                    saveBestTimes();
+                    const msg =
+                        (I18N_DICT[currentLang] && I18N_DICT[currentLang].winPersonalBest) ||
+                        (I18N_DICT.en && I18N_DICT.en.winPersonalBest) ||
+                        'Well done, this is your personal best time!';
+                    ui.winPersonalBestMessage.textContent = `${msg} 🏅✨`;
+                } else {
+                    const bestStr = formatSecondsToTime(previousBest);
+                    const template =
+                        (I18N_DICT[currentLang] && I18N_DICT[currentLang].winPersonalBestIs) ||
+                        (I18N_DICT.en && I18N_DICT.en.winPersonalBestIs) ||
+                        'Your personal best is {time}.';
+                    const base = template.replace('{time}', bestStr);
+                    ui.winPersonalBestMessage.textContent = `${base} 🏅`;
+                }
+                ui.winPersonalBestMessage.style.display = '';
+            } else {
+                ui.winPersonalBestMessage.textContent = '';
+                ui.winPersonalBestMessage.style.display = 'none';
+            }
+        }
+
         playSound('win');
         switchScreen('win');
         window.removeEventListener('resize', handleResize);
@@ -626,13 +843,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // In-game Back Button
     document.getElementById('back-to-menu-btn').addEventListener('click', resetToMenu);
 
+    function cleanupSceneLayout() {
+        window.removeEventListener('resize', handleResize);
+        if (ui.sceneWrapper) {
+            ui.sceneWrapper.removeEventListener('click', handleSceneClick);
+            ui.hitboxesLayer.innerHTML = '';
+            ui.sceneImage.src = '';
+            ui.sceneWrapper.style.transform = '';
+            ui.sceneWrapper.style.width = '';
+            ui.sceneWrapper.style.height = '';
+            ui.sceneWrapper.style.removeProperty('--inverse-scale');
+        }
+    }
+
     // Win Screen Buttons
     document.getElementById('play-again-btn').addEventListener('click', () => {
         if (window.stopWinConfetti) window.stopWinConfetti();
-        initGame(gameState.currentSceneId); // Restart current scene
+        cleanupSceneLayout();
+        if (gameState.currentSceneId) {
+            initGame(gameState.currentSceneId); // Restart current scene
+        }
     });
 
-    document.getElementById('win-menu-btn').addEventListener('click', resetToMenu);
+    document.getElementById('win-menu-btn').addEventListener('click', () => {
+        cleanupSceneLayout();
+        resetToMenu();
+    });
 
     // Default init behavior: Ensure menu is showing
     switchScreen('menu');

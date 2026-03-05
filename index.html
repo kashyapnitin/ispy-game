@@ -44,7 +44,7 @@
             </header>
 
             <div
-                class="menu-content w-full max-w-md sm:max-w-xl lg:max-w-3xl mx-2 sm:mx-6 px-2 sm:px-6 py-4 sm:py-8 rounded-3xl shadow bg-white text-center flex flex-col gap-3 sm:gap-4">
+                class="menu-content w-full max-w-md sm:max-w-xl lg:max-w-3xl mx-2 sm:mx-6 px-3 sm:px-6 py-4 sm:py-8 rounded-3xl shadow bg-white text-center flex flex-col gap-3 sm:gap-4 box-border min-w-0">
                 <h1 data-i18n="title"
                     class="font-heading text-3xl sm:text-4xl lg:text-5xl text-[var(--primary-color)] drop-shadow">
                     I Spy...
@@ -62,7 +62,7 @@
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="toyshop">
                             <img src="assets/images/scenes/toyshop/scene_toyshop.jpg" alt="Toy Shop Scene"
-                                class="scene-thumb rounded-lg w-full aspect-square sm:aspect-[4/3] object-cover"
+                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover"
                                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23ccc\'/><text x=\'50\' y=\'50\' dominant-baseline=\'middle\' text-anchor=\'middle\'>Image Needed</text></svg>'">
                             <span data-i18n="sceneToyshop"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
@@ -73,7 +73,7 @@
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="kitchen">
                             <img src="assets/images/scenes/kitchen/scene_kitchen.jpg" alt="Kitchen Scene"
-                                class="scene-thumb rounded-lg w-full aspect-square sm:aspect-[4/3] object-cover">
+                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
                             <span data-i18n="sceneKitchen"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
                                 Kitchen
@@ -83,7 +83,7 @@
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="playground">
                             <img src="assets/images/scenes/playground/scene_playground.jpg" alt="Playground Scene"
-                                class="scene-thumb rounded-lg w-full aspect-square sm:aspect-[4/3] object-cover">
+                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
                             <span data-i18n="scenePlayground"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
                                 Playground
@@ -93,7 +93,7 @@
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="beach">
                             <img src="assets/images/scenes/beach/scene_beach.jpg" alt="Beach Scene"
-                                class="scene-thumb rounded-lg w-full aspect-square sm:aspect-[4/3] object-cover">
+                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
                             <span data-i18n="sceneBeach"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
                                 Beach
@@ -101,6 +101,22 @@
                         </button>
                     </div>
                     <button class="carousel-arrow hidden sm:flex" id="carousel-next" aria-label="Next">&rarr;</button>
+                </div>
+                <div class="menu-toggles flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-between gap-3 mt-4 pt-4 border-t border-gray-200 w-full min-w-0">
+                    <div class="toggle-group flex items-center gap-2 min-w-0 flex-1 sm:flex-initial">
+                        <span data-i18n="gameModeLabel" class="toggle-label text-gray-600">Game mode:</span>
+                        <div class="toggle-pill flex rounded-lg overflow-hidden flex-shrink-0" role="group" aria-label="Game difficulty">
+                            <button type="button" id="toggle-easy" class="mode-option active" data-value="easy" data-i18n="gameModeEasy">Easy</button>
+                            <button type="button" id="toggle-hard" class="mode-option" data-value="hard" data-i18n="gameModeHard">Hard</button>
+                        </div>
+                    </div>
+                    <div class="toggle-group flex items-center gap-2 min-w-0 flex-1 sm:flex-initial">
+                        <span data-i18n="timerLabel" class="toggle-label text-gray-600">Timer:</span>
+                        <div class="toggle-pill flex rounded-lg overflow-hidden flex-shrink-0" role="group" aria-label="Timer">
+                            <button type="button" id="toggle-timer-off" class="timer-option active" data-value="off" data-i18n="timerOff">Off</button>
+                            <button type="button" id="toggle-timer-on" class="timer-option" data-value="on" data-i18n="timerOn">On</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,6 +138,7 @@
                     class="target-grid flex md:grid md:grid-cols-2 gap-2 overflow-x-auto md:overflow-y-auto">
                     <!-- Populated dynamically by JS -->
                 </div>
+                <div id="game-timer" class="font-heading text-[var(--secondary-color)] text-sm md:text-base text-left mb-1" aria-hidden="true">0:00</div>
                 <div class="sidebar-controls flex items-center justify-between gap-2 mt-2 border-t pt-2">
                     <div id="progress-text"
                         class="font-heading text-primary-color text-sm md:text-lg text-left whitespace-nowrap">
@@ -151,14 +168,16 @@
         <!-- Win/End Screen -->
         <div id="win-screen" class="screen overlay">
             <div
-                class="win-content bg-white rounded-3xl shadow-xl max-w-md sm:max-w-lg w-full p-6 sm:p-8 text-center">
+                class="win-content bg-white rounded-3xl shadow-xl max-w-lg sm:max-w-xl lg:max-w-2xl w-full p-6 sm:p-8 text-center">
                 <h2 data-i18n="winTitle"
                     class="font-heading text-2xl sm:text-3xl lg:text-4xl text-[var(--success-color)] mb-3">
                     You found them all!
                 </h2>
-                <p data-i18n="winSubtitle" class="text-sm sm:text-base lg:text-lg mb-6">
+                <p data-i18n="winSubtitle" class="text-sm sm:text-base lg:text-lg mb-3 leading-normal break-words px-2 sm:px-6">
                     Great job finding all the hidden objects.
                 </p>
+                <p id="win-time-message" class="text-sm sm:text-base text-gray-600 mb-2 leading-normal break-words px-2 sm:px-6"></p>
+                <p id="win-personal-best-message" class="text-sm sm:text-base text-gray-600 mb-6 leading-normal break-words px-2 sm:px-6"></p>
                 <div class="win-buttons flex gap-3 justify-center flex-wrap">
                     <button id="play-again-btn" class="primary-btn px-5 py-3 text-base sm:text-lg"
                         data-i18n="playAgain">Play Again</button>

@@ -179,14 +179,124 @@ button:active {
    MAIN MENU
    ========================================= */
 #main-menu {
+    position: relative;
+    overflow: hidden;
     background: radial-gradient(circle at center, #ffffff 0%, var(--bg-color) 100%);
+}
+
+/* Subtle \"ground\" footer like a crayon/bookend at the bottom of the main menu */
+#main-menu::after {
+    content: \"\";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 38px;
+    background:
+        repeating-linear-gradient(
+            -8deg,
+            rgba(255, 193, 7, 0.16),
+            rgba(255, 193, 7, 0.16) 6px,
+            rgba(255, 255, 255, 0.25) 6px,
+            rgba(255, 255, 255, 0.25) 12px
+        ),
+        linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 40%, #ffe8b2 100%);
+    pointer-events: none;
+}
+
+/* Toddler-friendly themed backgrounds for the main menu */
+#main-menu.menu-theme-sky {
+    background:
+        /* clouds */
+        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.75) 0, transparent 55%),
+        radial-gradient(circle at 82% 24%, rgba(255, 255, 255, 0.6) 0, transparent 52%),
+        radial-gradient(circle at 25% 82%, rgba(255, 255, 255, 0.55) 0, transparent 50%),
+        /* sun */
+        radial-gradient(circle at 90% 5%, rgba(255, 241, 118, 0.95) 0, rgba(255, 241, 118, 0.05) 60%),
+        /* balloons / balls */
+        radial-gradient(circle at 18% 60%, rgba(255, 183, 77, 0.9) 0, rgba(255, 183, 77, 0.0) 35%),
+        radial-gradient(circle at 70% 75%, rgba(3, 169, 244, 0.9) 0, rgba(3, 169, 244, 0.0) 33%),
+        radial-gradient(circle at 45% 22%, rgba(244, 143, 177, 0.9) 0, rgba(244, 143, 177, 0.0) 33%),
+        linear-gradient(180deg, #e0f4ff 0%, #f0f8ff 45%, #ffffff 100%);
+}
+
+#main-menu.menu-theme-meadow {
+    background:
+        /* soft sky puffs */
+        radial-gradient(circle at 15% 12%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.55) 0, transparent 50%),
+        /* trees / bushes */
+        radial-gradient(circle at 16% 82%, rgba(129, 199, 132, 0.8) 0, transparent 55%),
+        radial-gradient(circle at 38% 86%, rgba(76, 175, 80, 0.8) 0, transparent 52%),
+        radial-gradient(circle at 72% 84%, rgba(139, 195, 74, 0.8) 0, transparent 52%),
+        /* flowers / balls */
+        radial-gradient(circle at 28% 70%, rgba(244, 143, 177, 0.85) 0, transparent 43%),
+        radial-gradient(circle at 82% 68%, rgba(255, 202, 40, 0.9) 0, transparent 43%),
+        linear-gradient(180deg, #e3f9e5 0%, #f5fff7 40%, #ffffff 100%);
+}
+
+#main-menu.menu-theme-sunset {
+    background:
+        /* soft glow */
+        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.6) 0, transparent 55%),
+        /* sun + halo */
+        radial-gradient(circle at 84% 8%, rgba(255, 241, 118, 0.98) 0, rgba(255, 241, 118, 0.08) 60%),
+        radial-gradient(circle at 84% 8%, rgba(255, 213, 79, 0.95) 0, rgba(255, 213, 79, 0.05) 78%),
+        /* stars / confetti */
+        radial-gradient(circle at 22% 30%, rgba(255, 255, 255, 0.7) 0, transparent 38%),
+        radial-gradient(circle at 68% 32%, rgba(255, 255, 255, 0.7) 0, transparent 38%),
+        radial-gradient(circle at 32% 65%, rgba(244, 143, 177, 0.75) 0, transparent 52%),
+        radial-gradient(circle at 78% 78%, rgba(255, 183, 77, 0.75) 0, transparent 57%),
+        linear-gradient(180deg, #ffe0b2 0%, #ffe5c7 35%, #fff8e1 65%, #ffffff 100%);
+}
+
+#main-menu.menu-theme-ocean {
+    background:
+        /* bubbles */
+        radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
+        radial-gradient(circle at 75% 22%, rgba(255, 255, 255, 0.6) 0, transparent 55%),
+        radial-gradient(circle at 22% 70%, rgba(129, 212, 250, 0.85) 0, transparent 55%),
+        radial-gradient(circle at 82% 72%, rgba(0, 188, 212, 0.85) 0, transparent 55%),
+        /* waves / ribbons */
+        linear-gradient(120deg, rgba(3, 169, 244, 0.35) 0, rgba(3, 169, 244, 0.0) 32%, rgba(3, 169, 244, 0.3) 64%, rgba(3, 169, 244, 0.0) 100%),
+        linear-gradient(300deg, rgba(0, 188, 212, 0.3) 0, rgba(0, 188, 212, 0.0) 30%, rgba(0, 188, 212, 0.3) 65%, rgba(0, 188, 212, 0.0) 100%),
+        linear-gradient(180deg, #e0f7fa 0%, #e3f2fd 40%, #ffffff 100%);
+}
+
+#main-menu.menu-theme-candy {
+    background:
+        /* puffy clouds */
+        radial-gradient(circle at 14% 16%, rgba(255, 255, 255, 0.75) 0, transparent 55%),
+        radial-gradient(circle at 80% 14%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
+        /* candy swirls / lollipops */
+        radial-gradient(circle at 18% 78%, rgba(244, 143, 177, 0.9) 0, transparent 55%),
+        radial-gradient(circle at 78% 76%, rgba(255, 138, 101, 0.9) 0, transparent 55%),
+        radial-gradient(circle at 50% 30%, rgba(129, 212, 250, 0.85) 0, transparent 55%),
+        /* ribbons */
+        linear-gradient(135deg, rgba(255, 171, 145, 0.4) 0, rgba(255, 171, 145, 0.0) 40%, rgba(255, 171, 145, 0.35) 70%, rgba(255, 171, 145, 0.0) 100%),
+        linear-gradient(225deg, rgba(244, 143, 177, 0.38) 0, rgba(244, 143, 177, 0.0) 40%, rgba(244, 143, 177, 0.35) 70%, rgba(244, 143, 177, 0.0) 100%),
+        linear-gradient(180deg, #ffe4ec 0%, #fff3f8 45%, #ffffff 100%);
+}
+
+#main-menu.menu-theme-playroom {
+    background:
+        /* soft top glow */
+        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
+        radial-gradient(circle at 90% 12%, rgba(255, 241, 118, 0.8) 0, transparent 60%),
+        /* toy blocks / balls */
+        radial-gradient(circle at 18% 80%, rgba(255, 183, 77, 0.85) 0, transparent 55%),
+        radial-gradient(circle at 38% 78%, rgba(100, 181, 246, 0.85) 0, transparent 55%),
+        radial-gradient(circle at 70% 80%, rgba(129, 199, 132, 0.85) 0, transparent 55%),
+        radial-gradient(circle at 88% 78%, rgba(244, 143, 177, 0.85) 0, transparent 55%),
+        linear-gradient(180deg, #fffde7 0%, #fffdf3 40%, #ffffff 100%);
 }
 
 .menu-content {
     text-align: center;
-    background: var(--surface-color);
+    background: rgba(255, 255, 255, 0.88);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 .menu-content h1 {
@@ -271,6 +381,124 @@ button:active {
     background-color: #eee;
 }
 
+/* Menu toggles (Timer, Game mode) – compact, non-dominant */
+.menu-toggles {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Same font size for label and toggle option text */
+.toggle-label,
+.toggle-pill,
+.toggle-pill .mode-option,
+.toggle-pill .timer-option {
+    font-size: 0.8rem;
+}
+
+.toggle-label {
+    font-weight: 600;
+    color: #6b7280;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.toggle-pill {
+    position: relative;
+    font-family: var(--font-body);
+    font-weight: 600;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Single continuous border as top layer – same on all sides */
+.toggle-pill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid #4a5568;
+    border-radius: 8px;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+.toggle-pill .mode-option,
+.toggle-pill .timer-option {
+    padding: 6px 12px;
+    min-width: 3.25rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    background-color: #e8ecf0;
+    color: #5c6b7a;
+    position: relative;
+    z-index: 0;
+}
+
+.toggle-pill .mode-option:focus,
+.toggle-pill .timer-option:focus {
+    outline: none;
+}
+
+/* Match pill radius so segments fill to the inner edge (8px - 0 = 8px outer; inner curve ~6px) */
+.toggle-pill .mode-option:first-child,
+.toggle-pill .timer-option:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.toggle-pill .mode-option:last-child,
+.toggle-pill .timer-option:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.toggle-pill .mode-option:hover:not(.active),
+.toggle-pill .timer-option:hover:not(.active) {
+    background-color: #d4e1ed;
+    color: #37474f;
+}
+
+/* Selected: Timer Off = dark grey, Timer On = green */
+#toggle-timer-off.active {
+    background-color: #455a64;
+    color: white;
+}
+#toggle-timer-off.active:hover {
+    background-color: #37474f;
+    color: white;
+}
+#toggle-timer-on.active {
+    background-color: var(--success-color);
+    color: white;
+}
+#toggle-timer-on.active:hover {
+    background-color: #43a047;
+    color: white;
+}
+
+/* Selected: Easy = lighter green, Hard = maroon-red */
+#toggle-easy.active {
+    background-color: #66bb6a;
+    color: white;
+}
+#toggle-easy.active:hover {
+    background-color: #5cb860;
+    color: white;
+}
+#toggle-hard.active {
+    background-color: #8e2a3a;
+    color: white;
+}
+#toggle-hard.active:hover {
+    background-color: #7a2331;
+    color: white;
+}
+
+.toggle-pill .mode-option:active,
+.toggle-pill .timer-option:active {
+    transform: none;
+}
 
 /* =========================================
    GAME SCREEN (LAYOUT)
@@ -323,6 +551,7 @@ button:active {
 
 
 .target-item {
+    position: relative;
     background-color: #f9f9f9;
     border: 3px solid #eee;
     border-radius: var(--border-radius-md);
@@ -368,6 +597,22 @@ button:active {
 
 .target-item.found .sprite-thumb {
     filter: grayscale(80%);
+}
+
+/* Centred thick rounded tick on found items (game-style) */
+.target-item.found::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background-color: var(--success-color);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 6 9-10'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 6 9-10'/%3E%3C/svg%3E") center / contain no-repeat;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    pointer-events: none;
 }
 
 .target-item.recently-found {
@@ -682,6 +927,11 @@ button:active {
         padding: 5px;
     }
 
+    .target-item.found::after {
+        width: 28px;
+        height: 28px;
+    }
+
     .target-item .sprite-thumb {
         width: 40px;
         height: 40px;
@@ -749,8 +999,31 @@ button:active {
     }
 
     .menu-content {
-        padding: 1vh 1vw 2vh;
+        padding: 1vh 3vw 2vh;
         margin: 8vh 4% 0;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .menu-toggles {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .toggle-group {
+        justify-content: space-between;
+        max-width: 100%;
+    }
+
+    .toggle-label {
+        font-size: 0.8rem;
+    }
+
+    .toggle-pill .mode-option,
+    .toggle-pill .timer-option {
+        padding: 8px 14px;
+        min-width: 3.5rem;
     }
 
     .menu-content h1 {
@@ -780,17 +1053,17 @@ button:active {
     }
 
     .scene-btn {
-        flex: 0 0 92%;
+        flex: 0 0 auto;
         max-width: none;
         padding: 2vw;
         border-width: 3px;
     }
 
     .scene-btn img {
-        width: 25vh;
-        height: 25vh;
-        max-width: 110px;
-        max-height: 110px;
+        width: 100%;
+        height: auto;
+        max-width: none;
+        max-height: none;
     }
 
     .target-item {
