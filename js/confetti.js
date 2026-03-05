@@ -91,10 +91,12 @@
         initCanvas();
         if (!canvas) return;
 
-        // Rect to map client coords to canvas coords
+        // Map client coords to canvas pixel coords (element display size can differ from canvas.width/height on mobile)
         const rect = canvas.getBoundingClientRect();
-        const startX = clientX - rect.left;
-        const startY = clientY - rect.top;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const startX = (clientX - rect.left) * scaleX;
+        const startY = (clientY - rect.top) * scaleY;
 
         for (let i = 0; i < 30; i++) {
             particles.push(new Particle(startX, startY, false));

@@ -118,6 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchScreen(screenId) {
         Object.values(screens).forEach(s => s.classList.remove('active'));
         screens[screenId].classList.add('active');
+
+        // Show language selector only on main menu for a cleaner in-game UI.
+        const langHeader = document.querySelector('.app-header');
+        if (langHeader) {
+            langHeader.style.display = (screenId === 'menu') ? 'block' : 'none';
+        }
     }
 
     function initGame(sceneId) {
