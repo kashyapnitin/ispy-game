@@ -527,7 +527,8 @@ button:active {
     display: none;
     /* hidden by default; flex layout handled via Tailwind classes */
     height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #game-screen.active {
@@ -1057,7 +1058,7 @@ button:active {
 
     .menu-content {
         padding: 1vh 3vw 2vh;
-        margin: 8vh auto 0;
+        margin: 6vh auto 0;
         width: calc(100% - 24px); /* symmetric 12px gutters on both sides */
         max-width: 480px;
         min-width: 0;
@@ -1091,6 +1092,14 @@ button:active {
     .menu-content p {
         font-size: clamp(0.9rem, 4vw, 1.1rem);
         margin-bottom: 2vh;
+    }
+
+    #main-menu.screen.active {
+        justify-content: center;
+        align-items: center;
+        padding-top: 0;
+        padding-bottom: 0;
+        box-sizing: border-box;
     }
 
     .carousel-container {
@@ -1151,5 +1160,17 @@ button:active {
 
     .win-content p {
         font-size: 1.1rem;
+    }
+
+    .made-in-india {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        transform: translateX(-50%);
+        margin: 0;
+        text-align: center;
+        max-width: 92vw;
+        line-height: 1.2;
+        display: block;
     }
 }

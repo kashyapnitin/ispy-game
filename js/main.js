@@ -281,6 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear DOM
         ui.hitboxesLayer.innerHTML = '';
         ui.targetList.innerHTML = '';
+        ui.targetList.scrollLeft = 0;
+        ui.targetList.scrollTop = 0;
 
         let loadedAssets = 0;
 
@@ -478,8 +480,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setupSidebar() {
         ui.targetList.innerHTML = '';
-        ui.targetList.scrollLeft = 0;
-        ui.targetList.scrollTop = 0;
         sidebarTapCounts.clear();
 
         const hardMode = prefs.gameMode === 'hard';
