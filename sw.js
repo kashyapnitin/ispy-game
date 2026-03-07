@@ -3,7 +3,7 @@
 // so existing clients get the new SW and old shell cache is cleared on activate.
 // Precache URLs are relative to the SW scope so they work at any base path (e.g. / or /ispy-game/).
 
-const CACHE_NAME = 'ispy-shell-v6';
+const CACHE_NAME = 'ispy-shell-v7';
 const VOICE_CACHE_NAME = 'ispy-voices-v1';
 // Relative to registration scope (no leading slash) so cache keys match page fetch URLs
 const PRECACHE_URLS = [
@@ -11,6 +11,8 @@ const PRECACHE_URLS = [
   'css/style.css',
   'js/main.js',
   'manifest.webmanifest',
+  'assets/ispy-app-icon-32.png',
+  'assets/ispy-app-icon-512-square.png',
   'assets/ispy-app-icon-512.png',
   // Scene background images (offline play)
   'assets/images/scenes/scene_animalfarm.png',

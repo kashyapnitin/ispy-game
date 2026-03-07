@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>I Spy Digital Game</title>
     <!-- Tailwind (CDN build) for layout/utilities -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,11 +12,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap"
         rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/ispy-app-icon-512.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/ispy-app-icon-512.png">
-    <link rel="apple-touch-icon" href="assets/ispy-app-icon-512.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/ispy-app-icon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/ispy-app-icon-512-square.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/ispy-app-icon-512-square.png">
+    <link rel="apple-touch-icon" href="assets/ispy-app-icon-512-square.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="manifest" href="manifest.webmanifest">
+    <!-- Mobile viewport height: avoid Chrome address bar pushing content below fold -->
+    <script>
+(function() {
+    function setVh() {
+        var h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        document.documentElement.style.setProperty('--vh', h + 'px');
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', setVh);
+})();
+    </script>
     <!-- Plausible analytics (replace data-domain with your production domain) -->
     <!--script defer data-domain="ispy-game.netlify.app" src="https://plausible.io/js/script.js"></script-->
     <!-- Privacy-friendly analytics by Plausible -->
