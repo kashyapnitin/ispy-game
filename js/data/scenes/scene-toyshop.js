@@ -4,14 +4,11 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 window.ISPY_SCENES.toyshop = {
     id: 'toyshop',
     bgImage: 'assets/images/scenes/scene_toyshop.jpg',
-    // OrigWidth/Height will be populated dynamically at load time
-    /**
-     * Hotspot-only data model for this scene.
-     * Bounding boxes come from scripts/toyshop_hotspots.json via HOTSPOT_SOURCES.
-     */
     activeCount: 14,
+    // Bounding boxes loaded from scripts/data/hotspots/toyshop.json at runtime.
+    allObjectsLoaded: false,
     allObjects: [],
-    // Localized dictionary specific to this scene's items
+
     i18n: {
         en: {
             obj_Red_Ball: "Red Ball", obj_Toy_Train: "Toy Train", obj_Teddy_Bear: "Teddy Bear", obj_Robot: "Robot", obj_Rubber_Duck: "Rubber Duck", obj_Rocking_Horse: "Rocking Horse", obj_Blocks: "Blocks", obj_Toy_Car: "Toy Car", obj_Spinning_Top: "Spinning Top", obj_Kite: "Kite", obj_Doll: "Doll", obj_Drum: "Drum", obj_Airplane: "Airplane", obj_Xylophone: "Xylophone",

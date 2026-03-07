@@ -1,89 +1,68 @@
-// Data definition for the Animal Farm scene
+// Ensure the global registry exists
 window.ISPY_SCENES = window.ISPY_SCENES || {};
 
 window.ISPY_SCENES.animalfarm = {
-    id: "animalfarm",
-
-    i18n: {
-        en: {
-            sceneAnimalFarm: "Animal Farm",
-            obj_Bucket: "Bucket", obj_Pumpkin: "Pumpkin", obj_Hat: "Hat", obj_Duck: "Duck", obj_Pond: "Pond", obj_Dog: "Dog", obj_Corn: "Corn", obj_Milk_Can: "Milk Can", obj_Goat: "Goat", obj_Donkey: "Donkey", obj_Pig: "Pig", obj_Sheep: "Sheep", obj_Cow: "Cow", obj_Hay: "Hay", obj_Wheelbarrow: "Wheelbarrow", obj_Tractor: "Tractor", obj_Scare_Crow: "Scarecrow", obj_Horse: "Horse", obj_Sunflowers: "Sunflowers", obj_Rooster: "Rooster", obj_Hen: "Hen", obj_Chicken: "Chicken", obj_Blue_Bird: "Blue Bird", obj_Owl: "Owl", obj_Mouse: "Mouse", obj_Cat_on_a_Box: "Cat on a Box", obj_Barn: "Barn", obj_Wooden_Box: "Wooden Box"
-        },
-        es: {
-            sceneAnimalFarm: "Granja de Animales",
-            obj_Bucket: "Cubo", obj_Pumpkin: "Calabaza", obj_Hat: "Sombrero", obj_Duck: "Pato", obj_Pond: "Estanque", obj_Dog: "Perro", obj_Corn: "Maíz", obj_Milk_Can: "Bote de Leche", obj_Goat: "Cabra", obj_Donkey: "Burro", obj_Pig: "Cerdo", obj_Sheep: "Oveja", obj_Cow: "Vaca", obj_Hay: "Heno", obj_Wheelbarrow: "Carretilla", obj_Tractor: "Tractor", obj_Scare_Crow: "Espantapájaros", obj_Horse: "Caballo", obj_Sunflowers: "Girasoles", obj_Rooster: "Gallo", obj_Hen: "Gallina", obj_Chicken: "Pollo", obj_Blue_Bird: "Pájaro Azul", obj_Owl: "Búho", obj_Mouse: "Ratón", obj_Cat_on_a_Box: "Gato en una Caja", obj_Barn: "Granero", obj_Wooden_Box: "Caja de Madera"
-        },
-        hi: {
-            sceneAnimalFarm: "जानवरों का खेत",
-            obj_Bucket: "बाल्टी", obj_Pumpkin: "कद्दू", obj_Hat: "टोपी", obj_Duck: "बत्तख", obj_Pond: "तालाब", obj_Dog: "कुत्ता", obj_Corn: "मक्का", obj_Milk_Can: "दूध का डिब्बा", obj_Goat: "बकरी", obj_Donkey: "गधा", obj_Pig: "सुअर", obj_Sheep: "भेड़", obj_Cow: "गाय", obj_Hay: "सूखी घास", obj_Wheelbarrow: "ठेला", obj_Tractor: "ट्रैक्टर", obj_Scare_Crow: "खेत का पुतला", obj_Horse: "घोड़ा", obj_Sunflowers: "सूरजमुखी", obj_Rooster: "मुर्गा", obj_Hen: "मुर्गी", obj_Chicken: "चूज़ा", obj_Blue_Bird: "नीली चिड़िया", obj_Owl: "उल्लू", obj_Mouse: "चूहा", obj_Cat_on_a_Box: "बक्से पर बिल्ली", obj_Barn: "खलिहान", obj_Wooden_Box: "लकड़ी का डिब्बा"
-        },
-        zh: {
-            sceneAnimalFarm: "动物农场",
-            obj_Bucket: "桶", obj_Pumpkin: "南瓜", obj_Hat: "帽子", obj_Duck: "鸭子", obj_Pond: "池塘", obj_Dog: "狗", obj_Corn: "玉米", obj_Milk_Can: "奶桶", obj_Goat: "山羊", obj_Donkey: "驴", obj_Pig: "猪", obj_Sheep: "羊", obj_Cow: "牛", obj_Hay: "干草", obj_Wheelbarrow: "手推车", obj_Tractor: "拖拉机", obj_Scare_Crow: "稻草人", obj_Horse: "马", obj_Sunflowers: "向日葵", obj_Rooster: "公鸡", obj_Hen: "母鸡", obj_Chicken: "小鸡", obj_Blue_Bird: "蓝鸟", obj_Owl: "猫头鹰", obj_Mouse: "老鼠", obj_Cat_on_a_Box: "盒子上的猫", obj_Barn: "谷仓", obj_Wooden_Box: "木箱"
-        },
-        "pt-PT": {
-            sceneAnimalFarm: "Quinta de Animais",
-            obj_Bucket: "Balde", obj_Pumpkin: "Abóbora", obj_Hat: "Chapéu", obj_Duck: "Pato", obj_Pond: "Lagoa", obj_Dog: "Cão", obj_Corn: "Milho", obj_Milk_Can: "Lata de Leite", obj_Goat: "Cabra", obj_Donkey: "Burro", obj_Pig: "Porco", obj_Sheep: "Ovelha", obj_Cow: "Vaca", obj_Hay: "Feno", obj_Wheelbarrow: "Carrinho de Mão", obj_Tractor: "Trator", obj_Scare_Crow: "Espantalho", obj_Horse: "Cavalo", obj_Sunflowers: "Girassóis", obj_Rooster: "Galo", obj_Hen: "Galinha", obj_Chicken: "Frango", obj_Blue_Bird: "Pássaro Azul", obj_Owl: "Coruja", obj_Mouse: "Rato", obj_Cat_on_a_Box: "Gato numa Caixa", obj_Barn: "Celeiro", obj_Wooden_Box: "Caixa de Madeira"
-        },
-        "pt-BR": {
-            sceneAnimalFarm: "Fazenda de Animais",
-            obj_Bucket: "Balde", obj_Pumpkin: "Abóbora", obj_Hat: "Chapéu", obj_Duck: "Pato", obj_Pond: "Lagoa", obj_Dog: "Cachorro", obj_Corn: "Milho", obj_Milk_Can: "Lata de Leite", obj_Goat: "Cabra", obj_Donkey: "Burro", obj_Pig: "Porco", obj_Sheep: "Ovelha", obj_Cow: "Vaca", obj_Hay: "Feno", obj_Wheelbarrow: "Carrinho de Mão", obj_Tractor: "Trator", obj_Scare_Crow: "Espantalho", obj_Horse: "Cavalo", obj_Sunflowers: "Girassóis", obj_Rooster: "Galo", obj_Hen: "Galinha", obj_Chicken: "Frango", obj_Blue_Bird: "Pássaro Azul", obj_Owl: "Coruja", obj_Mouse: "Rato", obj_Cat_on_a_Box: "Gato numa Caixa", obj_Barn: "Celeiro", obj_Wooden_Box: "Caixa de Madeira"
-        },
-        fr: {
-            sceneAnimalFarm: "Ferme aux Animaux",
-            obj_Bucket: "Seau", obj_Pumpkin: "Citrouille", obj_Hat: "Chapeau", obj_Duck: "Canard", obj_Pond: "Étang", obj_Dog: "Chien", obj_Corn: "Maïs", obj_Milk_Can: "Bidon de Lait", obj_Goat: "Chèvre", obj_Donkey: "Âne", obj_Pig: "Cochon", obj_Sheep: "Mouton", obj_Cow: "Vache", obj_Hay: "Foin", obj_Wheelbarrow: "Brouette", obj_Tractor: "Tracteur", obj_Scare_Crow: "Épouvantail", obj_Horse: "Cheval", obj_Sunflowers: "Tournesols", obj_Rooster: "Coq", obj_Hen: "Poule", obj_Chicken: "Poulet", obj_Blue_Bird: "Oiseau Bleu", obj_Owl: "Hibou", obj_Mouse: "Souris", obj_Cat_on_a_Box: "Chat sur une Caisse", obj_Barn: "Grenier", obj_Wooden_Box: "Caisse en Bois"
-        },
-        ja: {
-            sceneAnimalFarm: "動物農場",
-            obj_Bucket: "バケツ", obj_Pumpkin: "カボチャ", obj_Hat: "帽子", obj_Duck: "アヒル", obj_Pond: "池", obj_Dog: "犬", obj_Corn: "トウモロコシ", obj_Milk_Can: "ミルク缶", obj_Goat: "ヤギ", obj_Donkey: "ロバ", obj_Pig: "豚", obj_Sheep: "羊", obj_Cow: "牛", obj_Hay: "干し草", obj_Wheelbarrow: "手押し車", obj_Tractor: "トラクター", obj_Scare_Crow: "かかし", obj_Horse: "馬", obj_Sunflowers: "ひまわり", obj_Rooster: "雄鶏", obj_Hen: "雌鶏", obj_Chicken: "ひよこ", obj_Blue_Bird: "青い鳥", obj_Owl: "フクロウ", obj_Mouse: "ネズミ", obj_Cat_on_a_Box: "箱の上の猫", obj_Barn: "納屋", obj_Wooden_Box: "木箱"
-        },
-        bn: {
-            sceneAnimalFarm: "পশুর খামার",
-            obj_Bucket: "বালতি", obj_Pumpkin: "কুমড়ো", obj_Hat: "টুপি", obj_Duck: "হাঁস", obj_Pond: "পুকুর", obj_Dog: "কুকুর", obj_Corn: "ভুট্টা", obj_Milk_Can: "দুধের ক্যান", obj_Goat: "ছাগল", obj_Donkey: "গাধা", obj_Pig: "শূকর", obj_Sheep: "ভেড়া", obj_Cow: "গরু", obj_Hay: "খড়", obj_Wheelbarrow: "হ্যান্ডকার্ট", obj_Tractor: "ট্র্যাক্টর", obj_Scare_Crow: "কাকতাড়ুয়া", obj_Horse: "ঘোড়া", obj_Sunflowers: "সূর্যমুখী", obj_Rooster: "মোরগ", obj_Hen: "মুরগি", obj_Chicken: "বাচ্চা মুরগি", obj_Blue_Bird: "নীল পাখি", obj_Owl: "পেঁচা", obj_Mouse: "ইঁদুর", obj_Cat_on_a_Box: "বাক্সের উপর বেড়াল", obj_Barn: "খামার ঘর", obj_Wooden_Box: "কাঠের বাক্স"
-        },
-        gu: {
-            sceneAnimalFarm: "પ્રાણીઓનું ખેતર",
-            obj_Bucket: "બાલ્ટી", obj_Pumpkin: "કોળું", obj_Hat: "ટોપી", obj_Duck: "બતક", obj_Pond: "તળાવ", obj_Dog: "કૂતરો", obj_Corn: "મકાઈ", obj_Milk_Can: "દૂધની કેન", obj_Goat: "બકરી", obj_Donkey: "ગધેડો", obj_Pig: "ડુક્કર", obj_Sheep: "ઘેટું", obj_Cow: "ગાય", obj_Hay: "સૂકો ઘાસ", obj_Wheelbarrow: "હેન્ડકાર્ટ", obj_Tractor: "ટ્રેક્ટર", obj_Scare_Crow: "ખેતરનું પુતળું", obj_Horse: "ઘોડો", obj_Sunflowers: "સૂર્યમુખી", obj_Rooster: "મુરઘો", obj_Hen: "મુરઘી", obj_Chicken: "ચિકન", obj_Blue_Bird: "નીલી ચિડિયા", obj_Owl: "ઘુવડ", obj_Mouse: "ઉંદર", obj_Cat_on_a_Box: "બોક્સ પર બિલાડી", obj_Barn: "ખાતર ઘર", obj_Wooden_Box: "લાકડાનું બોક્સ"
-        },
-        mr: {
-            sceneAnimalFarm: "प्राण्यांचे शेत",
-            obj_Bucket: "बादली", obj_Pumpkin: "भोपळा", obj_Hat: "टोपी", obj_Duck: "बदक", obj_Pond: "तलाव", obj_Dog: "कुत्रा", obj_Corn: "मका", obj_Milk_Can: "दुधाची कॅन", obj_Goat: "शेळी", obj_Donkey: "गाढव", obj_Pig: "डुकर", obj_Sheep: "मेंढी", obj_Cow: "गाय", obj_Hay: "सुका गवत", obj_Wheelbarrow: "हातगाडी", obj_Tractor: "ट्रॅक्टर", obj_Scare_Crow: "शेतातील पुतळा", obj_Horse: "घोडा", obj_Sunflowers: "सूर्यफुले", obj_Rooster: "कोंबडा", obj_Hen: "कोंबडी", obj_Chicken: "पिल्लू", obj_Blue_Bird: "निळा पक्षी", obj_Owl: "घुबड", obj_Mouse: "उंदीर", obj_Cat_on_a_Box: "बॉक्सवरची मांजर", obj_Barn: "गोठा", obj_Wooden_Box: "लाकडी बॉक्स"
-        },
-        kn: {
-            sceneAnimalFarm: "ಪ್ರಾಣಿ ಸಾಕಾಣಿಕೆ ಕೇಂದ್ರ",
-            obj_Bucket: "ಬಕೆಟ್", obj_Pumpkin: "ಕುಂಬಳಕಾಯಿ", obj_Hat: "ಟೋಪಿ", obj_Duck: "ಬಾತುಕೋಳಿ", obj_Pond: "ಕೊಳ", obj_Dog: "ನಾಯಿ", obj_Corn: "ಮೆಕ್ಕೆ ಜೋಳ", obj_Milk_Can: "ಹಾಲು ಕ್ಯಾನ್", obj_Goat: "ಮೇಕೆ", obj_Donkey: "ಕತ್ತೆ", obj_Pig: "ಹಂದಿ", obj_Sheep: "ಕುರಿ", obj_Cow: "ಹಸು", obj_Hay: "ಒಣ ಹುಲ್ಲು", obj_Wheelbarrow: "ಕೈವಾಹನ", obj_Tractor: "ಟ್ರ್ಯಾಕ್ಟರ್", obj_Scare_Crow: "ಗದ್ದೆ ಗೊಂಬೆ", obj_Horse: "ಕುದುರೆ", obj_Sunflowers: "ಸೂರ್ಯಕಾಂತಿ", obj_Rooster: "ಕೋಳಿ ಹುಂಜ", obj_Hen: "ಕೋಳಿ", obj_Chicken: "ಕೋಳಿ ಮರಿ", obj_Blue_Bird: "ನೀಲಿ ಹಕ್ಕಿ", obj_Owl: "ಗೂಬೆ", obj_Mouse: "ಇಲಿ", obj_Cat_on_a_Box: "ಪೆಟ್ಟಿಗೆಯ ಮೇಲೆ ಬೆಕ್ಕು", obj_Barn: "ಕಣಜ", obj_Wooden_Box: "ಮರದ ಪೆಟ್ಟಿಗೆ"
-        },
-        ta: {
-            sceneAnimalFarm: "விலங்கு பண்ணை",
-            obj_Bucket: "வாளி", obj_Pumpkin: "பூசணி", obj_Hat: "தொப்பி", obj_Duck: "வாத்து", obj_Pond: "குளம்", obj_Dog: "நாய்", obj_Corn: "மக்காச்சோளம்", obj_Milk_Can: "பால் கேன்", obj_Goat: "வெள்ளாடு", obj_Donkey: "கழுதை", obj_Pig: "பன்றி", obj_Sheep: "செம்மறி", obj_Cow: "மாடு", obj_Hay: "வைக்கோல்", obj_Wheelbarrow: "கைவண்டி", obj_Tractor: "டிராக்டர்", obj_Scare_Crow: "மண்ணானம்", obj_Horse: "குதிரை", obj_Sunflowers: "சூரியகாந்தி", obj_Rooster: "சேவல்", obj_Hen: "கோழி", obj_Chicken: "குஞ்சு", obj_Blue_Bird: "நீல பறவை", obj_Owl: "ஆந்தை", obj_Mouse: "சுண்டெலி", obj_Cat_on_a_Box: "பெட்டியில் பூனை", obj_Barn: "கொட்டகை", obj_Wooden_Box: "மர பெட்டி"
-        },
-        ml: {
-            sceneAnimalFarm: "മൃഗശാല",
-            obj_Bucket: "ബക്കറ്റ്", obj_Pumpkin: "മത്തൻ", obj_Hat: "തൊപ്പി", obj_Duck: "താറാവ്", obj_Pond: "കുളം", obj_Dog: "നായ", obj_Corn: "ചോളം", obj_Milk_Can: "പാല് കാൻ", obj_Goat: "ആട്", obj_Donkey: "കഴുത", obj_Pig: "പന്നി", obj_Sheep: "ചെമ്മരി", obj_Cow: "പശു", obj_Hay: "വൈക്കോൽ", obj_Wheelbarrow: "വണ്ടി", obj_Tractor: "ട്രാക്ടർ", obj_Scare_Crow: "കാവല്ക്കാള്", obj_Horse: "കുതിര", obj_Sunflowers: "സൂര്യകാന്തി", obj_Rooster: "പൂവൻകോഴി", obj_Hen: "കോഴി", obj_Chicken: "കോഴിക്കുഞ്ഞ്", obj_Blue_Bird: "നീല പക്ഷി", obj_Owl: "മൂങ്ങ", obj_Mouse: "ചുണ്ടെലി", obj_Cat_on_a_Box: "പെട്ടിയിലെ പൂച്ച", obj_Barn: "കളപ്പുര", obj_Wooden_Box: "മരം പെട്ടി"
-        },
-        pa: {
-            sceneAnimalFarm: "ਜਾਨਵਰਾਂ ਦਾ ਫਾਰਮ",
-            obj_Bucket: "ਬਾਲਟੀ", obj_Pumpkin: "ਕੱਦੂ", obj_Hat: "ਟੋਪੀ", obj_Duck: "ਬਤਖ਼", obj_Pond: "ਤਲਾਅ", obj_Dog: "ਕੁੱਤਾ", obj_Corn: "ਮੱਕੀ", obj_Milk_Can: "ਦੁੱਧ ਦੀ ਕੈਨ", obj_Goat: "ਬੱਕਰੀ", obj_Donkey: "ਗਧਾ", obj_Pig: "ਸੂਰ", obj_Sheep: "ਭੇਡ", obj_Cow: "ਗਾਂ", obj_Hay: "ਸੁੱਕੀ ਘਾਹ", obj_Wheelbarrow: "ਠੇਲਾ", obj_Tractor: "ਟ੍ਰੈਕਟਰ", obj_Scare_Crow: "ਖੇਤ ਦਾ ਪੁਤਲਾ", obj_Horse: "ਘੋੜਾ", obj_Sunflowers: "ਸੂਰਜਮੁਖੀ", obj_Rooster: "ਮੁਰਗਾ", obj_Hen: "ਮੁਰਗੀ", obj_Chicken: "ਚੂਜਾ", obj_Blue_Bird: "ਨੀਲੀ ਚਿੜੀ", obj_Owl: "ਉੱਲੂ", obj_Mouse: "ਚੂਹਾ", obj_Cat_on_a_Box: "ਬਕਸੇ 'ਤੇ ਬਿੱਲੀ", obj_Barn: "ਖਲਿਹਾਨ", obj_Wooden_Box: "ਲੱਕੜ ਦਾ ਡੱਬਾ"
-        },
-        sw: {
-            sceneAnimalFarm: "Shamba la Wanyama",
-            obj_Bucket: "Ndoo", obj_Pumpkin: "Maboga", obj_Hat: "Kofia", obj_Duck: "Bata", obj_Pond: "Bwawa", obj_Dog: "Mbwa", obj_Corn: "Mahindi", obj_Milk_Can: "Mkebe wa Maziwa", obj_Goat: "Mbuzi", obj_Donkey: "Punda", obj_Pig: "Nguruwe", obj_Sheep: "Kondoo", obj_Cow: "Ng'ombe", obj_Hay: "Majani", obj_Wheelbarrow: "Mkokoteni", obj_Tractor: "Traktari", obj_Scare_Crow: "Samaki wa Kuogopesha", obj_Horse: "Farasi", obj_Sunflowers: "Alizeti", obj_Rooster: "Jogoo", obj_Hen: "Kuku", obj_Chicken: "Kifaranga", obj_Blue_Bird: "Ndege ya Samawati", obj_Owl: "Bundi", obj_Mouse: "Panya", obj_Cat_on_a_Box: "Paka juu ya Sanduku", obj_Barn: "Lindi", obj_Wooden_Box: "Sanduku la Mbao"
-        },
-        ms: {
-            sceneAnimalFarm: "Ladang Haiwan",
-            obj_Bucket: "Baldi", obj_Pumpkin: "Labu", obj_Hat: "Topi", obj_Duck: "Itik", obj_Pond: "Kolam", obj_Dog: "Anjing", obj_Corn: "Jagung", obj_Milk_Can: "Tin Susu", obj_Goat: "Kambing", obj_Donkey: "Keldai", obj_Pig: "Babi", obj_Sheep: "Biri-biri", obj_Cow: "Lembu", obj_Hay: "Jerami", obj_Wheelbarrow: "Kereta Sorong", obj_Tractor: "Traktor", obj_Scare_Crow: "Orang-orangan", obj_Horse: "Kuda", obj_Sunflowers: "Bunga Matahari", obj_Rooster: "Ayam Jantan", obj_Hen: "Ayam Betina", obj_Chicken: "Anak Ayam", obj_Blue_Bird: "Burung Biru", obj_Owl: "Burung Hantu", obj_Mouse: "Tikus", obj_Cat_on_a_Box: "Kucing di atas Kotak", obj_Barn: "Lumbung", obj_Wooden_Box: "Kotak Kayu"
-        },
-        tl: {
-            sceneAnimalFarm: "Baryo ng mga Hayop",
-            obj_Bucket: "Balde", obj_Pumpkin: "Kalabasa", obj_Hat: "Sumbrero", obj_Duck: "Bibe", obj_Pond: "Lawa", obj_Dog: "Aso", obj_Corn: "Mais", obj_Milk_Can: "Lata ng Gatas", obj_Goat: "Kambing", obj_Donkey: "Asno", obj_Pig: "Baboy", obj_Sheep: "Tupa", obj_Cow: "Baka", obj_Hay: "Dayami", obj_Wheelbarrow: "Pandakot", obj_Tractor: "Traktor", obj_Scare_Crow: "Bambang", obj_Horse: "Kabayo", obj_Sunflowers: "Mirasol", obj_Rooster: "Tandang", obj_Hen: "Inahin", obj_Chicken: "Sisiw", obj_Blue_Bird: "Asul na Ibon", obj_Owl: "Kuwago", obj_Mouse: "Daga", obj_Cat_on_a_Box: "Pusa sa Kahon", obj_Barn: "Kamalig", obj_Wooden_Box: "Kahong Kahoy"
-        }
-    },
-
+    id: 'animalfarm',
     bgImage: 'assets/images/scenes/scene_animalfarm.png',
-
-    // Loaded from scripts/animalfarm_hotspots.json via HOTSPOT_SOURCES.
+    activeCount: 15,
+    // Bounding boxes loaded from scripts/data/hotspots/animalfarm.json at runtime.
     allObjectsLoaded: false,
     allObjects: [],
 
-    activeCount: 15
+    i18n: {
+        en: {
+            obj_Bucket: "Bucket", obj_Pumpkin: "Pumpkin", obj_Hat: "Hat", obj_Duck: "Duck", obj_Pond: "Pond", obj_Dog: "Dog", obj_Corn: "Corn", obj_Milk_Can: "Milk Can", obj_Goat: "Goat", obj_Donkey: "Donkey", obj_Pig: "Pig", obj_Sheep: "Sheep", obj_Cow: "Cow", obj_Hay: "Hay", obj_Wheelbarrow: "Wheelbarrow", obj_Tractor: "Tractor", obj_Scare_Crow: "Scarecrow", obj_Horse: "Horse", obj_Sunflowers: "Sunflowers", obj_Rooster: "Rooster", obj_Hen: "Hen", obj_Chicken: "Chicken", obj_Blue_Bird: "Blue Bird", obj_Owl: "Owl", obj_Mouse: "Mouse", obj_Cat_on_a_Box: "Cat on a Box", obj_Barn: "Barn", obj_Wooden_Box: "Wooden Box"
+        },
+        es: {
+            obj_Bucket: "Cubo", obj_Pumpkin: "Calabaza", obj_Hat: "Sombrero", obj_Duck: "Pato", obj_Pond: "Estanque", obj_Dog: "Perro", obj_Corn: "Maíz", obj_Milk_Can: "Bote de Leche", obj_Goat: "Cabra", obj_Donkey: "Burro", obj_Pig: "Cerdo", obj_Sheep: "Oveja", obj_Cow: "Vaca", obj_Hay: "Heno", obj_Wheelbarrow: "Carretilla", obj_Tractor: "Tractor", obj_Scare_Crow: "Espantapájaros", obj_Horse: "Caballo", obj_Sunflowers: "Girasoles", obj_Rooster: "Gallo", obj_Hen: "Gallina", obj_Chicken: "Pollo", obj_Blue_Bird: "Pájaro Azul", obj_Owl: "Búho", obj_Mouse: "Ratón", obj_Cat_on_a_Box: "Gato en una Caja", obj_Barn: "Granero", obj_Wooden_Box: "Caja de Madera"
+        },
+        hi: {
+            obj_Bucket: "बाल्टी", obj_Pumpkin: "कद्दू", obj_Hat: "टोपी", obj_Duck: "बत्तख", obj_Pond: "तालाब", obj_Dog: "कुत्ता", obj_Corn: "मक्का", obj_Milk_Can: "दूध का डिब्बा", obj_Goat: "बकरी", obj_Donkey: "गधा", obj_Pig: "सुअर", obj_Sheep: "भेड़", obj_Cow: "गाय", obj_Hay: "सूखी घास", obj_Wheelbarrow: "ठेला", obj_Tractor: "ट्रैक्टर", obj_Scare_Crow: "खेत का पुतला", obj_Horse: "घोड़ा", obj_Sunflowers: "सूरजमुखी", obj_Rooster: "मुर्गा", obj_Hen: "मुर्गी", obj_Chicken: "चूज़ा", obj_Blue_Bird: "नीली चिड़िया", obj_Owl: "उल्लू", obj_Mouse: "चूहा", obj_Cat_on_a_Box: "बक्से पर बिल्ली", obj_Barn: "खलिहान", obj_Wooden_Box: "लकड़ी का डिब्बा"
+        },
+        zh: {
+            obj_Bucket: "桶", obj_Pumpkin: "南瓜", obj_Hat: "帽子", obj_Duck: "鸭子", obj_Pond: "池塘", obj_Dog: "狗", obj_Corn: "玉米", obj_Milk_Can: "奶桶", obj_Goat: "山羊", obj_Donkey: "驴", obj_Pig: "猪", obj_Sheep: "羊", obj_Cow: "牛", obj_Hay: "干草", obj_Wheelbarrow: "手推车", obj_Tractor: "拖拉机", obj_Scare_Crow: "稻草人", obj_Horse: "马", obj_Sunflowers: "向日葵", obj_Rooster: "公鸡", obj_Hen: "母鸡", obj_Chicken: "小鸡", obj_Blue_Bird: "蓝鸟", obj_Owl: "猫头鹰", obj_Mouse: "老鼠", obj_Cat_on_a_Box: "盒子上的猫", obj_Barn: "谷仓", obj_Wooden_Box: "木箱"
+        },
+        "pt-PT": {
+            obj_Bucket: "Balde", obj_Pumpkin: "Abóbora", obj_Hat: "Chapéu", obj_Duck: "Pato", obj_Pond: "Lagoa", obj_Dog: "Cão", obj_Corn: "Milho", obj_Milk_Can: "Lata de Leite", obj_Goat: "Cabra", obj_Donkey: "Burro", obj_Pig: "Porco", obj_Sheep: "Ovelha", obj_Cow: "Vaca", obj_Hay: "Feno", obj_Wheelbarrow: "Carrinho de Mão", obj_Tractor: "Trator", obj_Scare_Crow: "Espantalho", obj_Horse: "Cavalo", obj_Sunflowers: "Girassóis", obj_Rooster: "Galo", obj_Hen: "Galinha", obj_Chicken: "Frango", obj_Blue_Bird: "Pássaro Azul", obj_Owl: "Coruja", obj_Mouse: "Rato", obj_Cat_on_a_Box: "Gato numa Caixa", obj_Barn: "Celeiro", obj_Wooden_Box: "Caixa de Madeira"
+        },
+        "pt-BR": {
+            obj_Bucket: "Balde", obj_Pumpkin: "Abóbora", obj_Hat: "Chapéu", obj_Duck: "Pato", obj_Pond: "Lagoa", obj_Dog: "Cachorro", obj_Corn: "Milho", obj_Milk_Can: "Lata de Leite", obj_Goat: "Cabra", obj_Donkey: "Burro", obj_Pig: "Porco", obj_Sheep: "Ovelha", obj_Cow: "Vaca", obj_Hay: "Feno", obj_Wheelbarrow: "Carrinho de Mão", obj_Tractor: "Trator", obj_Scare_Crow: "Espantalho", obj_Horse: "Cavalo", obj_Sunflowers: "Girassóis", obj_Rooster: "Galo", obj_Hen: "Galinha", obj_Chicken: "Frango", obj_Blue_Bird: "Pássaro Azul", obj_Owl: "Coruja", obj_Mouse: "Rato", obj_Cat_on_a_Box: "Gato numa Caixa", obj_Barn: "Celeiro", obj_Wooden_Box: "Caixa de Madeira"
+        },
+        fr: {
+            obj_Bucket: "Seau", obj_Pumpkin: "Citrouille", obj_Hat: "Chapeau", obj_Duck: "Canard", obj_Pond: "Étang", obj_Dog: "Chien", obj_Corn: "Maïs", obj_Milk_Can: "Bidon de Lait", obj_Goat: "Chèvre", obj_Donkey: "Âne", obj_Pig: "Cochon", obj_Sheep: "Mouton", obj_Cow: "Vache", obj_Hay: "Foin", obj_Wheelbarrow: "Brouette", obj_Tractor: "Tracteur", obj_Scare_Crow: "Épouvantail", obj_Horse: "Cheval", obj_Sunflowers: "Tournesols", obj_Rooster: "Coq", obj_Hen: "Poule", obj_Chicken: "Poulet", obj_Blue_Bird: "Oiseau Bleu", obj_Owl: "Hibou", obj_Mouse: "Souris", obj_Cat_on_a_Box: "Chat sur une Caisse", obj_Barn: "Grenier", obj_Wooden_Box: "Caisse en Bois"
+        },
+        ja: {
+            obj_Bucket: "バケツ", obj_Pumpkin: "カボチャ", obj_Hat: "帽子", obj_Duck: "アヒル", obj_Pond: "池", obj_Dog: "犬", obj_Corn: "トウモロコシ", obj_Milk_Can: "ミルク缶", obj_Goat: "ヤギ", obj_Donkey: "ロバ", obj_Pig: "豚", obj_Sheep: "羊", obj_Cow: "牛", obj_Hay: "干し草", obj_Wheelbarrow: "手押し車", obj_Tractor: "トラクター", obj_Scare_Crow: "かかし", obj_Horse: "馬", obj_Sunflowers: "ひまわり", obj_Rooster: "雄鶏", obj_Hen: "雌鶏", obj_Chicken: "ひよこ", obj_Blue_Bird: "青い鳥", obj_Owl: "フクロウ", obj_Mouse: "ネズミ", obj_Cat_on_a_Box: "箱の上の猫", obj_Barn: "納屋", obj_Wooden_Box: "木箱"
+        },
+        bn: {
+            obj_Bucket: "বালতি", obj_Pumpkin: "কুমড়ো", obj_Hat: "টুপি", obj_Duck: "হাঁস", obj_Pond: "পুকুর", obj_Dog: "কুকুর", obj_Corn: "ভুট্টা", obj_Milk_Can: "দুধের ক্যান", obj_Goat: "ছাগল", obj_Donkey: "গাধা", obj_Pig: "শূকর", obj_Sheep: "ভেড়া", obj_Cow: "গরু", obj_Hay: "খড়", obj_Wheelbarrow: "হ্যান্ডকার্ট", obj_Tractor: "ট্র্যাক্টর", obj_Scare_Crow: "কাকতাড়ুয়া", obj_Horse: "ঘোড়া", obj_Sunflowers: "সূর্যমুখী", obj_Rooster: "মোরগ", obj_Hen: "মুরগি", obj_Chicken: "বাচ্চা মুরগি", obj_Blue_Bird: "নীল পাখি", obj_Owl: "পেঁচা", obj_Mouse: "ইঁদুর", obj_Cat_on_a_Box: "বাক্সের উপর বেড়াল", obj_Barn: "খামার ঘর", obj_Wooden_Box: "কাঠের বাক্স"
+        },
+        gu: {
+            obj_Bucket: "બાલ્ટી", obj_Pumpkin: "કોળું", obj_Hat: "ટોપી", obj_Duck: "બતક", obj_Pond: "તળાવ", obj_Dog: "કૂતરો", obj_Corn: "મકાઈ", obj_Milk_Can: "દૂધની કેન", obj_Goat: "બકરી", obj_Donkey: "ગધેડો", obj_Pig: "ડુક્કર", obj_Sheep: "ઘેટું", obj_Cow: "ગાય", obj_Hay: "સૂકો ઘાસ", obj_Wheelbarrow: "હેન્ડકાર્ટ", obj_Tractor: "ટ્રેક્ટર", obj_Scare_Crow: "ખેતરનું પુતળું", obj_Horse: "ઘોડો", obj_Sunflowers: "સૂર્યમુખી", obj_Rooster: "મુરઘો", obj_Hen: "મુરઘી", obj_Chicken: "ચિકન", obj_Blue_Bird: "નીલી ચિડિયા", obj_Owl: "ઘુવડ", obj_Mouse: "ઉંદર", obj_Cat_on_a_Box: "બોક્સ પર બિલાડી", obj_Barn: "ખાતર ઘર", obj_Wooden_Box: "લાકડાનું બોક્સ"
+        },
+        mr: {
+            obj_Bucket: "बादली", obj_Pumpkin: "भोपळा", obj_Hat: "टोपी", obj_Duck: "बदक", obj_Pond: "तलाव", obj_Dog: "कुत्रा", obj_Corn: "मका", obj_Milk_Can: "दुधाची कॅन", obj_Goat: "शेळी", obj_Donkey: "गाढव", obj_Pig: "डुकर", obj_Sheep: "मेंढी", obj_Cow: "गाय", obj_Hay: "सुका गवत", obj_Wheelbarrow: "हातगाडी", obj_Tractor: "ट्रॅक्टर", obj_Scare_Crow: "शेतातील पुतळा", obj_Horse: "घोडा", obj_Sunflowers: "सूर्यफुले", obj_Rooster: "कोंबडा", obj_Hen: "कोंबडी", obj_Chicken: "पिल्लू", obj_Blue_Bird: "निळा पक्षी", obj_Owl: "घुबड", obj_Mouse: "उंदीर", obj_Cat_on_a_Box: "बॉक्सवरची मांजर", obj_Barn: "गोठा", obj_Wooden_Box: "लाकडी बॉक्स"
+        },
+        kn: {
+            obj_Bucket: "ಬಕೆಟ್", obj_Pumpkin: "ಕುಂಬಳಕಾಯಿ", obj_Hat: "ಟೋಪಿ", obj_Duck: "ಬಾತುಕೋಳಿ", obj_Pond: "ಕೊಳ", obj_Dog: "ನಾಯಿ", obj_Corn: "ಮೆಕ್ಕೆ ಜೋಳ", obj_Milk_Can: "ಹಾಲು ಕ್ಯಾನ್", obj_Goat: "ಮೇಕೆ", obj_Donkey: "ಕತ್ತೆ", obj_Pig: "ಹಂದಿ", obj_Sheep: "ಕುರಿ", obj_Cow: "ಹಸು", obj_Hay: "ಒಣ ಹುಲ್ಲು", obj_Wheelbarrow: "ಕೈವಾಹನ", obj_Tractor: "ಟ್ರ್ಯಾಕ್ಟರ್", obj_Scare_Crow: "ಗದ್ದೆ ಗೊಂಬೆ", obj_Horse: "ಕುದುರೆ", obj_Sunflowers: "ಸೂರ್ಯಕಾಂತಿ", obj_Rooster: "ಕೋಳಿ ಹುಂಜ", obj_Hen: "ಕೋಳಿ", obj_Chicken: "ಕೋಳಿ ಮರಿ", obj_Blue_Bird: "ನೀಲಿ ಹಕ್ಕಿ", obj_Owl: "ಗೂಬೆ", obj_Mouse: "ಇಲಿ", obj_Cat_on_a_Box: "ಪೆಟ್ಟಿಗೆಯ ಮೇಲೆ ಬೆಕ್ಕು", obj_Barn: "ಕಣಜ", obj_Wooden_Box: "ಮರದ ಪೆಟ್ಟಿಗೆ"
+        },
+        ta: {
+            obj_Bucket: "வாளி", obj_Pumpkin: "பூசணி", obj_Hat: "தொப்பி", obj_Duck: "வாத்து", obj_Pond: "குளம்", obj_Dog: "நாய்", obj_Corn: "மக்காச்சோளம்", obj_Milk_Can: "பால் கேன்", obj_Goat: "வெள்ளாடு", obj_Donkey: "கழுதை", obj_Pig: "பன்றி", obj_Sheep: "செம்மறி", obj_Cow: "மாடு", obj_Hay: "வைக்கோல்", obj_Wheelbarrow: "கைவண்டி", obj_Tractor: "டிராக்டர்", obj_Scare_Crow: "மண்ணானம்", obj_Horse: "குதிரை", obj_Sunflowers: "சூரியகாந்தி", obj_Rooster: "சேவல்", obj_Hen: "கோழி", obj_Chicken: "குஞ்சு", obj_Blue_Bird: "நீல பறவை", obj_Owl: "ஆந்தை", obj_Mouse: "சுண்டெலி", obj_Cat_on_a_Box: "பெட்டியில் பூனை", obj_Barn: "கொட்டகை", obj_Wooden_Box: "மர பெட்டி"
+        },
+        ml: {
+            obj_Bucket: "ബക്കറ്റ്", obj_Pumpkin: "മത്തൻ", obj_Hat: "തൊപ്പി", obj_Duck: "താറാവ്", obj_Pond: "കുളം", obj_Dog: "നായ", obj_Corn: "ചോളം", obj_Milk_Can: "പാല് കാൻ", obj_Goat: "ആട്", obj_Donkey: "കഴുത", obj_Pig: "പന്നി", obj_Sheep: "ചെമ്മരി", obj_Cow: "പശു", obj_Hay: "വൈക്കോൽ", obj_Wheelbarrow: "വണ്ടി", obj_Tractor: "ട്രാക്ടർ", obj_Scare_Crow: "കാവല്ക്കാള്", obj_Horse: "കുതിര", obj_Sunflowers: "സൂര്യകാന്തി", obj_Rooster: "പൂവൻകോഴി", obj_Hen: "കോഴി", obj_Chicken: "കോഴിക്കുഞ്ഞ്", obj_Blue_Bird: "നീല പക്ഷി", obj_Owl: "മൂങ്ങ", obj_Mouse: "ചുണ്ടെലി", obj_Cat_on_a_Box: "പെട്ടിയിലെ പൂച്ച", obj_Barn: "കളപ്പുര", obj_Wooden_Box: "മരം പെട്ടി"
+        },
+        pa: {
+            obj_Bucket: "ਬਾਲਟੀ", obj_Pumpkin: "ਕੱਦੂ", obj_Hat: "ਟੋਪੀ", obj_Duck: "ਬਤਖ਼", obj_Pond: "ਤਲਾਅ", obj_Dog: "ਕੁੱਤਾ", obj_Corn: "ਮੱਕੀ", obj_Milk_Can: "ਦੁੱਧ ਦੀ ਕੈਨ", obj_Goat: "ਬੱਕਰੀ", obj_Donkey: "ਗਧਾ", obj_Pig: "ਸੂਰ", obj_Sheep: "ਭੇਡ", obj_Cow: "ਗਾਂ", obj_Hay: "ਸੁੱਕੀ ਘਾਹ", obj_Wheelbarrow: "ਠੇਲਾ", obj_Tractor: "ਟ੍ਰੈਕਟਰ", obj_Scare_Crow: "ਖੇਤ ਦਾ ਪੁਤਲਾ", obj_Horse: "ਘੋੜਾ", obj_Sunflowers: "ਸੂਰਜਮੁਖੀ", obj_Rooster: "ਮੁਰਗਾ", obj_Hen: "ਮੁਰਗੀ", obj_Chicken: "ਚੂਜਾ", obj_Blue_Bird: "ਨੀਲੀ ਚਿੜੀ", obj_Owl: "ਉੱਲੂ", obj_Mouse: "ਚੂਹਾ", obj_Cat_on_a_Box: "ਬਕਸੇ 'ਤੇ ਬਿੱਲੀ", obj_Barn: "ਖਲਿਹਾਨ", obj_Wooden_Box: "ਲੱਕੜ ਦਾ ਡੱਬਾ"
+        },
+        sw: {
+            obj_Bucket: "Ndoo", obj_Pumpkin: "Maboga", obj_Hat: "Kofia", obj_Duck: "Bata", obj_Pond: "Bwawa", obj_Dog: "Mbwa", obj_Corn: "Mahindi", obj_Milk_Can: "Mkebe wa Maziwa", obj_Goat: "Mbuzi", obj_Donkey: "Punda", obj_Pig: "Nguruwe", obj_Sheep: "Kondoo", obj_Cow: "Ng'ombe", obj_Hay: "Majani", obj_Wheelbarrow: "Mkokoteni", obj_Tractor: "Traktari", obj_Scare_Crow: "Samaki wa Kuogopesha", obj_Horse: "Farasi", obj_Sunflowers: "Alizeti", obj_Rooster: "Jogoo", obj_Hen: "Kuku", obj_Chicken: "Kifaranga", obj_Blue_Bird: "Ndege ya Samawati", obj_Owl: "Bundi", obj_Mouse: "Panya", obj_Cat_on_a_Box: "Paka juu ya Sanduku", obj_Barn: "Lindi", obj_Wooden_Box: "Sanduku la Mbao"
+        },
+        ms: {
+            obj_Bucket: "Baldi", obj_Pumpkin: "Labu", obj_Hat: "Topi", obj_Duck: "Itik", obj_Pond: "Kolam", obj_Dog: "Anjing", obj_Corn: "Jagung", obj_Milk_Can: "Tin Susu", obj_Goat: "Kambing", obj_Donkey: "Keldai", obj_Pig: "Babi", obj_Sheep: "Biri-biri", obj_Cow: "Lembu", obj_Hay: "Jerami", obj_Wheelbarrow: "Kereta Sorong", obj_Tractor: "Traktor", obj_Scare_Crow: "Orang-orangan", obj_Horse: "Kuda", obj_Sunflowers: "Bunga Matahari", obj_Rooster: "Ayam Jantan", obj_Hen: "Ayam Betina", obj_Chicken: "Anak Ayam", obj_Blue_Bird: "Burung Biru", obj_Owl: "Burung Hantu", obj_Mouse: "Tikus", obj_Cat_on_a_Box: "Kucing di atas Kotak", obj_Barn: "Lumbung", obj_Wooden_Box: "Kotak Kayu"
+        },
+        tl: {
+            obj_Bucket: "Balde", obj_Pumpkin: "Kalabasa", obj_Hat: "Sumbrero", obj_Duck: "Bibe", obj_Pond: "Lawa", obj_Dog: "Aso", obj_Corn: "Mais", obj_Milk_Can: "Lata ng Gatas", obj_Goat: "Kambing", obj_Donkey: "Asno", obj_Pig: "Baboy", obj_Sheep: "Tupa", obj_Cow: "Baka", obj_Hay: "Dayami", obj_Wheelbarrow: "Pandakot", obj_Tractor: "Traktor", obj_Scare_Crow: "Bambang", obj_Horse: "Kabayo", obj_Sunflowers: "Mirasol", obj_Rooster: "Tandang", obj_Hen: "Inahin", obj_Chicken: "Sisiw", obj_Blue_Bird: "Asul na Ibon", obj_Owl: "Kuwago", obj_Mouse: "Daga", obj_Cat_on_a_Box: "Pusa sa Kahon", obj_Barn: "Kamalig", obj_Wooden_Box: "Kahong Kahoy"
+        }
+    }
 };

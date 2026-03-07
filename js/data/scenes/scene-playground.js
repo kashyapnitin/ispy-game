@@ -4,72 +4,11 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 window.ISPY_SCENES.playground = {
     id: 'playground',
     bgImage: 'assets/images/scenes/scene_playground.jpg',
-
-    /**
-     * New hotspot-only data model for this scene.
-     * We define a richer set of possible tappable objects but only activate
-     * a subset per run.
-     *
-     * Bounding boxes are in percentage coordinates of the background image:
-     * x1,y1 = top-left, x2,y2 = bottom-right (0–100).
-     */
     activeCount: 14,
-    allObjects: [
-        // Core structures
-        { id: "pg_slide",         name: "Slide",         bbox: { x1: 5,  y1: 15, x2: 38, y2: 75 }, priority: 1 },
-        { id: "pg_swings",        name: "Swings",        bbox: { x1: 2,  y1: 55, x2: 30, y2: 92 }, priority: 1 },
-        { id: "pg_seesaw",        name: "Seesaw",        bbox: { x1: 70, y1: 60, x2: 92, y2: 82 }, priority: 1 },
-        { id: "pg_climbing_net",  name: "Climbing Net",  bbox: { x1: 48, y1: 32, x2: 78, y2: 58 }, priority: 1 },
-        { id: "pg_merry_go_round",name: "Merry Go Round",bbox: { x1: 70, y1: 40, x2: 92, y2: 60 }, priority: 1 },
-        { id: "pg_bridge",        name: "Bridge",        bbox: { x1: 68, y1: 52, x2: 96, y2: 72 }, priority: 1 },
-        { id: "pg_playhouse",     name: "Playhouse",     bbox: { x1: 78, y1: 36, x2: 100,y2: 72 }, priority: 1 },
-        { id: "pg_bicycle",       name: "Bicycle",       bbox: { x1: 79, y1: 69, x2: 92, y2: 84 }, priority: 1 },
+    // Bounding boxes loaded from scripts/data/hotspots/playground.json at runtime.
+    allObjectsLoaded: false,
+    allObjects: [],
 
-        // Toys in and around the sandbox
-        { id: "pg_toy_truck",     name: "Toy Truck",     bbox: { x1: 44, y1: 72, x2: 52, y2: 82 }, priority: 2 },
-        { id: "pg_dinosaur",      name: "Dinosaur",      bbox: { x1: 49, y1: 83, x2: 57, y2: 95 }, priority: 2 },
-        { id: "pg_bucket",        name: "Bucket",        bbox: { x1: 39, y1: 70, x2: 47, y2: 80 }, priority: 2 },
-        { id: "pg_shovel",        name: "Shovel",        bbox: { x1: 55, y1: 73, x2: 63, y2: 84 }, priority: 2 },
-
-        // Path / bench foreground toys
-        { id: "pg_ball",          name: "Ball",          bbox: { x1: 73, y1: 84, x2: 83, y2: 94 }, priority: 2 },
-        { id: "pg_backpack",      name: "Backpack",      bbox: { x1: 66, y1: 78, x2: 76, y2: 92 }, priority: 2 },
-        { id: "pg_treasure",      name: "Treasure Chest",bbox: { x1: 18, y1: 76, x2: 32, y2: 94 }, priority: 2 },
-
-        // Animals and small creatures
-        { id: "pg_dog",           name: "Dog",           bbox: { x1: 44, y1: 84, x2: 54, y2: 96 }, priority: 3 },
-        { id: "pg_lizard",        name: "Lizard",        bbox: { x1: 56, y1: 90, x2: 68, y2: 100}, priority: 3 },
-        { id: "pg_squirrel",      name: "Squirrel",      bbox: { x1: 8,  y1: 26, x2: 18, y2: 44 }, priority: 3 },
-        { id: "pg_bird",          name: "Bird",          bbox: { x1: 30, y1: 18, x2: 42, y2: 32 }, priority: 3 },
-        { id: "pg_butterfly",     name: "Butterfly",     bbox: { x1: 82, y1: 63, x2: 92, y2: 78 }, priority: 3 },
-
-        // Environment / decor
-        { id: "pg_lamp_left",     name: "Lamp Post",     bbox: { x1: 2,  y1: 60, x2: 10, y2: 92 }, priority: 1 },
-        { id: "pg_lamp_right",    name: "Lamp Post",     bbox: { x1: 88, y1: 58, x2: 98, y2: 96 }, priority: 1 },
-        { id: "pg_flower_patch",  name: "Flower Patch",  bbox: { x1: 0,  y1: 82, x2: 15, y2: 100}, priority: 2 }
-    ],
-
-    /**
-     * Legacy sprite-based objects list
-     * Kept for backwards compatibility with older tooling; not used by the
-     * runtime for this scene anymore but still referenced by scripts that
-     * read `objects` if `allObjects` is absent.
-     */
-    objects: [
-        { id: "pg_1",  name: "Slide",      x: 20, y: 70, w: 12, imgUrl: "assets/images/scenes/playground/Slide.png?v=3" },
-        { id: "pg_2",  name: "Swing",      x: 80, y: 60, w: 10, imgUrl: "assets/images/scenes/playground/Swing.png?v=3" },
-        { id: "pg_3",  name: "Sandbox",    x: 50, y: 85, w: 15, imgUrl: "assets/images/scenes/playground/Sandbox.png?v=3" },
-        { id: "pg_4",  name: "Seesaw",     x: 40, y: 75, w: 20, imgUrl: "assets/images/scenes/playground/Seesaw.png?v=3" },
-        { id: "pg_5",  name: "Ball",       x: 60, y: 80, w: 3,  imgUrl: "assets/images/scenes/playground/Ball.png?v=3" },
-        { id: "pg_6",  name: "KitePg",     x: 70, y: 20, w: 6,  imgUrl: "assets/images/scenes/playground/KitePg.png?v=3" },
-        { id: "pg_7",  name: "Bicycle",    x: 90, y: 80, w: 8,  imgUrl: "assets/images/scenes/playground/Bicycle.png?v=3" },
-        { id: "pg_8",  name: "Bench",      x: 80, y: 80, w: 12, imgUrl: "assets/images/scenes/playground/Bench.png?v=3" },
-        { id: "pg_9",  name: "Tree",       x: 10, y: 40, w: 20, imgUrl: "assets/images/scenes/playground/Tree.png?v=3" },
-        { id: "pg_10", name: "Bird",       x: 40, y: 15, w: 3,  imgUrl: "assets/images/scenes/playground/Bird.png?v=3" },
-        { id: "pg_11", name: "Cloud",      x: 20, y: 15, w: 15, imgUrl: "assets/images/scenes/playground/Cloud.png?v=3" },
-        { id: "pg_12", name: "Flower",     x: 15, y: 90, w: 4,  imgUrl: "assets/images/scenes/playground/Flower.png?v=3" }
-    ],
-    // Localized dictionary specific to this scene's items
     i18n: {
         en: {
             // Legacy keys

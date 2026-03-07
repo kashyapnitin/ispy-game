@@ -4,31 +4,11 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 window.ISPY_SCENES.beach = {
     id: 'beach',
     bgImage: 'assets/images/scenes/scene_beach.jpg',
-    // OrigWidth/Height will be populated dynamically at load time
-    /**
-     * Hotspot-only data model for this scene.
-     * Bounding boxes come from scripts/beach_hotspots.json via HOTSPOT_SOURCES.
-     * The legacy `objects` list is kept only for tooling/backwards-compat.
-     */
     activeCount: 14,
+    // Bounding boxes loaded from scripts/data/hotspots/beach.json at runtime.
+    allObjectsLoaded: false,
     allObjects: [],
-    objects: [
-        { id: "b_1", name: "Sun Hat", x: 25, y: 75, w: 6, imgUrl: "assets/images/scenes/beach/Sun_Hat.png" },
-        { id: "b_2", name: "Sunglasses", x: 45, y: 85, w: 4, imgUrl: "assets/images/scenes/beach/Sunglasses.png" },
-        { id: "b_3", name: "Beach Ball", x: 60, y: 80, w: 7, imgUrl: "assets/images/scenes/beach/Beach_Ball.png" },
-        { id: "b_4", name: "Sandcastle", x: 30, y: 60, w: 10, imgUrl: "assets/images/scenes/beach/Sandcastle.png" },
-        { id: "b_5", name: "Starfish", x: 80, y: 70, w: 5, imgUrl: "assets/images/scenes/beach/Starfish.png" },
-        { id: "b_6", name: "Seashell", x: 15, y: 88, w: 4, imgUrl: "assets/images/scenes/beach/Seashell.png" },
-        { id: "b_7", name: "Crab", x: 55, y: 92, w: 6, imgUrl: "assets/images/scenes/beach/Crab.png" },
-        { id: "b_8", name: "Bucket", x: 75, y: 55, w: 6, imgUrl: "assets/images/scenes/beach/Bucket.png" },
-        { id: "b_9", name: "Spade", x: 85, y: 88, w: 4, imgUrl: "assets/images/scenes/beach/Spade.png" },
-        { id: "b_10", name: "Towel", x: 40, y: 65, w: 12, imgUrl: "assets/images/scenes/beach/Towel.png" },
-        { id: "b_11", name: "Umbrella", x: 65, y: 45, w: 15, imgUrl: "assets/images/scenes/beach/Umbrella.png" },
-        { id: "b_12", name: "Surfboard", x: 10, y: 50, w: 8, imgUrl: "assets/images/scenes/beach/Surfboard.png" },
-        { id: "b_13", name: "Ice Cream", x: 20, y: 65, w: 4, imgUrl: "assets/images/scenes/beach/Ice_Cream.png" },
-        { id: "b_14", name: "Flip Flops", x: 50, y: 75, w: 5, imgUrl: "assets/images/scenes/beach/Flip_Flops.png" }
-    ],
-    // Localized dictionary specific to this scene's items
+
     i18n: {
         en: {
             obj_Sun_Hat: "Sun Hat", obj_Sunglasses: "Sunglasses", obj_Beach_Ball: "Beach Ball", obj_Sandcastle: "Sandcastle", obj_Starfish: "Starfish", obj_Seashell: "Seashell", obj_Crab: "Crab", obj_Bucket: "Bucket", obj_Spade: "Spade", obj_Towel: "Towel", obj_Umbrella: "Umbrella", obj_Surfboard: "Surfboard", obj_Ice_Cream: "Ice Cream", obj_Flip_Flops: "Flip Flops",

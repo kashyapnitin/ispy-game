@@ -4,31 +4,11 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 window.ISPY_SCENES.kitchen = {
     id: 'kitchen',
     bgImage: 'assets/images/scenes/scene_kitchen.jpg',
-    // OrigWidth/Height will be populated dynamically at load time
-    /**
-     * Hotspot-only data model for this scene.
-     * Bounding boxes come from scripts/kitchen_hotspots.json via HOTSPOT_SOURCES.
-     * The legacy `objects` list is kept only for tooling/backwards-compat.
-     */
     activeCount: 14,
+    // Bounding boxes loaded from scripts/data/hotspots/kitchen.json at runtime.
+    allObjectsLoaded: false,
     allObjects: [],
-    objects: [
-        { id: "kit_1", name: "Apple", x: 28, y: 53, w: 3, imgUrl: "assets/images/scenes/kitchen/Apple.jpg" },
-        { id: "kit_2", name: "Banana", x: 86, y: 45, w: 4, imgUrl: "assets/images/scenes/kitchen/Banana.jpg" },
-        { id: "kit_3", name: "Mug", x: 67, y: 31, w: 3, imgUrl: "assets/images/scenes/kitchen/Mug.jpg" },
-        { id: "kit_4", name: "Spoon", x: 6, y: 72, w: 2, imgUrl: "assets/images/scenes/kitchen/Spoon.jpg" },
-        { id: "kit_5", name: "Fork", x: 58, y: 74, w: 2, imgUrl: "assets/images/scenes/kitchen/Fork.jpg" },
-        { id: "kit_6", name: "Plate", x: 50, y: 32, w: 6, imgUrl: "assets/images/scenes/kitchen/Plate.jpg" },
-        { id: "kit_7", name: "Pot", x: 34, y: 75, w: 5, imgUrl: "assets/images/scenes/kitchen/Pot.jpg" },
-        { id: "kit_8", name: "Pan", x: 63, y: 44, w: 5, imgUrl: "assets/images/scenes/kitchen/Pan.jpg" },
-        { id: "kit_9", name: "Spatula", x: 57, y: 45, w: 2, imgUrl: "assets/images/scenes/kitchen/Spatula.jpg" },
-        { id: "kit_10", name: "Toaster", x: 42, y: 53, w: 6, imgUrl: "assets/images/scenes/kitchen/Toaster.jpg" },
-        { id: "kit_11", name: "Blender", x: 48, y: 47, w: 5, imgUrl: "assets/images/scenes/kitchen/Blender.jpg" },
-        { id: "kit_12", name: "Oven Mitt", x: 19, y: 50, w: 4, imgUrl: "assets/images/scenes/kitchen/Oven_Mitt.jpg" },
-        { id: "kit_13", name: "Rolling Pin", x: 38, y: 55, w: 6, imgUrl: "assets/images/scenes/kitchen/Rolling_Pin.jpg" },
-        { id: "kit_14", name: "Whisk", x: 80, y: 14, w: 3, imgUrl: "assets/images/scenes/kitchen/Whisk.jpg" }
-    ],
-    // Localized dictionary specific to this scene's items
+
     i18n: {
         en: {
             obj_Apple: "Apple", obj_Banana: "Banana", obj_Mug: "Mug", obj_Spoon: "Spoon", obj_Fork: "Fork", obj_Plate: "Plate", obj_Pot: "Pot", obj_Pan: "Pan", obj_Spatula: "Spatula", obj_Toaster: "Toaster", obj_Blender: "Blender", obj_Oven_Mitt: "Oven Mitt", obj_Rolling_Pin: "Rolling Pin", obj_Whisk: "Whisk",
