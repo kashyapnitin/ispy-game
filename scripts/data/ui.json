@@ -74,7 +74,7 @@
     "winTime": "आपने सभी वस्तुएं {time} में ढूंढ लीं।",
     "playAgain": "फिर से खेलें",
     "mainMenu": "मुख्य मेनू",
-    "sceneAnimalfarm": "जानवरों का खेत",
+    "sceneAnimalfarm": "खेत और जानवर",
     "sceneToyshop": "खिलौनों की दुकान",
     "sceneKitchen": "रसोई",
     "scenePlayground": "खेल का मैदान",
@@ -93,7 +93,7 @@
     "offlineSceneUnavailable": "यह दृश्य ऑफलाइन उपलब्ध नहीं है। इसे खेलने के लिए इंटरनेट से कनेक्ट करें।",
     "findHintFallback": "ढूंढें: {name}",
     "madeInIndiaBy": "भारत में बनाया गया",
-    "madeInIndiaWith": "बहुत सारे ❤️ और Cursor, Claude और Gemini के साथ AI कोडिंग :)"
+    "madeInIndiaWith": "द्वारा, बहुत सारे ❤️ और Cursor, Claude और Gemini की AI कोडिंग के साथ :)"
   },
   "zh": {
     "title": "我找到了...",
