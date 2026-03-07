@@ -8,6 +8,7 @@
   - **`data/`** – Data dumping and consistency
     - **`dump_data.py`** – Reads `js/data/i18n-core.js` and `js/data/scenes/*.js`, writes `data/ui.json`, `data/scenes/*.json`, and legacy `game_data.json`.
     - **`check_consistency.py`** – Checks scene JS, hotspot JSON, and assets; exits 0 if all pass.
+  - **`split_game_data.py`** – One-off: splits `game_data.json` into `data/ui.json` and `data/scenes/*.json` (inverse of dump_data).
   - **`audio/`** – Voice and audio generation
     - **`generate_audio.py`** – General audio generation (ElevenLabs / mock).
     - **`generate_scene_audio.py`** – One scene, all or one lang: `python3 scripts/tools/audio/generate_scene_audio.py --scene <id> [--lang xx]`.
@@ -25,9 +26,11 @@
 
 ## Adding a new scene
 
+See **[docs/ADD-NEW-SCENE.md](../docs/ADD-NEW-SCENE.md)** for the full checklist. Summary:
+
 1. Add scene image to `assets/images/scenes/scene_<id>.<ext>`.
 2. Run `python3 scripts/tools/assets/bbox_editor.py --image assets/images/scenes/scene_<id>.<ext> --output scripts/data/hotspots/<id>.json` and save bboxes.
-3. Create `js/data/scenes/scene-<id>.js` and add scene to `SCENE_REGISTRY` in `js/main.js`, plus menu button and script tag in `index.html`.
+3. Create `js/data/scenes/scene-<id>.js` (see docs/SCENE-JS-CONVENTION.md) and add scene to `SCENE_REGISTRY` in `js/main.js`, scene label in `js/data/i18n-core.js`, and menu button + script tag in `index.html`.
 4. Run `python3 scripts/tools/data/dump_data.py` to update `data/` and `game_data.json`.
 5. Generate audio: `python3 scripts/tools/audio/generate_scene_audio.py --scene <id>` (or scene-specific script if added).
-6. Update `sw.js` PRECACHE with new scene image and hotspot JSON paths.
+6. Update `sw.js` precache with new scene image and hotspot JSON paths.

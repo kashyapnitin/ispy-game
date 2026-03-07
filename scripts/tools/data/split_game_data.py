@@ -3,7 +3,8 @@
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+# Project root (scripts/tools/data/ -> 3 levels up)
+ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "scripts" / "data"
 GAME_DATA = ROOT / "scripts" / "game_data.json"
 
