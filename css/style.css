@@ -148,6 +148,116 @@ button:active {
     box-shadow: none;
 }
 
+/* =========================================
+   OFFLINE BANNER (non-dismissible, light overlay; no user action)
+   ========================================= */
+.offline-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(248, 250, 252, 0.92);
+    color: #475569;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 8px 16px;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.08);
+    transform: translateY(100%);
+    transition: transform 0.25s ease-out;
+    pointer-events: none;
+}
+.offline-banner.visible {
+    transform: translateY(0);
+}
+
+.offline-banner-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35em;
+}
+.offline-banner-text strong {
+    font-weight: 700;
+    color: #334155;
+}
+.offline-banner-icon {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 0.35em;
+    vertical-align: -0.2em;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12h4M10 12h4M18 12h4M4 8v8M12 8v8M20 8v8'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Game screen: small offline indicator over the black letterbox at top */
+.game-offline-indicator {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(30, 30, 30, 0.75);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    border-radius: 20px;
+    pointer-events: none;
+}
+.game-offline-indicator[hidden] {
+    display: none !important;
+}
+.game-offline-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.95)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z'/%3E%3Cline x1='2' y1='2' x2='22' y2='22'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.game-offline-audio-hint {
+    max-width: 200px;
+    line-height: 1.2;
+}
+.game-offline-audio-hint.hidden {
+    display: none !important;
+}
+
+/* App toast for offline / error messages */
+.app-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    max-width: min(90vw, 360px);
+    padding: 12px 16px;
+    background: rgba(15, 23, 42, 0.95);
+    color: #e5e7eb;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    text-align: center;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease-out, opacity 0.2s ease-out;
+}
+.app-toast.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* Language Header */
 .app-header {
     position: absolute;

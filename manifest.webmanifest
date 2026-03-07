@@ -1,0 +1,24 @@
+{
+  "name": "I Spy Digital Game",
+  "short_name": "I Spy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0F8FF",
+  "theme_color": "#FF5722",
+  "description": "A playful hidden-object game for young kids, with multi-language voice hints.",
+  "icons": [
+    {
+      "src": "assets/ispy-app-icon-512.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/ispy-app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

@@ -90,7 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleEasy: document.getElementById('toggle-easy'),
         toggleHard: document.getElementById('toggle-hard'),
         toggleTimerOff: document.getElementById('toggle-timer-off'),
-        toggleTimerOn: document.getElementById('toggle-timer-on')
+        toggleTimerOn: document.getElementById('toggle-timer-on'),
+        offlineBanner: document.getElementById('offline-banner'),
+        appToast: document.getElementById('app-toast'),
+        gameOfflineIndicator: document.getElementById('game-offline-indicator'),
+        gameOfflineAudioHint: document.getElementById('game-offline-audio-hint')
     };
 
     // Audio Elements
@@ -141,6 +145,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- PWA: register service worker if supported ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch((err) => {
+                console.warn('Service worker registration failed:', err);
+            });
+        });
+    }
+
     const MENU_THEME_CLASSES = [
         'menu-theme-sky',
         'menu-theme-meadow',
@@ -168,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 (I18N_DICT.en && I18N_DICT.en[key]);
             if (text) el.innerText = text;
         });
-
         // Refresh dynamic UI elements if they are rendered
         if (ui.targetList && ui.targetList.children.length > 0) {
             setupSidebar();
@@ -187,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fromLang = currentLang;
         currentLang = e.target.value;
         updateDOMStrings();
+        updateOfflineBanner();
         trackEvent('language_change', {
             from: fromLang,
             to: currentLang
@@ -214,9 +227,70 @@ document.addEventListener('DOMContentLoaded', () => {
     ui.toggleTimerOff?.addEventListener('click', () => { prefs.timerOn = false; savePrefs(); syncTogglesFromPrefs(); });
     ui.toggleTimerOn?.addEventListener('click', () => { prefs.timerOn = true; savePrefs(); syncTogglesFromPrefs(); });
 
+    function updateOfflineBanner() {
+        const offline = !navigator.onLine;
+        const onGameScreen = screens.game && screens.game.classList.contains('active');
+        const onMenuOrOther = screens.menu?.classList.contains('active') || screens.loading?.classList.contains('active') || screens.win?.classList.contains('active');
+
+        if (ui.offlineBanner) {
+            ui.offlineBanner.classList.toggle('visible', offline && onMenuOrOther);
+        }
+        if (ui.gameOfflineIndicator) {
+            if (offline && onGameScreen) {
+                ui.gameOfflineIndicator.removeAttribute('hidden');
+                if (ui.gameOfflineAudioHint) {
+                    ui.gameOfflineAudioHint.classList.add('hidden');
+                    const showHint = () => {
+                        ui.gameOfflineAudioHint.classList.remove('hidden');
+                        ui.gameOfflineAudioHint.textContent = (I18N_DICT[currentLang]?.offlineAudioHint) || (I18N_DICT.en?.offlineAudioHint) || 'Go online once to make the audio hints work.';
+                    };
+                    const sceneData = gameState.sceneData;
+                    const objects = (sceneData && Array.isArray(sceneData.allObjects)) ? sceneData.allObjects : [];
+                    if (objects.length === 0) {
+                        showHint();
+                    } else if (typeof caches !== 'undefined') {
+                        const base = `${location.origin}/assets/audio/voices/${currentLang}`;
+                        const neededUrls = new Set();
+                        objects.forEach((obj) => {
+                            const n = (obj.name || '').replace(/ /g, '_');
+                            if (n) {
+                                neededUrls.add(`${base}/hint_${n}.mp3`);
+                                neededUrls.add(`${base}/found_${n}.mp3`);
+                            }
+                        });
+                        caches.open('ispy-voices-v1').then((cache) => cache.keys()).then((requests) => {
+                            const cachedUrls = new Set(requests.map((r) => r.url));
+                            const allNeededCached = [...neededUrls].every((u) => cachedUrls.has(u));
+                            if (!allNeededCached) showHint();
+                        }).catch(showHint);
+                    } else {
+                        showHint();
+                    }
+                }
+            } else {
+                ui.gameOfflineIndicator.setAttribute('hidden', '');
+                if (ui.gameOfflineAudioHint) ui.gameOfflineAudioHint.classList.remove('hidden');
+            }
+        }
+    }
+
+    window.addEventListener('online', updateOfflineBanner);
+    window.addEventListener('offline', updateOfflineBanner);
+
+    function showAppMessage(text, durationMs) {
+        if (!ui.appToast) return;
+        ui.appToast.textContent = text;
+        ui.appToast.classList.add('visible');
+        clearTimeout(ui.appToast._hideTimer);
+        ui.appToast._hideTimer = setTimeout(() => {
+            ui.appToast.classList.remove('visible');
+        }, durationMs || 4000);
+    }
+
     // Run once on boot to set initial correct translations
     updateDOMStrings();
     syncTogglesFromPrefs();
+    updateOfflineBanner();
     // --- Core Functions ---
 
     function applyRandomMenuTheme() {
@@ -246,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (langHeader) {
             langHeader.style.display = (screenId === 'menu') ? 'block' : 'none';
         }
+        updateOfflineBanner();
     }
 
     function initGame(sceneId) {
@@ -278,8 +353,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(err => {
                     console.error('Failed to load hotspot JSON for scene', sceneId, err);
                     sceneData.allObjectsLoaded = true; // avoid infinite loop
-                    initGame(sceneId); // fall back to any statically-defined allObjects/objects
+                    const msg = (I18N_DICT[currentLang]?.offlineSceneUnavailable) || (I18N_DICT.en?.offlineSceneUnavailable) || 'This scene isn\'t available offline. Connect to the internet to play it.';
+                    showAppMessage(msg, 5000);
+                    switchScreen('menu');
+                    return;
                 });
+            return;
+        }
+
+        if (!sceneData.bgImage) {
+            const msg = (I18N_DICT[currentLang]?.offlineSceneUnavailable) || (I18N_DICT.en?.offlineSceneUnavailable) || 'This scene isn\'t available offline. Connect to the internet to play it.';
+            showAppMessage(msg, 5000);
+            switchScreen('menu');
             return;
         }
 
@@ -287,6 +372,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!hasHotspots) {
             console.error('Scene is missing hotspot allObjects data; cannot start scene:', sceneId);
+            const msg = (I18N_DICT[currentLang]?.offlineSceneUnavailable) || (I18N_DICT.en?.offlineSceneUnavailable) || 'This scene isn\'t available offline. Connect to the internet to play it.';
+            showAppMessage(msg, 5000);
             switchScreen('menu');
             return;
         }
@@ -317,23 +404,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const assetPromises = [];
 
         // Preload main background
-        assetPromises.push(new Promise((resolve) => {
+        assetPromises.push(new Promise((resolve, reject) => {
             const bgImg = new Image();
             bgImg.onload = () => {
                 ui.sceneImage.src = bgImg.src;
-                // Dynamically capture the aspect ratio from the actual loaded image!
                 sceneData.origWidth = bgImg.naturalWidth || 1024;
                 sceneData.origHeight = bgImg.naturalHeight || 1024;
                 sceneData.bgImg = bgImg;
                 resolve();
             };
-            bgImg.onerror = resolve; // Resolve anyway to prevent infinite loading screen
+            bgImg.onerror = () => {
+                const msg = (I18N_DICT[currentLang]?.offlineSceneUnavailable) || (I18N_DICT.en?.offlineSceneUnavailable) || 'This scene isn\'t available offline. Connect to the internet to play it.';
+                showAppMessage(msg, 5000);
+                switchScreen('menu');
+                reject(new Error('Background image failed to load'));
+            };
             bgImg.src = sceneData.bgImage;
         }));
 
         // Legacy sprite overlays are no longer used; all scenes must provide hotspot data.
 
-        // Wait for all assets to load/fail, then boot the scene
+        // Wait for all assets to load; if any fail (e.g. bg image), we already showed message and went to menu
         Promise.all(assetPromises).then(() => {
             setupScene();
             setupSidebar();
@@ -382,7 +473,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateHardModeTargets();
                 scrollToFirstUnfoundSidebarItem();
             }
+
+            // Aggressively cache hint + found voice clips for all objects in this scene (full pool, not just the 14 active)
+            if (typeof caches !== 'undefined' && Array.isArray(gameState.sceneData.allObjects) && gameState.sceneData.allObjects.length) {
+                prefetchSceneVoices(currentLang, gameState.sceneData.allObjects);
+            }
+        }).catch(() => {
+            // Background or other asset failed; we already showed message and switched to menu
         });
+    }
+
+    function prefetchSceneVoices(lang, objects) {
+        if (!objects || !objects.length) return;
+        const base = `${location.origin}/assets/audio/voices/${lang}`;
+        caches.open('ispy-voices-v1').then((cache) => {
+            objects.forEach((obj) => {
+                const n = (obj.name || '').replace(/ /g, '_');
+                if (!n) return;
+                cache.add(`${base}/hint_${n}.mp3`).catch(() => {});
+                cache.add(`${base}/found_${n}.mp3`).catch(() => {});
+            });
+        }).catch(() => {});
     }
 
     function handleResize() {
@@ -540,8 +651,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const locName = getI18nObjName(obj.name);
 
+            const thumbSrc = obj.dataUrl || obj.imgUrl || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1\' height=\'1\'/%3E';
             itemElement.innerHTML = `
-                <img src="${obj.dataUrl || obj.imgUrl}" alt="${locName}" class="sprite-thumb">
+                <img src="${thumbSrc}" alt="${locName}" class="sprite-thumb">
                 <span>${locName}</span>
             `;
 
@@ -740,36 +852,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // If a voice clip is currently playing, wait for it to finish
+        const runAfterShortDelay = () => setTimeout(safeSpeak, navigator.onLine ? 200 : 100);
+
         if (currentVoiceAudio && !currentVoiceAudio.paused && !currentVoiceAudio.ended) {
-            const handler = () => {
-                // Small buffer after the found clip ends
-                setTimeout(safeSpeak, 200);
-            };
+            const handler = () => runAfterShortDelay();
             currentVoiceAudio.addEventListener('ended', handler, { once: true });
+            currentVoiceAudio.addEventListener('error', handler, { once: true });
         } else {
-            // Fallback: simple timeout if nothing is playing
-            setTimeout(safeSpeak, delayMs);
+            const delay = navigator.onLine ? delayMs : 400;
+            setTimeout(safeSpeak, delay);
         }
     }
 
     function speakPhrase(phraseType, objName) {
         if (!objName) return;
 
-        // Interrupt any currently playing TTS
+        const showHintTextFallback = () => {
+            if (phraseType !== 'hint') return;
+            const hintText = (I18N_DICT[currentLang]?.findHintFallback || I18N_DICT.en?.findHintFallback || 'Find: {name}').replace('{name}', getI18nObjName(objName));
+            showAppMessage(hintText, 2500);
+        };
+
         if (currentVoiceAudio) {
             currentVoiceAudio.pause();
             currentVoiceAudio.currentTime = 0;
         }
 
-        // Statically generated fallback paths
-        // Spaces are replaced with underscores matching the Python script
         const sanitizedObjName = objName.replace(/ /g, "_");
         const audioPath = `assets/audio/voices/${currentLang}/${phraseType}_${sanitizedObjName}.mp3`;
 
         currentVoiceAudio = new Audio(audioPath);
-        currentVoiceAudio.play().catch(err => {
-            console.warn(`Could not play static audio file ${audioPath}:`, err);
+        currentVoiceAudio.play().catch(() => {
+            showHintTextFallback();
         });
     }
 

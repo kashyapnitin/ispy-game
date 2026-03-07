@@ -12,7 +12,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/ispy-app-icon-512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/ispy-app-icon-512.png">
+    <link rel="apple-touch-icon" href="assets/ispy-app-icon-512.png">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.webmanifest">
     <!-- Plausible analytics (replace data-domain with your production domain) -->
     <!--script defer data-domain="ispy-game.netlify.app" src="https://plausible.io/js/script.js"></script-->
     <!-- Privacy-friendly analytics by Plausible -->
@@ -170,6 +174,11 @@
             <!-- Main Scene Area -->
             <main id="scene-container"
                 class="flex-1 flex items-center justify-center bg-[#333333] relative overflow-hidden">
+                <!-- Offline indicator: icon + optional audio hint, over the black letterbox area; hidden when online -->
+                <div id="game-offline-indicator" class="game-offline-indicator" aria-live="polite" role="status" hidden>
+                    <span class="game-offline-icon" aria-hidden="true"></span>
+                    <span id="game-offline-audio-hint" class="game-offline-audio-hint" data-i18n="offlineAudioHint"></span>
+                </div>
                 <!-- Inner container handles scaling/aspect ratio of the scene -->
                 <div id="scene-wrapper">
                     <img id="scene-image" src="" alt="Game Scene Background">
@@ -215,6 +224,16 @@
     <script src="js/data/scenes/scene-kitchen.js"></script>
     <script src="js/data/scenes/scene-playground.js?v=3"></script>
     <script src="js/data/scenes/scene-beach.js"></script>
+
+    <!-- Offline banner: non-dismissible, light overlay, shows when offline (no user action) -->
+    <div id="offline-banner" class="offline-banner" aria-live="polite" role="status">
+        <span class="offline-banner-icon" aria-hidden="true"></span>
+        <span class="offline-banner-text">
+            <strong data-i18n="offlineTitle">You're offline</strong>
+            <span data-i18n="offlineSubtitle">You can still play the game.</span>
+        </span>
+    </div>
+    <div id="app-toast" class="app-toast" aria-live="polite" role="status"></div>
 
     <!-- Core Game Engine -->
     <script src="js/main.js?v=2"></script>
