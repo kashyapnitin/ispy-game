@@ -507,8 +507,61 @@ button:active {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.scene-btn img {
+.scene-thumb-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.scene-btn img.scene-thumb {
     background-color: #eee;
+}
+
+.scene-thumb-done {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    pointer-events: none;
+}
+
+.scene-thumb-done.visible {
+    display: flex;
+}
+
+.scene-done-tick {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #5a8f5a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.scene-done-tick::after {
+    content: '';
+    width: 6px;
+    height: 10px;
+    margin-bottom: 2px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.scene-best-time {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #2d5a2d;
+    line-height: 1.1;
+    padding: 2px 6px;
+    border-radius: 9999px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 /* Menu toggles (Timer, Game mode) – compact, non-dominant */

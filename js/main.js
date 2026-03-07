@@ -42,15 +42,62 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {}
     }
 
-    // --- Personal best times (per scene + mode, persisted) ---
+    // --- Personal best times (per scene + language + mode, persisted) ---
     const BEST_TIMES_KEY = 'ispy_bestTimes';
-    let bestTimes = {}; // { [sceneId]: { easy?: number, hard?: number } } in seconds
+    let bestTimes = {}; // { [sceneId]: { [lang]: { easy?: number, hard?: number } } } in seconds
+
+    // --- Completed scenes per language (for menu tick + carousel order) ---
+    const COMPLETED_SCENES_KEY = 'ispy_completedScenes';
+    let completedScenes = {}; // { [sceneId]: string[] } lang codes
+
+    function loadCompletedScenes() {
+        try {
+            const raw = localStorage.getItem(COMPLETED_SCENES_KEY);
+            if (raw) completedScenes = JSON.parse(raw);
+            if (typeof completedScenes !== 'object' || completedScenes === null) completedScenes = {};
+        } catch (e) {
+            completedScenes = {};
+        }
+    }
+
+    function saveCompletedScenes() {
+        try {
+            localStorage.setItem(COMPLETED_SCENES_KEY, JSON.stringify(completedScenes));
+        } catch (e) {}
+    }
+
+    function markSceneCompleted(sceneId, lang) {
+        if (!sceneId || !lang) return;
+        if (!completedScenes[sceneId]) completedScenes[sceneId] = [];
+        if (!completedScenes[sceneId].includes(lang)) {
+            completedScenes[sceneId].push(lang);
+            saveCompletedScenes();
+        }
+    }
+
+    function isSceneCompletedInLang(sceneId, lang) {
+        return Array.isArray(completedScenes[sceneId]) && completedScenes[sceneId].includes(lang);
+    }
 
     function loadBestTimes() {
         try {
             const raw = localStorage.getItem(BEST_TIMES_KEY);
             if (raw) bestTimes = JSON.parse(raw);
             if (typeof bestTimes !== 'object' || bestTimes === null) bestTimes = {};
+            // Migrate old format (per scene+mode only) to per-language
+            Object.keys(bestTimes).forEach((sceneId) => {
+                const v = bestTimes[sceneId];
+                if (!v || typeof v !== 'object') return;
+                const keys = Object.keys(v);
+                const hasLegacyMode = typeof v.easy === 'number' || typeof v.hard === 'number';
+                const looksLikeLegacy = hasLegacyMode && keys.every((k) => k === 'easy' || k === 'hard');
+                if (looksLikeLegacy) {
+                    const en = {};
+                    if (typeof v.easy === 'number') en.easy = v.easy;
+                    if (typeof v.hard === 'number') en.hard = v.hard;
+                    bestTimes[sceneId] = { en };
+                }
+            });
         } catch (e) {
             bestTimes = {};
         }
@@ -200,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentLang = e.target.value;
         updateDOMStrings();
         updateOfflineBanner();
+        updateSceneSelectionUI();
         trackEvent('language_change', {
             from: fromLang,
             to: currentLang
@@ -212,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lang: currentLang
     });
     loadBestTimes();
+    loadCompletedScenes();
 
     function syncTogglesFromPrefs() {
         [ui.toggleEasy, ui.toggleHard].forEach(el => {
@@ -222,8 +271,47 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.toggleTimerOn && (ui.toggleTimerOn.classList.toggle('active', prefs.timerOn));
     }
 
-    ui.toggleEasy?.addEventListener('click', () => { prefs.gameMode = 'easy'; savePrefs(); syncTogglesFromPrefs(); });
-    ui.toggleHard?.addEventListener('click', () => { prefs.gameMode = 'hard'; savePrefs(); syncTogglesFromPrefs(); });
+    const DEFAULT_SCENE_ORDER = ['toyshop', 'kitchen', 'playground', 'beach'];
+
+    function updateSceneSelectionUI() {
+        const container = document.getElementById('scene-selection');
+        if (!container) return;
+        const buttons = Array.from(container.querySelectorAll('.scene-btn'));
+        if (buttons.length === 0) return;
+
+        const completedInLang = (sceneId) => isSceneCompletedInLang(sceneId, currentLang);
+        const uncompleted = DEFAULT_SCENE_ORDER.filter((id) => !completedInLang(id));
+        const completed = DEFAULT_SCENE_ORDER.filter(completedInLang);
+        const orderedIds = [...uncompleted, ...completed];
+        const byScene = new Map(buttons.map((btn) => [btn.dataset.scene, btn]));
+
+        orderedIds.forEach((id) => {
+            const btn = byScene.get(id);
+            if (btn) container.appendChild(btn);
+        });
+
+        container.scrollLeft = 0;
+
+        const mode = prefs.gameMode;
+        buttons.forEach((btn) => {
+            const sceneId = btn.dataset.scene;
+            const doneEl = btn.querySelector('.scene-thumb-done');
+            const timeEl = btn.querySelector('.scene-best-time');
+            if (!doneEl || !timeEl) return;
+            const completed = isSceneCompletedInLang(sceneId, currentLang);
+            if (completed) {
+                doneEl.classList.add('visible');
+                const seconds = bestTimes[sceneId]?.[currentLang]?.[mode];
+                timeEl.textContent = seconds != null ? formatSecondsToTime(seconds) : '';
+            } else {
+                doneEl.classList.remove('visible');
+                timeEl.textContent = '';
+            }
+        });
+    }
+
+    ui.toggleEasy?.addEventListener('click', () => { prefs.gameMode = 'easy'; savePrefs(); syncTogglesFromPrefs(); updateSceneSelectionUI(); });
+    ui.toggleHard?.addEventListener('click', () => { prefs.gameMode = 'hard'; savePrefs(); syncTogglesFromPrefs(); updateSceneSelectionUI(); });
     ui.toggleTimerOff?.addEventListener('click', () => { prefs.timerOn = false; savePrefs(); syncTogglesFromPrefs(); });
     ui.toggleTimerOn?.addEventListener('click', () => { prefs.timerOn = true; savePrefs(); syncTogglesFromPrefs(); });
 
@@ -314,6 +402,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (screenId === 'menu') {
             applyRandomMenuTheme();
             syncTogglesFromPrefs();
+            updateSceneSelectionUI();
+            const sceneSelection = document.getElementById('scene-selection');
+            if (sceneSelection) sceneSelection.scrollLeft = 0;
         }
         // Show language selector only on main menu for a cleaner in-game UI.
         const langHeader = document.querySelector('.app-header');
@@ -429,6 +520,8 @@ document.addEventListener('DOMContentLoaded', () => {
             setupScene();
             setupSidebar();
             updateProgress();
+            ui.targetList.scrollLeft = 0;
+            ui.targetList.scrollTop = 0;
 
             // On first entering a scene, speak the first target object (both Easy and Hard modes)
             const firstObj = gameState.objectsToFind[0];
@@ -988,13 +1081,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ui.winPersonalBestMessage) {
             if (prefs.timerOn && sceneId) {
                 const currentSeconds = elapsedSeconds;
-                const sceneBests = bestTimes[sceneId] || {};
+                const sceneBests = bestTimes[sceneId]?.[currentLang] || {};
                 const previousBest = sceneBests[mode];
                 const isNewBest = previousBest == null || currentSeconds <= previousBest;
 
                 if (isNewBest) {
                     if (!bestTimes[sceneId]) bestTimes[sceneId] = {};
-                    bestTimes[sceneId][mode] = currentSeconds;
+                    if (!bestTimes[sceneId][currentLang]) bestTimes[sceneId][currentLang] = {};
+                    bestTimes[sceneId][currentLang][mode] = currentSeconds;
                     saveBestTimes();
                     const msg =
                         (I18N_DICT[currentLang] && I18N_DICT[currentLang].winPersonalBest) ||
@@ -1023,8 +1117,10 @@ document.addEventListener('DOMContentLoaded', () => {
             timerOn: prefs.timerOn,
             lang: currentLang,
             elapsedSeconds,
-            bestSeconds: (bestTimes[sceneId] && bestTimes[sceneId][mode]) || null
+            bestSeconds: (bestTimes[sceneId]?.[currentLang]?.[mode]) ?? null
         });
+
+        markSceneCompleted(sceneId, currentLang);
 
         playSound('win');
         switchScreen('win');

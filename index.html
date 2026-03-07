@@ -73,9 +73,12 @@
                         <button
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="toyshop">
-                            <img src="assets/images/scenes/toyshop/scene_toyshop.jpg" alt="Toy Shop Scene"
-                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover"
-                                onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23ccc\'/><text x=\'50\' y=\'50\' dominant-baseline=\'middle\' text-anchor=\'middle\'>Image Needed</text></svg>'">
+                            <div class="scene-thumb-wrap">
+                                <img src="assets/images/scenes/toyshop/scene_toyshop.jpg" alt="Toy Shop Scene"
+                                    class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover"
+                                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23ccc\'/><text x=\'50\' y=\'50\' dominant-baseline=\'middle\' text-anchor=\'middle\'>Image Needed</text></svg>'">
+                                <span class="scene-thumb-done" aria-hidden="true"><span class="scene-done-tick"></span><span class="scene-best-time"></span></span>
+                            </div>
                             <span data-i18n="sceneToyshop"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
                                 Toy Shop
@@ -84,8 +87,11 @@
                         <button
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="kitchen">
-                            <img src="assets/images/scenes/kitchen/scene_kitchen.jpg" alt="Kitchen Scene"
-                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
+                            <div class="scene-thumb-wrap">
+                                <img src="assets/images/scenes/kitchen/scene_kitchen.jpg" alt="Kitchen Scene"
+                                    class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
+                                <span class="scene-thumb-done" aria-hidden="true"><span class="scene-done-tick"></span><span class="scene-best-time"></span></span>
+                            </div>
                             <span data-i18n="sceneKitchen"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
                                 Kitchen
@@ -94,8 +100,11 @@
                         <button
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="playground">
-                            <img src="assets/images/scenes/playground/scene_playground.jpg" alt="Playground Scene"
-                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
+                            <div class="scene-thumb-wrap">
+                                <img src="assets/images/scenes/playground/scene_playground.jpg" alt="Playground Scene"
+                                    class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
+                                <span class="scene-thumb-done" aria-hidden="true"><span class="scene-done-tick"></span><span class="scene-best-time"></span></span>
+                            </div>
                             <span data-i18n="scenePlayground"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
                                 Playground
@@ -104,8 +113,11 @@
                         <button
                             class="scene-btn flex flex-col items-center bg-white border-[3px] border-[var(--secondary-color)] rounded-xl shadow flex-shrink-0 w-[38vw] sm:w-52 lg:w-64 snap-center p-1.5 sm:p-2"
                             data-scene="beach">
-                            <img src="assets/images/scenes/beach/scene_beach.jpg" alt="Beach Scene"
-                                class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
+                            <div class="scene-thumb-wrap">
+                                <img src="assets/images/scenes/beach/scene_beach.jpg" alt="Beach Scene"
+                                    class="scene-thumb rounded-lg w-full aspect-[4/3] object-cover">
+                                <span class="scene-thumb-done" aria-hidden="true"><span class="scene-done-tick"></span><span class="scene-best-time"></span></span>
+                            </div>
                             <span data-i18n="sceneBeach"
                                 class="font-heading text-sm sm:text-sm lg:text-base mt-1 w-full text-center truncate">
                                 Beach
@@ -132,13 +144,13 @@
                 </div>
             </div>
             <p class="made-in-india text-xs text-gray-400 mt-2 mb-4 text-center px-4">
-                Made in India by
+                <span data-i18n="madeInIndiaBy">Made in India by</span>
                 <a href="https://in.linkedin.com/in/nitin-kashyap-7573181"
                     class="font-semibold underline decoration-dotted text-gray-500"
                     target="_blank" rel="noopener noreferrer">
                     nkp
                 </a>
-                with lots of ❤️ and AI coding with Cursor, Claude &amp; Gemini :)
+                <span data-i18n="madeInIndiaWith">with lots of ❤️ and AI coding with Cursor, Claude &amp; Gemini :)</span>
             </p>
         </div>
 
