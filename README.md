@@ -75,7 +75,7 @@ All helper scripts live in the `scripts/` directory. They are optional and only 
   - `scripts/list_voices.py` – lists potential kid-friendly voices from your ElevenLabs account.
 
 - **Generate DALL·E object sprites** (legacy)
-  - `scripts/tools/generate_dalle_assets.py`
+  - `scripts/tools/assets/generate_dalle_assets.py`
   - Uses `OPENAI_API_KEY` to generate PNG sprites for individual objects. Scenes now use hotspot-only mode (background image + bounding boxes); object sprite art is no longer used and the former `assets/images/archive/` folder has been removed.
 
 Before running any of the above, install Python dependencies (e.g. `requests`, `chompjs`, ElevenLabs SDK) into your environment as needed.

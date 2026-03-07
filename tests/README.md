@@ -1,7 +1,7 @@
 # Tests
 
 - **Consistency** (data/config): from project root run  
-  `python3 scripts/tools/check_consistency.py`  
+  `python3 scripts/tools/data/check_consistency.py`  
   or `npm run test:consistency`.  
   Checks: scene registry vs scene JS, hotspots, scene images, i18n coverage, English audio files per scene.
 

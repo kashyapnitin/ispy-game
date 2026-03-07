@@ -3,8 +3,12 @@
 Data/config consistency checks. Run from project root or scripts/tools/.
 Exits 0 if all pass, 1 otherwise.
 """
+import sys
 from pathlib import Path
 
+_TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(_TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_DIR))
 from data_loader import ROOT, load_game_data, load_hotspot_objects
 
 # Must match js/main.js SCENE_REGISTRY order

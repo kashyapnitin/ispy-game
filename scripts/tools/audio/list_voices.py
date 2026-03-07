@@ -20,8 +20,8 @@ def load_dotenv(dotenv_path: str) -> None:
             os.environ.setdefault(key, value)
 
 
-# Load repo-root .env if present
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Load repo-root .env if present (scripts/tools/audio/ -> 3 levels up)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # Add installed package to sys.path since pip might have installed to site-packages locally

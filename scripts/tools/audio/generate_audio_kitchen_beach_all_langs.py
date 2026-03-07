@@ -26,6 +26,11 @@ def load_dotenv(dotenv_path: Path) -> None:
             os.environ.setdefault(key, value)
 
 
+import sys
+from pathlib import Path
+_TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(_TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_DIR))
 from data_loader import ROOT, load_game_data, load_hotspot_objects
 
 load_dotenv(ROOT / ".env")

@@ -7,6 +7,11 @@ import json
 import shutil
 from pathlib import Path
 
+import sys
+from pathlib import Path
+_TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(_TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_DIR))
 from data_loader import ROOT, load_hotspot_objects
 
 VOICES_DIR = ROOT / "assets" / "audio" / "voices"

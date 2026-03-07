@@ -582,121 +582,8 @@
       "id": "beach",
       "bgImage": "assets/images/scenes/scene_beach.jpg",
       "activeCount": 14,
+      "allObjectsLoaded": false,
       "allObjects": [],
-      "objects": [
-        {
-          "id": "b_1",
-          "name": "Sun Hat",
-          "x": 25,
-          "y": 75,
-          "w": 6,
-          "imgUrl": "assets/images/scenes/beach/Sun_Hat.png"
-        },
-        {
-          "id": "b_2",
-          "name": "Sunglasses",
-          "x": 45,
-          "y": 85,
-          "w": 4,
-          "imgUrl": "assets/images/scenes/beach/Sunglasses.png"
-        },
-        {
-          "id": "b_3",
-          "name": "Beach Ball",
-          "x": 60,
-          "y": 80,
-          "w": 7,
-          "imgUrl": "assets/images/scenes/beach/Beach_Ball.png"
-        },
-        {
-          "id": "b_4",
-          "name": "Sandcastle",
-          "x": 30,
-          "y": 60,
-          "w": 10,
-          "imgUrl": "assets/images/scenes/beach/Sandcastle.png"
-        },
-        {
-          "id": "b_5",
-          "name": "Starfish",
-          "x": 80,
-          "y": 70,
-          "w": 5,
-          "imgUrl": "assets/images/scenes/beach/Starfish.png"
-        },
-        {
-          "id": "b_6",
-          "name": "Seashell",
-          "x": 15,
-          "y": 88,
-          "w": 4,
-          "imgUrl": "assets/images/scenes/beach/Seashell.png"
-        },
-        {
-          "id": "b_7",
-          "name": "Crab",
-          "x": 55,
-          "y": 92,
-          "w": 6,
-          "imgUrl": "assets/images/scenes/beach/Crab.png"
-        },
-        {
-          "id": "b_8",
-          "name": "Bucket",
-          "x": 75,
-          "y": 55,
-          "w": 6,
-          "imgUrl": "assets/images/scenes/beach/Bucket.png"
-        },
-        {
-          "id": "b_9",
-          "name": "Spade",
-          "x": 85,
-          "y": 88,
-          "w": 4,
-          "imgUrl": "assets/images/scenes/beach/Spade.png"
-        },
-        {
-          "id": "b_10",
-          "name": "Towel",
-          "x": 40,
-          "y": 65,
-          "w": 12,
-          "imgUrl": "assets/images/scenes/beach/Towel.png"
-        },
-        {
-          "id": "b_11",
-          "name": "Umbrella",
-          "x": 65,
-          "y": 45,
-          "w": 15,
-          "imgUrl": "assets/images/scenes/beach/Umbrella.png"
-        },
-        {
-          "id": "b_12",
-          "name": "Surfboard",
-          "x": 10,
-          "y": 50,
-          "w": 8,
-          "imgUrl": "assets/images/scenes/beach/Surfboard.png"
-        },
-        {
-          "id": "b_13",
-          "name": "Ice Cream",
-          "x": 20,
-          "y": 65,
-          "w": 4,
-          "imgUrl": "assets/images/scenes/beach/Ice_Cream.png"
-        },
-        {
-          "id": "b_14",
-          "name": "Flip Flops",
-          "x": 50,
-          "y": 75,
-          "w": 5,
-          "imgUrl": "assets/images/scenes/beach/Flip_Flops.png"
-        }
-      ],
       "i18n": {
         "en": {
           "obj_Sun_Hat": "Sun Hat",
@@ -1442,6 +1329,7 @@
       "id": "toyshop",
       "bgImage": "assets/images/scenes/scene_toyshop.jpg",
       "activeCount": 14,
+      "allObjectsLoaded": false,
       "allObjects": [],
       "i18n": {
         "en": {
@@ -2224,359 +2112,8 @@
       "id": "playground",
       "bgImage": "assets/images/scenes/scene_playground.jpg",
       "activeCount": 14,
-      "allObjects": [
-        {
-          "id": "pg_slide",
-          "name": "Slide",
-          "bbox": {
-            "x1": 5,
-            "y1": 15,
-            "x2": 38,
-            "y2": 75
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_swings",
-          "name": "Swings",
-          "bbox": {
-            "x1": 2,
-            "y1": 55,
-            "x2": 30,
-            "y2": 92
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_seesaw",
-          "name": "Seesaw",
-          "bbox": {
-            "x1": 70,
-            "y1": 60,
-            "x2": 92,
-            "y2": 82
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_climbing_net",
-          "name": "Climbing Net",
-          "bbox": {
-            "x1": 48,
-            "y1": 32,
-            "x2": 78,
-            "y2": 58
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_merry_go_round",
-          "name": "Merry Go Round",
-          "bbox": {
-            "x1": 70,
-            "y1": 40,
-            "x2": 92,
-            "y2": 60
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_bridge",
-          "name": "Bridge",
-          "bbox": {
-            "x1": 68,
-            "y1": 52,
-            "x2": 96,
-            "y2": 72
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_playhouse",
-          "name": "Playhouse",
-          "bbox": {
-            "x1": 78,
-            "y1": 36,
-            "x2": 100,
-            "y2": 72
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_bicycle",
-          "name": "Bicycle",
-          "bbox": {
-            "x1": 79,
-            "y1": 69,
-            "x2": 92,
-            "y2": 84
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_toy_truck",
-          "name": "Toy Truck",
-          "bbox": {
-            "x1": 44,
-            "y1": 72,
-            "x2": 52,
-            "y2": 82
-          },
-          "priority": 2
-        },
-        {
-          "id": "pg_dinosaur",
-          "name": "Dinosaur",
-          "bbox": {
-            "x1": 49,
-            "y1": 83,
-            "x2": 57,
-            "y2": 95
-          },
-          "priority": 2
-        },
-        {
-          "id": "pg_bucket",
-          "name": "Bucket",
-          "bbox": {
-            "x1": 39,
-            "y1": 70,
-            "x2": 47,
-            "y2": 80
-          },
-          "priority": 2
-        },
-        {
-          "id": "pg_shovel",
-          "name": "Shovel",
-          "bbox": {
-            "x1": 55,
-            "y1": 73,
-            "x2": 63,
-            "y2": 84
-          },
-          "priority": 2
-        },
-        {
-          "id": "pg_ball",
-          "name": "Ball",
-          "bbox": {
-            "x1": 73,
-            "y1": 84,
-            "x2": 83,
-            "y2": 94
-          },
-          "priority": 2
-        },
-        {
-          "id": "pg_backpack",
-          "name": "Backpack",
-          "bbox": {
-            "x1": 66,
-            "y1": 78,
-            "x2": 76,
-            "y2": 92
-          },
-          "priority": 2
-        },
-        {
-          "id": "pg_treasure",
-          "name": "Treasure Chest",
-          "bbox": {
-            "x1": 18,
-            "y1": 76,
-            "x2": 32,
-            "y2": 94
-          },
-          "priority": 2
-        },
-        {
-          "id": "pg_dog",
-          "name": "Dog",
-          "bbox": {
-            "x1": 44,
-            "y1": 84,
-            "x2": 54,
-            "y2": 96
-          },
-          "priority": 3
-        },
-        {
-          "id": "pg_lizard",
-          "name": "Lizard",
-          "bbox": {
-            "x1": 56,
-            "y1": 90,
-            "x2": 68,
-            "y2": 100
-          },
-          "priority": 3
-        },
-        {
-          "id": "pg_squirrel",
-          "name": "Squirrel",
-          "bbox": {
-            "x1": 8,
-            "y1": 26,
-            "x2": 18,
-            "y2": 44
-          },
-          "priority": 3
-        },
-        {
-          "id": "pg_bird",
-          "name": "Bird",
-          "bbox": {
-            "x1": 30,
-            "y1": 18,
-            "x2": 42,
-            "y2": 32
-          },
-          "priority": 3
-        },
-        {
-          "id": "pg_butterfly",
-          "name": "Butterfly",
-          "bbox": {
-            "x1": 82,
-            "y1": 63,
-            "x2": 92,
-            "y2": 78
-          },
-          "priority": 3
-        },
-        {
-          "id": "pg_lamp_left",
-          "name": "Lamp Post",
-          "bbox": {
-            "x1": 2,
-            "y1": 60,
-            "x2": 10,
-            "y2": 92
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_lamp_right",
-          "name": "Lamp Post",
-          "bbox": {
-            "x1": 88,
-            "y1": 58,
-            "x2": 98,
-            "y2": 96
-          },
-          "priority": 1
-        },
-        {
-          "id": "pg_flower_patch",
-          "name": "Flower Patch",
-          "bbox": {
-            "x1": 0,
-            "y1": 82,
-            "x2": 15,
-            "y2": 100
-          },
-          "priority": 2
-        }
-      ],
-      "objects": [
-        {
-          "id": "pg_1",
-          "name": "Slide",
-          "x": 20,
-          "y": 70,
-          "w": 12,
-          "imgUrl": "assets/images/scenes/playground/Slide.png?v=3"
-        },
-        {
-          "id": "pg_2",
-          "name": "Swing",
-          "x": 80,
-          "y": 60,
-          "w": 10,
-          "imgUrl": "assets/images/scenes/playground/Swing.png?v=3"
-        },
-        {
-          "id": "pg_3",
-          "name": "Sandbox",
-          "x": 50,
-          "y": 85,
-          "w": 15,
-          "imgUrl": "assets/images/scenes/playground/Sandbox.png?v=3"
-        },
-        {
-          "id": "pg_4",
-          "name": "Seesaw",
-          "x": 40,
-          "y": 75,
-          "w": 20,
-          "imgUrl": "assets/images/scenes/playground/Seesaw.png?v=3"
-        },
-        {
-          "id": "pg_5",
-          "name": "Ball",
-          "x": 60,
-          "y": 80,
-          "w": 3,
-          "imgUrl": "assets/images/scenes/playground/Ball.png?v=3"
-        },
-        {
-          "id": "pg_6",
-          "name": "KitePg",
-          "x": 70,
-          "y": 20,
-          "w": 6,
-          "imgUrl": "assets/images/scenes/playground/KitePg.png?v=3"
-        },
-        {
-          "id": "pg_7",
-          "name": "Bicycle",
-          "x": 90,
-          "y": 80,
-          "w": 8,
-          "imgUrl": "assets/images/scenes/playground/Bicycle.png?v=3"
-        },
-        {
-          "id": "pg_8",
-          "name": "Bench",
-          "x": 80,
-          "y": 80,
-          "w": 12,
-          "imgUrl": "assets/images/scenes/playground/Bench.png?v=3"
-        },
-        {
-          "id": "pg_9",
-          "name": "Tree",
-          "x": 10,
-          "y": 40,
-          "w": 20,
-          "imgUrl": "assets/images/scenes/playground/Tree.png?v=3"
-        },
-        {
-          "id": "pg_10",
-          "name": "Bird",
-          "x": 40,
-          "y": 15,
-          "w": 3,
-          "imgUrl": "assets/images/scenes/playground/Bird.png?v=3"
-        },
-        {
-          "id": "pg_11",
-          "name": "Cloud",
-          "x": 20,
-          "y": 15,
-          "w": 15,
-          "imgUrl": "assets/images/scenes/playground/Cloud.png?v=3"
-        },
-        {
-          "id": "pg_12",
-          "name": "Flower",
-          "x": 15,
-          "y": 90,
-          "w": 4,
-          "imgUrl": "assets/images/scenes/playground/Flower.png?v=3"
-        }
-      ],
+      "allObjectsLoaded": false,
+      "allObjects": [],
       "i18n": {
         "en": {
           "obj_Slide": "Slide",
@@ -3368,9 +2905,12 @@
     },
     "animalfarm": {
       "id": "animalfarm",
+      "bgImage": "assets/images/scenes/scene_animalfarm.png",
+      "activeCount": 15,
+      "allObjectsLoaded": false,
+      "allObjects": [],
       "i18n": {
         "en": {
-          "sceneAnimalFarm": "Animal Farm",
           "obj_Bucket": "Bucket",
           "obj_Pumpkin": "Pumpkin",
           "obj_Hat": "Hat",
@@ -3401,7 +2941,6 @@
           "obj_Wooden_Box": "Wooden Box"
         },
         "es": {
-          "sceneAnimalFarm": "Granja de Animales",
           "obj_Bucket": "Cubo",
           "obj_Pumpkin": "Calabaza",
           "obj_Hat": "Sombrero",
@@ -3432,7 +2971,6 @@
           "obj_Wooden_Box": "Caja de Madera"
         },
         "hi": {
-          "sceneAnimalFarm": "जानवरों का खेत",
           "obj_Bucket": "बाल्टी",
           "obj_Pumpkin": "कद्दू",
           "obj_Hat": "टोपी",
@@ -3463,7 +3001,6 @@
           "obj_Wooden_Box": "लकड़ी का डिब्बा"
         },
         "zh": {
-          "sceneAnimalFarm": "动物农场",
           "obj_Bucket": "桶",
           "obj_Pumpkin": "南瓜",
           "obj_Hat": "帽子",
@@ -3494,7 +3031,6 @@
           "obj_Wooden_Box": "木箱"
         },
         "pt-PT": {
-          "sceneAnimalFarm": "Quinta de Animais",
           "obj_Bucket": "Balde",
           "obj_Pumpkin": "Abóbora",
           "obj_Hat": "Chapéu",
@@ -3525,7 +3061,6 @@
           "obj_Wooden_Box": "Caixa de Madeira"
         },
         "pt-BR": {
-          "sceneAnimalFarm": "Fazenda de Animais",
           "obj_Bucket": "Balde",
           "obj_Pumpkin": "Abóbora",
           "obj_Hat": "Chapéu",
@@ -3556,7 +3091,6 @@
           "obj_Wooden_Box": "Caixa de Madeira"
         },
         "fr": {
-          "sceneAnimalFarm": "Ferme aux Animaux",
           "obj_Bucket": "Seau",
           "obj_Pumpkin": "Citrouille",
           "obj_Hat": "Chapeau",
@@ -3587,7 +3121,6 @@
           "obj_Wooden_Box": "Caisse en Bois"
         },
         "ja": {
-          "sceneAnimalFarm": "動物農場",
           "obj_Bucket": "バケツ",
           "obj_Pumpkin": "カボチャ",
           "obj_Hat": "帽子",
@@ -3618,7 +3151,6 @@
           "obj_Wooden_Box": "木箱"
         },
         "bn": {
-          "sceneAnimalFarm": "পশুর খামার",
           "obj_Bucket": "বালতি",
           "obj_Pumpkin": "কুমড়ো",
           "obj_Hat": "টুপি",
@@ -3649,7 +3181,6 @@
           "obj_Wooden_Box": "কাঠের বাক্স"
         },
         "gu": {
-          "sceneAnimalFarm": "પ્રાણીઓનું ખેતર",
           "obj_Bucket": "બાલ્ટી",
           "obj_Pumpkin": "કોળું",
           "obj_Hat": "ટોપી",
@@ -3680,7 +3211,6 @@
           "obj_Wooden_Box": "લાકડાનું બોક્સ"
         },
         "mr": {
-          "sceneAnimalFarm": "प्राण्यांचे शेत",
           "obj_Bucket": "बादली",
           "obj_Pumpkin": "भोपळा",
           "obj_Hat": "टोपी",
@@ -3711,7 +3241,6 @@
           "obj_Wooden_Box": "लाकडी बॉक्स"
         },
         "kn": {
-          "sceneAnimalFarm": "ಪ್ರಾಣಿ ಸಾಕಾಣಿಕೆ ಕೇಂದ್ರ",
           "obj_Bucket": "ಬಕೆಟ್",
           "obj_Pumpkin": "ಕುಂಬಳಕಾಯಿ",
           "obj_Hat": "ಟೋಪಿ",
@@ -3742,7 +3271,6 @@
           "obj_Wooden_Box": "ಮರದ ಪೆಟ್ಟಿಗೆ"
         },
         "ta": {
-          "sceneAnimalFarm": "விலங்கு பண்ணை",
           "obj_Bucket": "வாளி",
           "obj_Pumpkin": "பூசணி",
           "obj_Hat": "தொப்பி",
@@ -3773,7 +3301,6 @@
           "obj_Wooden_Box": "மர பெட்டி"
         },
         "ml": {
-          "sceneAnimalFarm": "മൃഗശാല",
           "obj_Bucket": "ബക്കറ്റ്",
           "obj_Pumpkin": "മത്തൻ",
           "obj_Hat": "തൊപ്പി",
@@ -3804,7 +3331,6 @@
           "obj_Wooden_Box": "മരം പെട്ടി"
         },
         "pa": {
-          "sceneAnimalFarm": "ਜਾਨਵਰਾਂ ਦਾ ਫਾਰਮ",
           "obj_Bucket": "ਬਾਲਟੀ",
           "obj_Pumpkin": "ਕੱਦੂ",
           "obj_Hat": "ਟੋਪੀ",
@@ -3835,7 +3361,6 @@
           "obj_Wooden_Box": "ਲੱਕੜ ਦਾ ਡੱਬਾ"
         },
         "sw": {
-          "sceneAnimalFarm": "Shamba la Wanyama",
           "obj_Bucket": "Ndoo",
           "obj_Pumpkin": "Maboga",
           "obj_Hat": "Kofia",
@@ -3866,7 +3391,6 @@
           "obj_Wooden_Box": "Sanduku la Mbao"
         },
         "ms": {
-          "sceneAnimalFarm": "Ladang Haiwan",
           "obj_Bucket": "Baldi",
           "obj_Pumpkin": "Labu",
           "obj_Hat": "Topi",
@@ -3897,7 +3421,6 @@
           "obj_Wooden_Box": "Kotak Kayu"
         },
         "tl": {
-          "sceneAnimalFarm": "Baryo ng mga Hayop",
           "obj_Bucket": "Balde",
           "obj_Pumpkin": "Kalabasa",
           "obj_Hat": "Sumbrero",
@@ -3927,131 +3450,14 @@
           "obj_Barn": "Kamalig",
           "obj_Wooden_Box": "Kahong Kahoy"
         }
-      },
-      "bgImage": "assets/images/scenes/scene_animalfarm.png",
-      "allObjectsLoaded": false,
-      "allObjects": [],
-      "activeCount": 15
+      }
     },
     "kitchen": {
       "id": "kitchen",
       "bgImage": "assets/images/scenes/scene_kitchen.jpg",
       "activeCount": 14,
+      "allObjectsLoaded": false,
       "allObjects": [],
-      "objects": [
-        {
-          "id": "kit_1",
-          "name": "Apple",
-          "x": 28,
-          "y": 53,
-          "w": 3,
-          "imgUrl": "assets/images/scenes/kitchen/Apple.jpg"
-        },
-        {
-          "id": "kit_2",
-          "name": "Banana",
-          "x": 86,
-          "y": 45,
-          "w": 4,
-          "imgUrl": "assets/images/scenes/kitchen/Banana.jpg"
-        },
-        {
-          "id": "kit_3",
-          "name": "Mug",
-          "x": 67,
-          "y": 31,
-          "w": 3,
-          "imgUrl": "assets/images/scenes/kitchen/Mug.jpg"
-        },
-        {
-          "id": "kit_4",
-          "name": "Spoon",
-          "x": 6,
-          "y": 72,
-          "w": 2,
-          "imgUrl": "assets/images/scenes/kitchen/Spoon.jpg"
-        },
-        {
-          "id": "kit_5",
-          "name": "Fork",
-          "x": 58,
-          "y": 74,
-          "w": 2,
-          "imgUrl": "assets/images/scenes/kitchen/Fork.jpg"
-        },
-        {
-          "id": "kit_6",
-          "name": "Plate",
-          "x": 50,
-          "y": 32,
-          "w": 6,
-          "imgUrl": "assets/images/scenes/kitchen/Plate.jpg"
-        },
-        {
-          "id": "kit_7",
-          "name": "Pot",
-          "x": 34,
-          "y": 75,
-          "w": 5,
-          "imgUrl": "assets/images/scenes/kitchen/Pot.jpg"
-        },
-        {
-          "id": "kit_8",
-          "name": "Pan",
-          "x": 63,
-          "y": 44,
-          "w": 5,
-          "imgUrl": "assets/images/scenes/kitchen/Pan.jpg"
-        },
-        {
-          "id": "kit_9",
-          "name": "Spatula",
-          "x": 57,
-          "y": 45,
-          "w": 2,
-          "imgUrl": "assets/images/scenes/kitchen/Spatula.jpg"
-        },
-        {
-          "id": "kit_10",
-          "name": "Toaster",
-          "x": 42,
-          "y": 53,
-          "w": 6,
-          "imgUrl": "assets/images/scenes/kitchen/Toaster.jpg"
-        },
-        {
-          "id": "kit_11",
-          "name": "Blender",
-          "x": 48,
-          "y": 47,
-          "w": 5,
-          "imgUrl": "assets/images/scenes/kitchen/Blender.jpg"
-        },
-        {
-          "id": "kit_12",
-          "name": "Oven Mitt",
-          "x": 19,
-          "y": 50,
-          "w": 4,
-          "imgUrl": "assets/images/scenes/kitchen/Oven_Mitt.jpg"
-        },
-        {
-          "id": "kit_13",
-          "name": "Rolling Pin",
-          "x": 38,
-          "y": 55,
-          "w": 6,
-          "imgUrl": "assets/images/scenes/kitchen/Rolling_Pin.jpg"
-        },
-        {
-          "id": "kit_14",
-          "name": "Whisk",
-          "x": 80,
-          "y": 14,
-          "w": 3,
-          "imgUrl": "assets/images/scenes/kitchen/Whisk.jpg"
-        }
-      ],
       "i18n": {
         "en": {
           "obj_Apple": "Apple",

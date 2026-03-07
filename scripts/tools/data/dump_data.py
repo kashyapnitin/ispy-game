@@ -5,8 +5,8 @@ from pathlib import Path
 
 import chompjs
 
-# Project root (scripts/tools/ -> 2 levels up)
-ROOT = Path(__file__).resolve().parents[2]
+# Project root (scripts/tools/data/ -> 3 levels up)
+ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT / "scripts" / "data"
 
 

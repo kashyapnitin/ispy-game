@@ -3,7 +3,6 @@
   "bgImage": "assets/images/scenes/scene_animalfarm.png",
   "i18n": {
     "en": {
-      "sceneAnimalFarm": "Animal Farm",
       "obj_Bucket": "Bucket",
       "obj_Pumpkin": "Pumpkin",
       "obj_Hat": "Hat",
@@ -34,7 +33,6 @@
       "obj_Wooden_Box": "Wooden Box"
     },
     "es": {
-      "sceneAnimalFarm": "Granja de Animales",
       "obj_Bucket": "Cubo",
       "obj_Pumpkin": "Calabaza",
       "obj_Hat": "Sombrero",
@@ -65,7 +63,6 @@
       "obj_Wooden_Box": "Caja de Madera"
     },
     "hi": {
-      "sceneAnimalFarm": "जानवरों का खेत",
       "obj_Bucket": "बाल्टी",
       "obj_Pumpkin": "कद्दू",
       "obj_Hat": "टोपी",
@@ -96,7 +93,6 @@
       "obj_Wooden_Box": "लकड़ी का डिब्बा"
     },
     "zh": {
-      "sceneAnimalFarm": "动物农场",
       "obj_Bucket": "桶",
       "obj_Pumpkin": "南瓜",
       "obj_Hat": "帽子",
@@ -127,7 +123,6 @@
       "obj_Wooden_Box": "木箱"
     },
     "pt-PT": {
-      "sceneAnimalFarm": "Quinta de Animais",
       "obj_Bucket": "Balde",
       "obj_Pumpkin": "Abóbora",
       "obj_Hat": "Chapéu",
@@ -158,7 +153,6 @@
       "obj_Wooden_Box": "Caixa de Madeira"
     },
     "pt-BR": {
-      "sceneAnimalFarm": "Fazenda de Animais",
       "obj_Bucket": "Balde",
       "obj_Pumpkin": "Abóbora",
       "obj_Hat": "Chapéu",
@@ -189,7 +183,6 @@
       "obj_Wooden_Box": "Caixa de Madeira"
     },
     "fr": {
-      "sceneAnimalFarm": "Ferme aux Animaux",
       "obj_Bucket": "Seau",
       "obj_Pumpkin": "Citrouille",
       "obj_Hat": "Chapeau",
@@ -220,7 +213,6 @@
       "obj_Wooden_Box": "Caisse en Bois"
     },
     "ja": {
-      "sceneAnimalFarm": "動物農場",
       "obj_Bucket": "バケツ",
       "obj_Pumpkin": "カボチャ",
       "obj_Hat": "帽子",
@@ -251,7 +243,6 @@
       "obj_Wooden_Box": "木箱"
     },
     "bn": {
-      "sceneAnimalFarm": "পশুর খামার",
       "obj_Bucket": "বালতি",
       "obj_Pumpkin": "কুমড়ো",
       "obj_Hat": "টুপি",
@@ -282,7 +273,6 @@
       "obj_Wooden_Box": "কাঠের বাক্স"
     },
     "gu": {
-      "sceneAnimalFarm": "પ્રાણીઓનું ખેતર",
       "obj_Bucket": "બાલ્ટી",
       "obj_Pumpkin": "કોળું",
       "obj_Hat": "ટોપી",
@@ -313,7 +303,6 @@
       "obj_Wooden_Box": "લાકડાનું બોક્સ"
     },
     "mr": {
-      "sceneAnimalFarm": "प्राण्यांचे शेत",
       "obj_Bucket": "बादली",
       "obj_Pumpkin": "भोपळा",
       "obj_Hat": "टोपी",
@@ -344,7 +333,6 @@
       "obj_Wooden_Box": "लाकडी बॉक्स"
     },
     "kn": {
-      "sceneAnimalFarm": "ಪ್ರಾಣಿ ಸಾಕಾಣಿಕೆ ಕೇಂದ್ರ",
       "obj_Bucket": "ಬಕೆಟ್",
       "obj_Pumpkin": "ಕುಂಬಳಕಾಯಿ",
       "obj_Hat": "ಟೋಪಿ",
@@ -375,7 +363,6 @@
       "obj_Wooden_Box": "ಮರದ ಪೆಟ್ಟಿಗೆ"
     },
     "ta": {
-      "sceneAnimalFarm": "விலங்கு பண்ணை",
       "obj_Bucket": "வாளி",
       "obj_Pumpkin": "பூசணி",
       "obj_Hat": "தொப்பி",
@@ -406,7 +393,6 @@
       "obj_Wooden_Box": "மர பெட்டி"
     },
     "ml": {
-      "sceneAnimalFarm": "മൃഗശാല",
       "obj_Bucket": "ബക്കറ്റ്",
       "obj_Pumpkin": "മത്തൻ",
       "obj_Hat": "തൊപ്പി",
@@ -437,7 +423,6 @@
       "obj_Wooden_Box": "മരം പെട്ടി"
     },
     "pa": {
-      "sceneAnimalFarm": "ਜਾਨਵਰਾਂ ਦਾ ਫਾਰਮ",
       "obj_Bucket": "ਬਾਲਟੀ",
       "obj_Pumpkin": "ਕੱਦੂ",
       "obj_Hat": "ਟੋਪੀ",
@@ -468,7 +453,6 @@
       "obj_Wooden_Box": "ਲੱਕੜ ਦਾ ਡੱਬਾ"
     },
     "sw": {
-      "sceneAnimalFarm": "Shamba la Wanyama",
       "obj_Bucket": "Ndoo",
       "obj_Pumpkin": "Maboga",
       "obj_Hat": "Kofia",
@@ -499,7 +483,6 @@
       "obj_Wooden_Box": "Sanduku la Mbao"
     },
     "ms": {
-      "sceneAnimalFarm": "Ladang Haiwan",
       "obj_Bucket": "Baldi",
       "obj_Pumpkin": "Labu",
       "obj_Hat": "Topi",
@@ -530,7 +513,6 @@
       "obj_Wooden_Box": "Kotak Kayu"
     },
     "tl": {
-      "sceneAnimalFarm": "Baryo ng mga Hayop",
       "obj_Bucket": "Balde",
       "obj_Pumpkin": "Kalabasa",
       "obj_Hat": "Sumbrero",

@@ -1,40 +1,19 @@
-import json
-import os
+"""
+Generate all Animal Farm scene audio using gTTS only (all 18 locales).
+Writes to assets/audio/voices/{lang}/animalfarm/ (scene subfolders).
+"""
 import time
 from pathlib import Path
 
 from gtts import gTTS
 from gtts.tts import gTTSError
-from elevenlabs.client import ElevenLabs
 
-
-def load_dotenv(dotenv_path: Path) -> None:
-    if not dotenv_path.exists():
-        return
-    with dotenv_path.open("r", encoding="utf-8") as f:
-        for raw_line in f:
-            line = raw_line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, value = line.split("=", 1)
-            key = key.strip()
-            value = value.strip()
-            if not key:
-                continue
-            if len(value) >= 2 and value[0] == value[-1] and value[0] in ("'", '"'):
-                value = value[1:-1]
-            os.environ.setdefault(key, value)
-
-
+import sys
+from pathlib import Path
+_TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(_TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_DIR))
 from data_loader import ROOT, load_game_data, load_hotspot_objects
-
-load_dotenv(ROOT / ".env")
-
-API_KEY = os.environ.get("ELEVENLABS_API_KEY")
-if not API_KEY:
-    raise SystemExit("ELEVENLABS_API_KEY is not set. Add it to .env before running.")
-
-client = ElevenLabs(api_key=API_KEY)
 
 
 def build_i18n_dict(data: dict) -> dict:
@@ -112,86 +91,55 @@ GTTS_LANG_MAP = {
 }
 
 
-ELEVEN_VOICES = {
-    "en": "cgSgspJ2msm6clMCkdW9",  # Jessica
-    "hi": "yLldDJzoAIYirDpSiBvy",  # Tripti
-}
-
-
 def main() -> None:
-    scene_id = "toyshop"
     data = load_game_data()
     i18n = build_i18n_dict(data)
-    obj_names = load_hotspot_objects(scene_id)
 
-    print(f"Toyshop hotspot objects: {len(obj_names)}")
-
+    scene_id = "animalfarm"
     scene = data["scenes"].get(scene_id, {})
     scene_langs = sorted(scene.get("i18n", {}).keys())
     if not scene_langs:
-        raise SystemExit("No i18n languages found for toyshop in game_data.")
+        raise SystemExit("No i18n languages found for animalfarm in game_data.")
+
+    obj_names = load_hotspot_objects(scene_id)
+    print(f"Animal Farm: {len(obj_names)} objects, {len(scene_langs)} languages, gTTS only.")
 
     base_dir = ROOT / "assets" / "audio" / "voices"
 
     for lang in scene_langs:
-        use_eleven = lang in ("en", "hi")
-        engine = "eleven" if use_eleven else "gtts"
+        g_lang = GTTS_LANG_MAP.get(lang)
+        if not g_lang:
+            print(f"Skipping {lang}: no gTTS language mapping.")
+            continue
 
         scene_dir = base_dir / lang / scene_id
         scene_dir.mkdir(parents=True, exist_ok=True)
+        print(f"\n{lang} -> {scene_dir.relative_to(ROOT)}")
 
-        print(f"\nLanguage '{lang}' ({len(obj_names)} objects) using engine='{engine}'")
-
-        voice_id = ELEVEN_VOICES.get(lang) if use_eleven else None
+        hint_tpl = HINT_TEMPLATES.get(lang, HINT_TEMPLATES["en"])
+        found_tpl = FOUND_TEMPLATES.get(lang, FOUND_TEMPLATES["en"])
 
         for obj_name in obj_names:
             key = f"obj_{obj_name.replace(' ', '_')}"
             loc = i18n.get(lang, {}).get(key, i18n.get("en", {}).get(key, obj_name))
 
-            hint_tpl = HINT_TEMPLATES.get(lang, HINT_TEMPLATES["en"])
-            found_tpl = FOUND_TEMPLATES.get(lang, FOUND_TEMPLATES["en"])
             hint_text = hint_tpl.format(loc=loc)
             found_text = found_tpl.format(loc=loc)
-
             safe = obj_name.replace(" ", "_")
 
             for kind, text in (("hint", hint_text), ("found", found_text)):
                 out_path = scene_dir / f"{kind}_{safe}.mp3"
-                print(f"  -> {out_path.relative_to(ROOT)}")
+                try:
+                    tts = gTTS(text=text, lang=g_lang)
+                    tts.save(str(out_path))
+                    time.sleep(0.25)
+                except gTTSError as e:
+                    print(f"  gTTS ERROR {out_path.name}: {e}")
+                except Exception as e:
+                    print(f"  ERROR {out_path.name}: {e}")
 
-                if engine == "gtts":
-                    g_lang = GTTS_LANG_MAP.get(lang)
-                    if not g_lang:
-                        print(f"    Skipping {lang}: no gTTS language mapping.")
-                        continue
-                    try:
-                        tts = gTTS(text=text, lang=g_lang)
-                        tts.save(str(out_path))
-                    except gTTSError as e:
-                        print(f"    gTTS ERROR for {out_path.name}: {e}")
-                    except Exception as e:
-                        print(f"    Unexpected gTTS error for {out_path.name}: {e}")
-                else:
-                    if not voice_id:
-                        print(f"    Skipping {out_path.name}: no ElevenLabs voice configured for {lang}.")
-                        continue
-                    try:
-                        audio_gen = client.text_to_speech.convert(
-                            voice_id=voice_id,
-                            output_format="mp3_44100_128",
-                            text=text,
-                            model_id="eleven_multilingual_v2",
-                        )
-                        audio_bytes = b"".join(list(audio_gen))
-                        with out_path.open("wb") as f:
-                            f.write(audio_bytes)
-                        time.sleep(0.4)
-                    except Exception as e:
-                        print(f"    ERROR for {out_path.name}: {e}")
-
-    print("\nDone generating toyshop audio for all languages.")
+    print("\nDone generating Animal Farm audio (gTTS, all locales).")
 
 
 if __name__ == "__main__":
     main()
-
