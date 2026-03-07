@@ -1,35 +1,41 @@
 // Service worker for I Spy Digital Game
-// Bump CACHE_NAME (e.g. to ispy-shell-v4) when you change shell assets (HTML/CSS/JS)
+// Bump CACHE_NAME (e.g. to ispy-shell-v6) when you change shell assets (HTML/CSS/JS)
 // so existing clients get the new SW and old shell cache is cleared on activate.
+// Precache URLs are relative to the SW scope so they work at any base path (e.g. / or /ispy-game/).
 
-const CACHE_NAME = 'ispy-shell-v3';
+const CACHE_NAME = 'ispy-shell-v6';
 const VOICE_CACHE_NAME = 'ispy-voices-v1';
+// Relative to registration scope (no leading slash) so cache keys match page fetch URLs
 const PRECACHE_URLS = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/js/main.js',
-  '/manifest.webmanifest',
-  '/assets/ispy-app-icon-512.png',
-  // Full scene background images (exact URLs used by scene data for offline play)
-  '/assets/images/scenes/toyshop/scene_toyshop.jpg',
-  '/assets/images/scenes/kitchen/scene_kitchen.jpg',
-  '/assets/images/scenes/playground/scene_playground.jpg',
-  '/assets/images/scenes/playground/scene_playground.jpg?v=3',
-  '/assets/images/scenes/beach/scene_beach.jpg',
-  // Hotspot JSON used for gameplay
-  '/scripts/playground_hotspots.json',
-  '/scripts/toyshop_hotspots.json',
-  '/scripts/kitchen_hotspots.json',
-  '/scripts/beach_hotspots.json'
+  'index.html',
+  'css/style.css',
+  'js/main.js',
+  'manifest.webmanifest',
+  'assets/ispy-app-icon-512.png',
+  // Scene background images (offline play)
+  'assets/images/scenes/scene_animalfarm.png',
+  'assets/images/scenes/scene_toyshop.jpg',
+  'assets/images/scenes/scene_kitchen.jpg',
+  'assets/images/scenes/scene_playground.jpg',
+  'assets/images/scenes/scene_beach.jpg',
+  // Hotspot JSON (required for each scene to load offline)
+  'scripts/data/hotspots/animalfarm.json',
+  'scripts/data/hotspots/playground.json',
+  'scripts/data/hotspots/toyshop.json',
+  'scripts/data/hotspots/kitchen.json',
+  'scripts/data/hotspots/beach.json'
 ];
 
 self.addEventListener('install', (event) => {
+  const scope = self.registration.scope;
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) =>
-      Promise.allSettled(PRECACHE_URLS.map((url) => cache.add(url).catch((err) => {
-        console.warn('sw: failed to cache', url, err);
-      })))
+      Promise.allSettled(PRECACHE_URLS.map((path) => {
+        const url = new URL(path, scope).href;
+        return cache.add(url).catch((err) => {
+          console.warn('sw: failed to precache', url, err);
+        });
+      }))
     )
   );
   self.skipWaiting();
@@ -58,6 +64,10 @@ function isVoiceRequest(url) {
   }
 }
 
+function getIndexUrl() {
+  return new URL('index.html', self.registration.scope).href;
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
@@ -75,6 +85,24 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => caches.match(request))
     );
     return;
+  }
+
+  // Navigation to scope root (e.g. / or /ispy-game/) -> serve cached index.html
+  if (request.mode === 'navigate') {
+    const scopeUrl = new URL(self.registration.scope);
+    const requestUrl = new URL(url);
+    const scopePath = scopeUrl.pathname.replace(/\/$/, '') || '/';
+    const requestPath = requestUrl.pathname.replace(/\/$/, '') || '/';
+    const isScopeRoot = requestUrl.origin === scopeUrl.origin && (requestPath === scopePath || requestPath + '/' === scopePath || requestPath === scopePath + '/');
+    if (isScopeRoot) {
+      event.respondWith(
+        caches.match(new Request(getIndexUrl())).then((cached) => {
+          if (cached) return cached;
+          return fetch(request).catch(() => caches.match(getIndexUrl()).then((r) => r || new Response('', { status: 503, statusText: 'Service Unavailable' })));
+        })
+      );
+      return;
+    }
   }
 
   event.respondWith(

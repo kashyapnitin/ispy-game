@@ -3,7 +3,7 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 
 window.ISPY_SCENES.toyshop = {
     id: 'toyshop',
-    bgImage: 'assets/images/scenes/toyshop/scene_toyshop.jpg',
+    bgImage: 'assets/images/scenes/scene_toyshop.jpg',
     // OrigWidth/Height will be populated dynamically at load time
     /**
      * Hotspot-only data model for this scene.

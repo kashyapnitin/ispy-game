@@ -3,7 +3,7 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 
 window.ISPY_SCENES.kitchen = {
     id: 'kitchen',
-    bgImage: 'assets/images/scenes/kitchen/scene_kitchen.jpg',
+    bgImage: 'assets/images/scenes/scene_kitchen.jpg',
     // OrigWidth/Height will be populated dynamically at load time
     /**
      * Hotspot-only data model for this scene.

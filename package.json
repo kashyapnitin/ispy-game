@@ -1,0 +1,11 @@
+{
+  "name": "ispy-game",
+  "private": true,
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:consistency": "python3 scripts/tools/check_consistency.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}

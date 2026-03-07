@@ -3,7 +3,7 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 
 window.ISPY_SCENES.playground = {
     id: 'playground',
-    bgImage: 'assets/images/scenes/playground/scene_playground.jpg?v=3',
+    bgImage: 'assets/images/scenes/scene_playground.jpg',
 
     /**
      * New hotspot-only data model for this scene.

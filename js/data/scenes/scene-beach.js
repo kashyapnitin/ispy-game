@@ -3,7 +3,7 @@ window.ISPY_SCENES = window.ISPY_SCENES || {};
 
 window.ISPY_SCENES.beach = {
     id: 'beach',
-    bgImage: 'assets/images/scenes/beach/scene_beach.jpg',
+    bgImage: 'assets/images/scenes/scene_beach.jpg',
     // OrigWidth/Height will be populated dynamically at load time
     /**
      * Hotspot-only data model for this scene.

@@ -4,13 +4,19 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const DEV_HOTSPOTS = window.location.search.includes('devHotspots=1');
+    // --- Scene registry: single source for scene order and hotspot paths ---
+    const SCENE_REGISTRY = [
+        { id: 'animalfarm', order: 0 },
+        { id: 'toyshop', order: 1 },
+        { id: 'kitchen', order: 2 },
+        { id: 'playground', order: 3 },
+        { id: 'beach', order: 4 },
+    ];
+    const DEFAULT_SCENE_ORDER = SCENE_REGISTRY.map((s) => s.id);
+    const HOTSPOT_SOURCES = Object.fromEntries(
+        SCENE_REGISTRY.map((s) => [s.id, `scripts/data/hotspots/${s.id}.json`])
+    );
     // --- State ---
-    const HOTSPOT_SOURCES = {
-        playground: 'scripts/playground_hotspots.json',
-        toyshop: 'scripts/toyshop_hotspots.json',
-        kitchen: 'scripts/kitchen_hotspots.json',
-        beach: 'scripts/beach_hotspots.json',
-    };
     const gameState = {
         currentSceneId: null,
         objectsToFind: [],
@@ -192,10 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- PWA: register service worker if supported ---
+    // --- PWA: register service worker (relative path so scope matches app base path for offline precache) ---
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').catch((err) => {
+            navigator.serviceWorker.register('sw.js').catch((err) => {
                 console.warn('Service worker registration failed:', err);
             });
         });
@@ -271,8 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.toggleTimerOn && (ui.toggleTimerOn.classList.toggle('active', prefs.timerOn));
     }
 
-    const DEFAULT_SCENE_ORDER = ['toyshop', 'kitchen', 'playground', 'beach'];
-
     function updateSceneSelectionUI() {
         const container = document.getElementById('scene-selection');
         if (!container) return;
@@ -337,7 +341,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (objects.length === 0) {
                         showHint();
                     } else if (typeof caches !== 'undefined') {
-                        const base = `${location.origin}/assets/audio/voices/${currentLang}`;
+                        const sceneId = gameState.currentSceneId || '';
+                        const base = `${location.origin}/assets/audio/voices/${currentLang}/${sceneId}`;
                         const neededUrls = new Set();
                         objects.forEach((obj) => {
                             const n = (obj.name || '').replace(/ /g, '_');
@@ -578,7 +583,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function prefetchSceneVoices(lang, objects) {
         if (!objects || !objects.length) return;
-        const base = `${location.origin}/assets/audio/voices/${lang}`;
+        const sceneId = gameState.currentSceneId || '';
+        const base = `${location.origin}/assets/audio/voices/${lang}/${sceneId}`;
         caches.open('ispy-voices-v1').then((cache) => {
             objects.forEach((obj) => {
                 const n = (obj.name || '').replace(/ /g, '_');
@@ -972,7 +978,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const sanitizedObjName = objName.replace(/ /g, "_");
-        const audioPath = `assets/audio/voices/${currentLang}/${phraseType}_${sanitizedObjName}.mp3`;
+        const sceneId = gameState.currentSceneId || "";
+        const audioPath = `assets/audio/voices/${currentLang}/${sceneId}/${phraseType}_${sanitizedObjName}.mp3`;
 
         currentVoiceAudio = new Audio(audioPath);
         currentVoiceAudio.play().catch(() => {

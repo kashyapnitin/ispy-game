@@ -12,3 +12,10 @@ __pycache__/
 assets/audio/voices_temp_tests/
 scripts/game_data.json
 scripts/expanded_dict.json
+
+# Node (E2E)
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+.playwright/
